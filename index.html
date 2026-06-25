@@ -31,36 +31,29 @@ html{ -webkit-text-size-adjust:100%; }
 body{ margin:0; background:var(--bg); color:var(--fg); line-height:1.65;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Atkinson Hyperlegible",sans-serif;
 font-size:18px; }
-.wrap{ max-width:740px; margin:0 auto; padding:1.1rem 1.1rem 4rem; }
+.wrap,body>*{ }
+body{ padding:0; }
+main,.container{ }
 h1{ font-size:1.7rem; line-height:1.25; margin:.6rem 0 .2rem; }
 h1.title{ color:var(--accent-dk); }
 .subtitle{ color:var(--muted); font-style:italic; margin:.2rem 0 1.4rem; }
-h2{ font-size:1.32rem; margin:2.2rem 0 .6rem; padding-top:1.2rem; border-top:3px solid var(--accent);
-line-height:1.3; }
+h2{ font-size:1.32rem; margin:2.2rem 0 .6rem; padding-top:1.2rem; border-top:3px solid var(--accent); line-height:1.3; }
 h3{ font-size:1.1rem; margin:1.4rem 0 .4rem; color:var(--accent-dk); }
 a{ color:var(--accent-dk); }
 p,li{ overflow-wrap:break-word; }
-code{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--code-bg);
-padding:.1em .35em; border-radius:4px; font-size:.92em; }
-pre{ background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem;
-overflow-x:auto; font-size:.9rem; line-height:1.45; }
+code{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--code-bg); padding:.1em .35em; border-radius:4px; font-size:.92em; }
+pre{ background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-size:.9rem; line-height:1.45; }
 pre code{ background:none; padding:0; }
-blockquote{ margin:1rem 0; padding:.7rem 1rem; background:var(--quote-bg);
-border-left:4px solid var(--accent); border-radius:0 8px 8px 0; }
+blockquote{ margin:1rem 0; padding:.7rem 1rem; background:var(--quote-bg); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; }
 blockquote p{ margin:.3rem 0; }
 hr{ border:none; border-top:1px solid var(--border); margin:2rem 0; }
-strong{ font-weight:700; }
-#TOC{ background:var(--code-bg); border:1px solid var(--border); border-radius:10px;
-padding:.6rem 1rem; margin:1rem 0 2rem; }
-#TOC::before{ content:"Contents"; display:block; font-weight:700; color:var(--accent-dk);
-margin:.2rem 0 .4rem; font-size:.95rem; letter-spacing:.02em; }
+body{ max-width:740px; margin:0 auto; padding:1.1rem 1.1rem 4rem; }
+#TOC{ background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:.6rem 1rem; margin:1rem 0 2rem; }
+#TOC::before{ content:"Contents"; display:block; font-weight:700; color:var(--accent-dk); margin:.2rem 0 .4rem; font-size:.95rem; }
 #TOC ul{ margin:.2rem 0; padding-left:1.1rem; }
-#TOC li{ margin:.15rem 0; }
-#TOC a{ text-decoration:none; }
-.topbtn{ position:fixed; right:14px; bottom:14px; background:var(--accent); color:#fff;
-text-decoration:none; border-radius:50%; width:44px; height:44px; display:flex; align-items:center;
-justify-content:center; font-size:1.3rem; box-shadow:0 2px 8px rgba(0,0,0,.25); opacity:.9; }
-@media (max-width:480px){ body{ font-size:17px; } .wrap{ padding:.9rem; } h1{ font-size:1.45rem; } }
+#TOC li{ margin:.15rem 0; } #TOC a{ text-decoration:none; }
+.topbtn{ position:fixed; right:14px; bottom:14px; background:var(--accent); color:#fff; text-decoration:none; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; box-shadow:0 2px 8px rgba(0,0,0,.25); opacity:.9; }
+@media (max-width:480px){ body{ font-size:17px; padding:.9rem; } h1{ font-size:1.45rem; } }
 </style>
 <meta name="robots" content="noindex, nofollow">
 <link rel="manifest" href="manifest.json">
@@ -235,6 +228,54 @@ pair. A bipartite graph with that property is
 graph is bipartite, Hamilton-connected if it isn’t. I.e. the strongest
 path property the graph is <em>allowed</em> to have.</p>
 </blockquote>
+<h3 id="what-these-actually-look-like-small-checkable-examples">What
+these actually look like (small, checkable examples)</h3>
+<p>It’s worth seeing that “a Hamilton path between <em>every</em> pair”
+is real, not impossible. The trick: when your two endpoints happen to be
+neighbours, you may <em>not</em> hop directly between them (that would
+end the path immediately, skipping everyone) — so the path takes a
+scenic route. Hamilton- connectedness just says a scenic route always
+exists. (Every path below is real, machine-checked.)</p>
+<p><strong>K₄ — the complete graph on 4 vertices (every pair
+joined).</strong> Total freedom: pick a start, pick an end, list the
+other two between them in any order — every step is automatically an
+edge.</p>
+<pre><code>0→1: 0-2-3-1     0→2: 0-1-3-2     0→3: 0-1-2-3
+1→2: 1-0-3-2     1→3: 1-0-2-3     2→3: 2-0-1-3</code></pre>
+<p>So with enough edges it’s clearly possible. But you don’t
+<em>need</em> a complete graph:</p>
+<p><strong>The triangular prism — sparse, yet still
+Hamilton-connected.</strong> Two triangles joined by three rungs; every
+vertex has only 3 neighbours (9 edges total):</p>
+<pre><code>top triangle:        0 — 1 — 2 — 0
+bottom triangle:     3 — 4 — 5 — 3
+rungs (a matching):  0–3,  1–4,  2–5</code></pre>
+<p>Watch the rerouting when the endpoints are adjacent (0 and 1 are
+neighbours, so the path can’t use edge 0–1):</p>
+<pre><code>0→1:  0-2-5-3-4-1      (skips the direct edge, snakes through all six)
+0→3:  0-1-2-5-4-3
+3→4:  3-5-2-0-1-4</code></pre>
+<p>All 15 pairs work. The lesson: you need enough <em>alternative
+routes</em>, not completeness.</p>
+<p><strong>Why bipartite graphs can only be “laceable.”</strong>
+2-colour a bipartite graph black/white so every edge is black–white. Any
+path then alternates colours, so a Hamilton path through all N vertices
+(N/2 of each colour) must start and end on <em>opposite</em> colours. A
+Hamilton path between two <em>same-colour</em> vertices is therefore
+impossible — pure parity, not a defect of the graph. The best a
+bipartite graph can manage is a Hamilton path between every
+<em>opposite-colour</em> pair: that’s <strong>laceable</strong>.</p>
+<p><strong>K₃,₃ — complete bipartite, 3 + 3 (we meet it again later as
+CT₃).</strong> Top a1,a2,a3; bottom b1,b2,b3; every top joined to every
+bottom:</p>
+<pre><code>opposite-colour (a Hamilton path exists):  a1→b1:  a1-b2-a2-b3-a3-b1
+same-colour (impossible, by parity):       a1→a2:  none</code></pre>
+<p><strong>The cube Q₃ — 8 corners = 3-bit strings, edge = flip one
+bit</strong> (a Hamilton path here is literally a Gray code):</p>
+<pre><code>000→111:  000-001-011-010-110-100-101-111   ✔ opposite parity
+000→011:  none                               ✗ same parity (both even # of 1s)</code></pre>
+<p>Both are laceable — every opposite-colour pair connects, no
+same-colour pair can.</p>
 <p>Hold onto the distinction between “one cycle” (Hamiltonian) and “a
 path between every legal pair” (the strong versions). The jump between
 them is the whole game (Part 15 explains why we <em>want</em> the harder
