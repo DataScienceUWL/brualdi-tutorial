@@ -21,24 +21,17 @@ vertical-align: middle;
 }
 .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 </style>
-  <style type="text/css">:root{ --accent:#569BBD; --accent-dk:#3d7a97; --bg:#ffffff; --fg:#1d1d1f; --muted:#5b6470;
---code-bg:#f5f7f9; --border:#e2e6ea; --quote-bg:#eef5f9; }
-@media (prefers-color-scheme: dark){
-:root{ --bg:#15181b; --fg:#e7e9ec; --muted:#9aa3ad; --code-bg:#1e2329; --border:#2c333a; --quote-bg:#1a2530; }
-}
-*{ box-sizing:border-box; }
-html{ -webkit-text-size-adjust:100%; }
-body{ margin:0 auto; max-width:740px; padding:1.1rem 1.1rem 4rem; background:var(--bg); color:var(--fg);
-line-height:1.65; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; font-size:18px; }
+  <style type="text/css">:root{ --accent:#569BBD; --accent-dk:#3d7a97; --bg:#fff; --fg:#1d1d1f; --muted:#5b6470; --code-bg:#f5f7f9; --border:#e2e6ea; --quote-bg:#eef5f9; }
+@media (prefers-color-scheme: dark){ :root{ --bg:#15181b; --fg:#e7e9ec; --muted:#9aa3ad; --code-bg:#1e2329; --border:#2c333a; --quote-bg:#1a2530; } }
+*{ box-sizing:border-box; } html{ -webkit-text-size-adjust:100%; }
+body{ margin:0 auto; max-width:740px; padding:1.1rem 1.1rem 4rem; background:var(--bg); color:var(--fg); line-height:1.65; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; font-size:18px; }
 h1{ font-size:1.7rem; line-height:1.25; margin:.6rem 0 .2rem; color:var(--accent-dk); }
 h2{ font-size:1.32rem; margin:2.2rem 0 .6rem; padding-top:1.2rem; border-top:3px solid var(--accent); line-height:1.3; }
 h3{ font-size:1.1rem; margin:1.4rem 0 .4rem; color:var(--accent-dk); }
-a{ color:var(--accent-dk); }
-p,li{ overflow-wrap:break-word; }
+a{ color:var(--accent-dk); } p,li{ overflow-wrap:break-word; }
 img{ max-width:100%; height:auto; display:block; margin:1rem auto; border-radius:6px; }
 code{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--code-bg); padding:.1em .35em; border-radius:4px; font-size:.92em; }
-pre{ background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-size:.9rem; line-height:1.45; }
-pre code{ background:none; padding:0; }
+pre{ background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-size:.9rem; line-height:1.45; } pre code{ background:none; padding:0; }
 blockquote{ margin:1rem 0; padding:.7rem 1rem; background:var(--quote-bg); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; }
 hr{ border:none; border-top:1px solid var(--border); margin:2rem 0; }
 #TOC{ background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:.6rem 1rem; margin:1rem 0 2rem; }
@@ -117,19 +110,6 @@ how, and what remains to be verified. It assumes comfort with
 undergraduate linear algebra and a little probability, but no
 combinatorics: every term is defined on first use and small cases are
 worked by hand. Short, self-contained parts.</em></p>
-<p><strong>Contents</strong> 1. Graphs, in 3 minutes (refresher) 2.
-Walks, paths, cycles, and “Hamiltonian” 3. Bipartite graphs and the
-colour rule 4. The three Hamilton properties we care about 5. Flip
-graphs: the general idea 6. 0/1 matrices with fixed margins 7. The 2×2
-interchange move 8. The interchange graph (our flip graph) — worked by
-hand 9. The same object in three other languages 10. Brualdi’s
-conjecture and its history 11. Cartesian products of graphs 12. Complete
-transposition graphs 13. The structure theory: lines, fibres, quotients
-14. The bipartite = triangle-free surprise 15. The strategy: strengthen,
-then reduce to one lemma 16. The engine: Coleman 2024 + the double
-induction 17. The pivot construction (our deepest part) 18. The bonus
-corollary: two communities 19. How we know it’s (probably) right — and
-the honest gaps 20. Glossary</p>
 <hr />
 <h2 id="part-1-graphs-in-3-minutes">Part 1 — Graphs, in 3 minutes</h2>
 <p>A <strong>graph</strong> is just a set of <strong>vertices</strong>
