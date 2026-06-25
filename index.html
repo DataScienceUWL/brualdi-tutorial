@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Brualdi&#39;s Conjecture — a from-scratch tutorial</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">:root{ --accent:#569BBD; --accent-dk:#3d7a97; --bg:#ffffff; --fg:#1d1d1f; --muted:#5b6470;
+--code-bg:#f5f7f9; --border:#e2e6ea; --quote-bg:#eef5f9; }
+@media (prefers-color-scheme: dark){
+:root{ --bg:#15181b; --fg:#e7e9ec; --muted:#9aa3ad; --code-bg:#1e2329; --border:#2c333a; --quote-bg:#1a2530; }
+}
+*{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{ margin:0; background:var(--bg); color:var(--fg); line-height:1.65;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Atkinson Hyperlegible",sans-serif;
+font-size:18px; }
+.wrap{ max-width:740px; margin:0 auto; padding:1.1rem 1.1rem 4rem; }
+h1{ font-size:1.7rem; line-height:1.25; margin:.6rem 0 .2rem; }
+h1.title{ color:var(--accent-dk); }
+.subtitle{ color:var(--muted); font-style:italic; margin:.2rem 0 1.4rem; }
+h2{ font-size:1.32rem; margin:2.2rem 0 .6rem; padding-top:1.2rem; border-top:3px solid var(--accent);
+line-height:1.3; }
+h3{ font-size:1.1rem; margin:1.4rem 0 .4rem; color:var(--accent-dk); }
+a{ color:var(--accent-dk); }
+p,li{ overflow-wrap:break-word; }
+code{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--code-bg);
+padding:.1em .35em; border-radius:4px; font-size:.92em; }
+pre{ background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem;
+overflow-x:auto; font-size:.9rem; line-height:1.45; }
+pre code{ background:none; padding:0; }
+blockquote{ margin:1rem 0; padding:.7rem 1rem; background:var(--quote-bg);
+border-left:4px solid var(--accent); border-radius:0 8px 8px 0; }
+blockquote p{ margin:.3rem 0; }
+hr{ border:none; border-top:1px solid var(--border); margin:2rem 0; }
+strong{ font-weight:700; }
+#TOC{ background:var(--code-bg); border:1px solid var(--border); border-radius:10px;
+padding:.6rem 1rem; margin:1rem 0 2rem; }
+#TOC::before{ content:"Contents"; display:block; font-weight:700; color:var(--accent-dk);
+margin:.2rem 0 .4rem; font-size:.95rem; letter-spacing:.02em; }
+#TOC ul{ margin:.2rem 0; padding-left:1.1rem; }
+#TOC li{ margin:.15rem 0; }
+#TOC a{ text-decoration:none; }
+.topbtn{ position:fixed; right:14px; bottom:14px; background:var(--accent); color:#fff;
+text-decoration:none; border-radius:50%; width:44px; height:44px; display:flex; align-items:center;
+justify-content:center; font-size:1.3rem; box-shadow:0 2px 8px rgba(0,0,0,.25); opacity:.9; }
+@media (max-width:480px){ body{ font-size:17px; } .wrap{ padding:.9rem; } h1{ font-size:1.45rem; } }
+</style>
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#569BBD">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brualdi">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Brualdi&#39;s Conjecture — a from-scratch tutorial</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#brualdis-conjecture-a-from-scratch-tutorial" id="toc-brualdis-conjecture-a-from-scratch-tutorial">Brualdi’s
+conjecture — a from-scratch tutorial</a>
+<ul>
+<li><a href="#part-1-graphs-in-3-minutes" id="toc-part-1-graphs-in-3-minutes">Part 1 — Graphs, in 3
+minutes</a></li>
+<li><a href="#part-2-walks-paths-cycles-and-hamiltonian" id="toc-part-2-walks-paths-cycles-and-hamiltonian">Part 2 — Walks,
+paths, cycles, and “Hamiltonian”</a></li>
+<li><a href="#part-3-bipartite-graphs-and-the-colour-rule" id="toc-part-3-bipartite-graphs-and-the-colour-rule">Part 3 — Bipartite
+graphs and the colour rule</a></li>
+<li><a href="#part-4-the-three-hamilton-properties-we-care-about" id="toc-part-4-the-three-hamilton-properties-we-care-about">Part 4 — The
+three Hamilton properties we care about</a></li>
+<li><a href="#part-5-flip-graphs-the-general-idea" id="toc-part-5-flip-graphs-the-general-idea">Part 5 — Flip graphs: the
+general idea</a></li>
+<li><a href="#part-6-matrices-with-fixed-margins-what-margins-means" id="toc-part-6-matrices-with-fixed-margins-what-margins-means">Part 6 —
+Matrices with fixed margins (what “margins” means)</a></li>
+<li><a href="#part-7-the-22-interchange-move" id="toc-part-7-the-22-interchange-move">Part 7 — The 2×2 interchange
+move</a></li>
+<li><a href="#part-8-the-interchange-graph-our-flip-graph-by-hand" id="toc-part-8-the-interchange-graph-our-flip-graph-by-hand">Part 8 —
+The interchange graph (our flip graph), by hand</a></li>
+<li><a href="#part-9-the-same-object-in-three-other-languages-optional" id="toc-part-9-the-same-object-in-three-other-languages-optional">Part 9
+— The same object in three other languages (optional)</a></li>
+<li><a href="#part-10-brualdis-conjecture-and-its-history" id="toc-part-10-brualdis-conjecture-and-its-history">Part 10 — Brualdi’s
+conjecture and its history</a></li>
+<li><a href="#part-11-cartesian-products-of-graphs" id="toc-part-11-cartesian-products-of-graphs">Part 11 — Cartesian
+products of graphs</a></li>
+<li><a href="#part-12-complete-transposition-graphs" id="toc-part-12-complete-transposition-graphs">Part 12 — Complete
+transposition graphs</a></li>
+<li><a href="#part-13-the-structure-theory-lines-fibres-quotients" id="toc-part-13-the-structure-theory-lines-fibres-quotients">Part 13 —
+The structure theory: lines, fibres, quotients</a></li>
+<li><a href="#part-14-the-bipartite-triangle-free-surprise" id="toc-part-14-the-bipartite-triangle-free-surprise">Part 14 — The
+bipartite = triangle-free surprise</a></li>
+<li><a href="#part-15-the-strategy-strengthen-then-reduce-to-one-lemma" id="toc-part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
+15 — The strategy: strengthen, then reduce to one lemma</a></li>
+<li><a href="#part-16-the-engine-coleman-2024-the-double-induction" id="toc-part-16-the-engine-coleman-2024-the-double-induction">Part 16 —
+The engine: Coleman 2024 + the double induction</a></li>
+<li><a href="#part-17-the-pivot-construction-our-deepest-part" id="toc-part-17-the-pivot-construction-our-deepest-part">Part 17 — The
+pivot construction (our deepest part)</a></li>
+<li><a href="#part-18-the-bonus-corollary-two-communities" id="toc-part-18-the-bonus-corollary-two-communities">Part 18 — The bonus
+corollary: two communities</a></li>
+<li><a href="#part-19-how-we-know-its-probably-right-and-the-honest-gaps" id="toc-part-19-how-we-know-its-probably-right-and-the-honest-gaps">Part
+19 — How we know it’s (probably) right — and the honest gaps</a></li>
+<li><a href="#part-20-glossary-one-liners" id="toc-part-20-glossary-one-liners">Part 20 — Glossary
+(one-liners)</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="brualdis-conjecture-a-from-scratch-tutorial">Brualdi’s
+conjecture — a from-scratch tutorial</h1>
+<p><em>A from-scratch tutorial on Brualdi’s interchange-graph
+conjecture: starting from “what is a flip graph?” and building, with
+worked examples, up to a recent candidate resolution — what is proved,
+how, and what remains to be verified. It assumes comfort with
+undergraduate linear algebra and a little probability, but no
+combinatorics: every term is defined on first use and small cases are
+worked by hand. Short, self-contained parts.</em></p>
+<p><strong>Contents</strong> 1. Graphs, in 3 minutes (refresher) 2.
+Walks, paths, cycles, and “Hamiltonian” 3. Bipartite graphs and the
+colour rule 4. The three Hamilton properties we care about 5. Flip
+graphs: the general idea 6. 0/1 matrices with fixed margins 7. The 2×2
+interchange move 8. The interchange graph (our flip graph) — worked by
+hand 9. The same object in three other languages 10. Brualdi’s
+conjecture and its history 11. Cartesian products of graphs 12. Complete
+transposition graphs 13. The structure theory: lines, fibres, quotients
+14. The bipartite = triangle-free surprise 15. The strategy: strengthen,
+then reduce to one lemma 16. The engine: Coleman 2024 + the double
+induction 17. The pivot construction (our deepest part) 18. The bonus
+corollary: two communities 19. How we know it’s (probably) right — and
+the honest gaps 20. Glossary</p>
+<hr />
+<h2 id="part-1-graphs-in-3-minutes">Part 1 — Graphs, in 3 minutes</h2>
+<p>A <strong>graph</strong> is just a set of <strong>vertices</strong>
+(dots) and a set of <strong>edges</strong> (lines joining pairs of
+dots). That’s it. No directions, no repeated edges for us — a “simple
+graph.”</p>
+<p>Two vertices joined by an edge are <strong>adjacent</strong> (or
+<strong>neighbours</strong>). The <strong>degree</strong> of a vertex is
+how many neighbours it has.</p>
+<p>Tiny example — 4 vertices in a square:</p>
+<pre><code>A --- B
+|     |
+C --- D</code></pre>
+<p>Vertices {A,B,C,D}; edges {AB, AC, BD, CD}. Every vertex has degree
+2. This square graph has a name we’ll reuse: the
+<strong>4-cycle</strong>, written <code>C_4</code>.</p>
+<p>That’s all the graph theory vocabulary we need to start. Everything
+in this project is an ordinary graph like this — the only twist is that
+our “dots” will turn out to be <strong>matrices</strong>.</p>
+<hr />
+<h2 id="part-2-walks-paths-cycles-and-hamiltonian">Part 2 — Walks,
+paths, cycles, and “Hamiltonian”</h2>
+<ul>
+<li>A <strong>walk</strong> is a sequence of vertices, each adjacent to
+the next (you “walk” along edges).</li>
+<li>A <strong>path</strong> is a walk that never repeats a vertex.</li>
+<li>A <strong>cycle</strong> is a path that returns to its start (a
+closed loop), like A→B→D→C→A above.</li>
+</ul>
+<p>Now the star concept:</p>
+<ul>
+<li>A graph is <strong>Hamiltonian</strong> if it has a cycle that
+visits <strong>every</strong> vertex exactly once (a <em>Hamilton
+cycle</em>). Named after Hamilton, who studied this on the
+dodecahedron.</li>
+<li>A <strong>Hamilton path</strong> is the path version: visits every
+vertex exactly once, but doesn’t have to return to start.</li>
+</ul>
+<p>In <code>C_4</code> above, A→B→D→C→A is a Hamilton cycle, so
+<code>C_4</code> is Hamiltonian.</p>
+<p>Why anyone cares: a Hamilton cycle is a way to list all the objects
+(vertices) so that consecutive ones differ by a single allowed “move.”
+That’s exactly a <strong>combinatorial Gray code</strong> — and that’s
+the broad family this whole problem lives in.</p>
+<p>Deciding whether a <em>general</em> graph is Hamiltonian is famously
+hard (NP-complete). So proving an <em>entire infinite family</em> of
+graphs is always Hamiltonian is a real theorem, not a computation.</p>
+<hr />
+<h2 id="part-3-bipartite-graphs-and-the-colour-rule">Part 3 — Bipartite
+graphs and the colour rule</h2>
+<p>A graph is <strong>bipartite</strong> if you can colour every vertex
+black or white so that <strong>every edge joins a black to a
+white</strong> (no edge inside a colour class). The square
+<code>C_4</code> is bipartite: colour A,D black and B,C white — every
+edge is black–white.</p>
+<p>Classic fact: <strong>bipartite ⇔ no odd-length cycle.</strong> (If
+you 2-colour along any cycle, the colours alternate, so the cycle must
+have even length.) Remember this — it comes back in Part 14, because for
+<em>our</em> special graphs something stronger is true.</p>
+<p>One consequence we’ll lean on hard: in a bipartite graph, <strong>any
+path alternates colours</strong>. So a path with an even number of
+vertices starts and ends on <em>opposite</em> colours; odd number,
+<em>same</em> colour. This simple parity fact secretly drives the whole
+proof.</p>
+<hr />
+<h2 id="part-4-the-three-hamilton-properties-we-care-about">Part 4 — The
+three Hamilton properties we care about</h2>
+<p>There’s a ladder of “how freely can you thread a single path through
+all vertices,” weakest first:</p>
+<ol type="1">
+<li><strong>Hamiltonian</strong> — there exists <em>one</em> Hamilton
+cycle. (This is what Brualdi asked.)</li>
+<li><strong>Hamilton-connected</strong> — for <em>every</em> pair of
+vertices u, v there’s a Hamilton <em>path</em> from u to v. Far
+stronger: you may start and end anywhere.</li>
+<li><strong>Hamilton-laceable</strong> — the bipartite version of #2. In
+a bipartite graph you <em>cannot</em> have a Hamilton path between two
+<strong>same-colour</strong> vertices when the colour classes are
+equal-sized (parity from Part 3 forbids it). So the best possible is: a
+Hamilton path between <em>every</em> <strong>opposite-colour</strong>
+pair. A bipartite graph with that property is
+<strong>laceable</strong>.</li>
+</ol>
+<p>We bundle the top of the ladder into one word:</p>
+<blockquote>
+<p><strong>Maximally Hamiltonian</strong> = Hamilton-laceable if the
+graph is bipartite, Hamilton-connected if it isn’t. I.e. the strongest
+path property the graph is <em>allowed</em> to have.</p>
+</blockquote>
+<p>Hold onto the distinction between “one cycle” (Hamiltonian) and “a
+path between every legal pair” (the strong versions). The jump between
+them is the whole game (Part 15 explains why we <em>want</em> the harder
+one).</p>
+<hr />
+<h2 id="part-5-flip-graphs-the-general-idea">Part 5 — Flip graphs: the
+general idea</h2>
+<p>Here’s the unifying idea behind the whole subject.</p>
+<p>Take some family of combinatorial objects (think: all ways to
+triangulate a polygon, all permutations, all standard Young tableaux,
+all binary strings…). Define a simple, local <strong>“flip”</strong>
+move that turns one object into another. Now build a graph:</p>
+<ul>
+<li><strong>vertices</strong> = the objects,</li>
+<li><strong>edges</strong> = pairs that differ by a single flip.</li>
+</ul>
+<p>That graph is a <strong>flip graph</strong> (also called a
+“reconfiguration graph” or, when the flips are Markov-chain moves, a
+“state graph”). The associahedron (triangulation flips) and the
+permutohedron (adjacent-transposition flips) are famous examples.</p>
+<p>Natural questions about a flip graph: Is it connected (can you always
+reach any object from any other by flips)? What’s its diameter?
+<strong>Is it Hamiltonian</strong> — can you list every object so
+consecutive ones differ by one flip (a Gray code)?</p>
+<p>Our problem is exactly a flip-graph Hamiltonicity question, for one
+specific, important family of objects and one specific flip. Let’s meet
+them.</p>
+<hr />
+<h2 id="part-6-matrices-with-fixed-margins-what-margins-means">Part 6 —
+Matrices with fixed margins (what “margins” means)</h2>
+<p>Our objects are <strong>matrices of 0s and 1s with prescribed row
+sums and column sums.</strong> First the word <strong>margins</strong>,
+because it’s central and it’s just jargon for something simple.</p>
+<p>Take a matrix, add up each <strong>row</strong> and write those
+totals down the <strong>right edge</strong>; add up each
+<strong>column</strong> and write those totals along the <strong>bottom
+edge</strong>. Those edge totals are the <strong>margins</strong>
+(statisticians call them <em>marginal totals</em> — they literally sit
+in the margins of the table):</p>
+<pre><code>         c1 c2 c3  |  row sums  = R
+   r1     1  0  1  |     2
+   r2     0  1  1  |     2
+   r3     1  1  0  |     2
+         ---------
+  col      2  2  2
+  sums =  S</code></pre>
+<p>The “2 2 2” down the right is the <strong>row-sum vector</strong>
+<code>R = (2,2,2)</code>; the “2 2 2” along the bottom is the
+<strong>column-sum vector</strong> <code>S = (2,2,2)</code>. Together, R
+and S are <em>the margins</em> of the matrix.</p>
+<p>Now fix the margins and gather every 0/1 matrix that has them:</p>
+<ul>
+<li>Fix a <strong>row-sum vector</strong>
+<code>R = (r_1, ..., r_m)</code> and a <strong>column-sum
+vector</strong> <code>S = (s_1, ..., s_n)</code>.</li>
+<li><code>A(R,S)</code> = all <code>m×n</code> matrices of 0s and 1s
+whose row sums are exactly <code>R</code> and column sums exactly
+<code>S</code>. (The matrix above is <em>one</em> member of
+<code>A((2,2,2),(2,2,2))</code>; there are others with the same margins
+— e.g. shift the 1s around while keeping every row and column summing to
+2.)</li>
+</ul>
+<p>Where the idea comes from: a grid of counts with fixed row and column
+totals is a <strong>contingency table</strong> (statistics — e.g. a
+survey cross-tabulated by two attributes, with the attribute totals held
+fixed). The very same objects are <strong>transportation plans</strong>
+(ship from <code>m</code> sources with supplies <code>R</code> to
+<code>n</code> destinations with demands <code>S</code>) and
+<strong>bipartite degree sequences</strong> (Part 9). Brualdi’s
+question, in plain words: <em>can you walk through all tables with given
+margins, one small move at a time?</em></p>
+<p>Worked example we’ll reuse. Let <code>m = n = 3</code>, and
+<code>R = S = (1,1,1)</code> — every row and every column sums to 1. A
+0/1 matrix with exactly one 1 per row and per column is a
+<strong>permutation matrix</strong>. There are <code>3! = 6</code> of
+them. Here are two:</p>
+<pre><code>1 0 0          0 1 0
+0 1 0          1 0 0
+0 0 1          0 0 1</code></pre>
+<p>The left is the identity. The right swaps rows’ 1s in columns 1 and
+2. So <code>A((1,1,1),(1,1,1))</code> has 6 elements — the 6 permutation
+matrices of size 3.</p>
+<p>For bigger or uneven margins the class <code>A(R,S)</code> is larger
+and far less symmetric — but it’s always the same idea: <strong>fixed
+margins, 0/1 entries.</strong></p>
+<hr />
+<h2 id="part-7-the-22-interchange-move">Part 7 — The 2×2 interchange
+move</h2>
+<p>Now the flip. A <strong>2×2 interchange</strong> (a.k.a.
+<strong>swap</strong> or <strong>2-switch</strong>) picks two rows and
+two columns where the 2×2 corner submatrix is one of these two patterns
+and flips it to the other:</p>
+<pre><code>1 0      &lt;---&gt;      0 1
+0 1                 1 0</code></pre>
+<p>Everything outside those four cells stays fixed. Notice: each row of
+the little block keeps its sum (1 stays 1), and each column keeps its
+sum too. <strong>So an interchange preserves all the margins</strong> —
+it turns one matrix in <code>A(R,S)</code> into another matrix in the
+<em>same</em> <code>A(R,S)</code>.</p>
+<p>Concrete example on a 3×3 matrix. Take the identity and interchange
+using rows {1,2}, columns {1,2}:</p>
+<pre><code>1 0 0          0 1 0
+0 1 0    --&gt;   1 0 0
+0 0 1          0 0 1</code></pre>
+<p>The top-left 2×2 block went from <code>[[1,0],[0,1]]</code> to
+<code>[[0,1],[1,0]]</code>; row 3 / column 3 untouched. Both matrices
+have margins (1,1,1)/(1,1,1). One flip, one new matrix.</p>
+<p>Foundational fact (<strong>Ryser, 1957</strong>): <em>any</em> two
+matrices in <code>A(R,S)</code> can be turned into each other by a
+sequence of these interchanges. In flip-graph language: the flip graph
+is <strong>connected</strong>. Good — connectivity is the floor; Brualdi
+conjectured the ceiling (Hamiltonicity).</p>
+<hr />
+<h2 id="part-8-the-interchange-graph-our-flip-graph-by-hand">Part 8 —
+The interchange graph (our flip graph), by hand</h2>
+<p>Now assemble the flip graph for our objects + move:</p>
+<blockquote>
+<p><strong>Interchange graph <code>G(R,S)</code></strong>: vertices =
+the matrices in <code>A(R,S)</code>; an edge joins two matrices that
+differ by a single 2×2 interchange.</p>
+</blockquote>
+<p>It’s an ordinary simple graph (Part 1). The fact that the dots are
+matrices is just labelling.</p>
+<p><strong>Let’s build a tiny one fully.</strong> Take
+<code>m=n=2</code>, <code>R=S=(1,1)</code>. Then <code>A</code> has just
+two matrices:</p>
+<pre><code>1 0          0 1
+0 1          1 0</code></pre>
+<p>They differ by one interchange (the whole matrix is the 2×2 block).
+So <code>G</code> is two vertices joined by one edge — the single-edge
+graph <code>K_2</code>.</p>
+<p><strong>Now the first interesting one: <code>R=S=(1,1,1)</code> (3×3
+permutation matrices).</strong> Six vertices (Part 6). Two permutation
+matrices are adjacent exactly when one is obtained from the other by
+<strong>swapping two columns’ worth of 1s</strong> — i.e. when the two
+permutations differ by one transposition (one swap).</p>
+<ul>
+<li>The identity <code>123</code> is adjacent to <code>213</code>,
+<code>132</code>, <code>321</code> (swap any one pair). Degree 3.</li>
+<li>Every permutation has exactly 3 single-swaps, so the graph is
+<strong>3-regular</strong> on 6 vertices.</li>
+<li>Colour each permutation by its <strong>parity</strong> (even/odd
+number of swaps to sort it). A single swap flips parity, so every edge
+joins an even to an odd permutation — the graph is
+<strong>bipartite</strong>, 3 of each colour.</li>
+<li>A 3-regular bipartite graph on 3+3 vertices, with every even
+adjacent to every odd… that’s exactly
+<strong><code>K_{3,3}</code></strong>, the complete bipartite
+graph.</li>
+</ul>
+<p>So <code>G((1,1,1),(1,1,1)) = K_{3,3}</code>. <strong>Keep this
+example in your pocket</strong> — it’s the smallest rich case, and
+<code>K_{3,3}</code> will literally reappear as a building block (it’s
+“CT_3” in Part 12).</p>
+<p>Sanity check you can do on the phone: <code>K_{3,3}</code> has a
+Hamilton cycle (e1→o1→e2→o2→e3→o3→e1, zig-zag across the colours). So
+this interchange graph is Hamiltonian — Brualdi’s conjecture holds for
+these margins. The conjecture says: <em>no matter the margins, you can
+always do this.</em></p>
+<hr />
+<h2 id="part-9-the-same-object-in-three-other-languages-optional">Part 9
+— The same object in three other languages (optional)</h2>
+<p><em>You can skip this part and lose nothing essential — it’s just
+three other ways people describe the exact same graph. But one of them
+may make it click, and the third is the one graph theorists usually find
+most natural.</em></p>
+<p><strong>(1) A Markov-chain state graph.</strong> To sample random
+contingency tables with fixed margins, statisticians start from one
+table and repeatedly apply random 2×2 interchanges — a random walk on
+the tables. <code>G(R,S)</code> is the “state graph” of that walk:
+states = tables, moves = interchanges.</p>
+<p><strong>(2) The 1-skeleton of a transportation polytope.</strong>
+Quick refresher: a <strong>polytope</strong> is the higher-dimensional
+analogue of a polygon (2D) or polyhedron (3D) — the solution set of some
+linear inequalities, with flat <strong>faces</strong>, straight
+<strong>edges</strong>, and corner <strong>vertices</strong>. Now relax
+our matrices: instead of 0/1 entries, allow any <strong>nonnegative
+real</strong> entries that still produce the <strong>same
+margins</strong> R and S. That set of real matrices forms a convex
+polytope — the <strong>transportation polytope</strong> (from the
+“transportation problem”: ship goods from sources with supplies R to
+destinations with demands S; the matrix says how much travels on each
+route). Two facts tie it back to us:</p>
+<ul>
+<li>its <strong>corner vertices are exactly the 0/1 matrices</strong>
+(the integer extreme points), and</li>
+<li>two corners are joined by an <strong>edge of the polytope</strong>
+precisely when they differ by <strong>one 2×2 interchange</strong>.</li>
+</ul>
+<p>The <strong>1-skeleton</strong> of a polytope means: keep only its
+vertices and edges, throw away the 2-dimensional and higher faces —
+i.e. the plain graph of corners and edges. (Example: the 1-skeleton of
+an ordinary 3D cube is the 8-vertex “cube graph.”) So
+<strong><code>G(R,S)</code> is the 1-skeleton of the transportation
+polytope with margins R, S.</strong> That’s the <em>only</em> sense in
+which anything “higher-dimensional” is involved: the polytope has higher
+faces, but the interchange graph itself is just corners and edges — an
+ordinary graph.</p>
+<p><strong>(3) Bipartite graphs under 2-switches (the friendly one for
+graph theorists).</strong> A <strong>bipartite graph</strong> splits its
+vertices into two sides, with edges only <em>between</em> the sides.
+Record one by a <strong>biadjacency matrix</strong>: rows = left-side
+vertices, columns = right-side vertices, and a <code>1</code> in cell
+(i,j) means “there is an edge from left-i to right-j” (0 = no edge).
+Then:</p>
+<ul>
+<li>the row sums and column sums are exactly the
+<strong>degrees</strong> (edge-counts) of the vertices on each side, so
+fixed margins = a fixed <strong>degree sequence</strong> on each
+side;</li>
+<li>a 2×2 interchange is exactly a <strong>2-switch</strong>: remove
+edges i–b and j–a, add edges i–a and j–b — the classic move that rewires
+a graph while keeping every vertex’s degree the same.</li>
+</ul>
+<p>So <code>G(R,S)</code> is the <strong>flip graph of all bipartite
+graphs with a prescribed degree sequence, under 2-switches</strong> —
+what graph theorists call a <strong>realization graph</strong> of the
+degree sequence. Graph theorists work on graph Hamiltonicity, so this is
+the dictionary that let that intuition transfer straight in.</p>
+<p>Picture for #3 — a 2-switch on a little bipartite graph (left side
+1,2; right side a,b):</p>
+<pre><code> 1 — a            1   a
+        becomes      X
+ 2 — b            2   b      (edges 1a,2b  -&gt;  1b,2a)</code></pre>
+<p>Same degrees on every vertex, different graph. That’s one edge of
+<code>G(R,S)</code>.</p>
+<hr />
+<h2 id="part-10-brualdis-conjecture-and-its-history">Part 10 — Brualdi’s
+conjecture and its history</h2>
+<blockquote>
+<p><strong>Brualdi’s conjecture (1980).</strong> For all margins R, S,
+the interchange graph <code>G(R,S)</code> is Hamiltonian.</p>
+</blockquote>
+<p>In words: the matrices with any fixed margins can always be listed so
+that consecutive ones differ by a single 2×2 interchange — a Gray code
+for contingency tables.</p>
+<p>What was known before us:</p>
+<ul>
+<li><strong>Li &amp; Zhang (1994):</strong> true when one margin is
+all-1s. Their tools (induction + Cartesian products
+<ul>
+<li>Hamiltonicity of a <em>matroid basis graph</em>) are, strikingly,
+the same <em>family</em> of tools we use — they just handled that
+special case.</li>
+</ul></li>
+<li><strong>Arikati &amp; Peled (1999):</strong> true for “majorization
+gap 1” degree sequences — another special case, via the
+realization-graph view of Part 9.</li>
+<li><strong>Otherwise open for 45 years.</strong> It’s <strong>Problem
+P60</strong> in Mütze’s survey <em>Combinatorial Gray Codes</em> (2024),
+the standard catalogue of open problems in this area.</li>
+</ul>
+<p>So the target is a recognized, named, long-standing open problem with
+only fragments solved. That’s why (if our proof holds) the journal
+ambitions are high.</p>
+<hr />
+<h2 id="part-11-cartesian-products-of-graphs">Part 11 — Cartesian
+products of graphs</h2>
+<p>We need one standard graph construction, because our hard cases are
+<em>built</em> from smaller graphs.</p>
+<p>The <strong>Cartesian product</strong> <code>G □ H</code> of two
+graphs:</p>
+<ul>
+<li>vertices = ordered pairs <code>(g, h)</code> with g in G and h in
+H;</li>
+<li><code>(g,h)</code> is adjacent to <code>(g&#39;,h&#39;)</code> exactly when
+<strong>one coordinate matches and the other is an edge</strong> —
+i.e. (g=g’ and h~h’) or (h=h’ and g~g’).</li>
+</ul>
+<p>Think of a grid: move one coordinate at a time. Examples:</p>
+<ul>
+<li><code>K_2 □ K_2</code> = the square <code>C_4</code> (a 2×2
+grid).</li>
+<li><code>K_2 □ K_2 □ K_2</code> = the cube <code>Q_3</code>. In general
+<code>K_2</code> to the box-power <code>k</code> = the
+<strong>k-dimensional hypercube</strong> <code>Q_k</code> (binary
+strings, flip one bit — itself a famous flip graph / Gray code!).</li>
+<li><code>(path) □ (path)</code> = a rectangular grid graph.</li>
+</ul>
+<p>Key intuition for later: a Cartesian product is “layers of
+<code>G</code>, indexed by <code>H</code>, stitched together.” To thread
+a single path through the whole product you traverse layers and hop
+between them — and that hopping is where the strong path properties
+(Part 4) matter, because a plain Hamilton <em>cycle</em> doesn’t survive
+this stitching but Hamilton-connectedness/laceability do.</p>
+<hr />
+<h2 id="part-12-complete-transposition-graphs">Part 12 — Complete
+transposition graphs</h2>
+<p>A special family of interchange graphs gets its own name.</p>
+<blockquote>
+<p><strong>Complete transposition graph <code>CT_a</code></strong>: take
+the <code>a!</code> permutations of <code>a</code> symbols; join two if
+they differ by <strong>one transposition</strong> (one swap of two
+symbols). Equivalently, it’s the Cayley graph of the symmetric group
+<code>S_a</code> with <em>all</em> transpositions as generators.
+Equivalently again, it’s <code>G(R,S)</code> for the all-1s
+<code>a×a</code> margins.</p>
+</blockquote>
+<p>We’ve already met them:</p>
+<ul>
+<li><code>CT_2</code> = <code>K_2</code> (one edge).</li>
+<li><code>CT_3</code> = <code>K_{3,3}</code> (Part 8).</li>
+<li><code>CT_4</code> has <code>4! = 24</code> vertices, and so on.</li>
+</ul>
+<p>Each <code>CT_a</code> is bipartite (parity again),
+vertex-transitive, and very symmetric. These are the “atoms.” The
+structure theorem (next part) says the bipartite interchange graphs are
+exactly <strong>Cartesian products of these atoms</strong>,
+e.g. <code>CT_3 □ CT_4</code>. Those products are the single hard family
+the whole proof funnels into.</p>
+<hr />
+<h2 id="part-13-the-structure-theory-lines-fibres-quotients">Part 13 —
+The structure theory: lines, fibres, quotients</h2>
+<p>To run an induction on these graphs, we need to know how they’re
+<em>shaped</em>. Three ideas; learn the words, not the fine print.</p>
+<ul>
+<li><strong>Line</strong> = a row or a column of the matrix.</li>
+<li><strong>Invariant cell</strong> = a cell that has the <em>same</em>
+value in <strong>every</strong> matrix of <code>A(R,S)</code>. Such a
+cell never takes part in any interchange (it can’t — it’s frozen).
+Delete all invariant cells and you get the <strong>invariant-free
+core</strong>; its interchange graph is <em>the same graph</em>, just
+described more cleanly. We always reduce to the invariant-free case.
+(“Active” cell = not invariant.)</li>
+<li><strong>Fibre and quotient.</strong> Freeze one line <code>L</code>
+(say, fix the first row to a specific 0/1 pattern).
+<ul>
+<li>The matrices that share a given everything-except-<code>L</code>
+form a <strong>fibre</strong> — and a fibre is itself a smaller
+interchange graph.</li>
+<li>The collection of all <em>legal patterns</em> the line
+<code>L</code> can take, joined by single interchanges inside
+<code>L</code>, is the <strong>quotient</strong> <code>Q_L</code>.</li>
+<li>So <code>G(R,S)</code> looks like: copies of fibres (smaller
+versions of the same kind of object), laid out over the quotient
+<code>Q_L</code>, glued along edges. This “split along a line into
+fibres + a quotient” is the engine of the induction.</li>
+</ul></li>
+</ul>
+<p>One deep bonus fact you only need to <em>recognize</em>: the legal
+patterns of a line are the <strong>bases of a matroid</strong>, so
+<code>Q_L</code> is a <strong>matroid basis-exchange graph</strong>.
+That matters because there’s a powerful theorem (Naddef–Pulleyblank)
+that such graphs are always either hypercubes or Hamilton-connected —
+which the proof cashes in at Part 17.</p>
+<hr />
+<h2 id="part-14-the-bipartite-triangle-free-surprise">Part 14 — The
+bipartite = triangle-free surprise</h2>
+<p>This is a natural first point of confusion, so it’s worth getting
+crisp.</p>
+<p>A <strong>triangle</strong> is a 3-cycle (three mutually adjacent
+vertices). “Triangle-free” = no triangles.</p>
+<p><strong>For graphs in general:</strong> bipartite ⇔ no odd cycle
+(Part 3). Being triangle-free is <strong>weaker</strong> — you can be
+triangle-free but still have a 5-cycle, so still not bipartite. That is
+exactly right. (The 5-cycle <code>C_5</code> is the standard example: no
+triangle, not bipartite.)</p>
+<p><strong>But interchange graphs are special.</strong> Brualdi proved
+(Thm 6.3.4 in his book <em>Combinatorial Matrix Classes</em>): an
+interchange graph that contains <em>any</em> odd cycle already contains
+a <strong>triangle</strong>. So for this class — and only because of its
+rigid structure — triangle-free <strong>does</strong> imply bipartite,
+and the two notions coincide.</p>
+<p>We double-checked by computer: across <strong>all 6,017 interchange
+graphs with margins up to 6×6</strong>, every non-bipartite one has a
+triangle and every bipartite one is triangle-free — <strong>0
+exceptions</strong>.</p>
+<p>And Brualdi’s theorem says more: for an invariant-free class,
+<em>bipartite ⇔ triangle-free ⇔ the class is a Cartesian product of
+complete transposition graphs (and complements)</em>. That last clause
+is the structural gold we use next.</p>
+<hr />
+<h2 id="part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
+15 — The strategy: strengthen, then reduce to one lemma</h2>
+<p>Two moves make the whole proof.</p>
+<p><strong>Move 1 — strengthen the goal</strong> (counter-intuitive but
+essential). We prove not “Hamiltonian” but “<strong>maximally
+Hamiltonian</strong>” (Part 4). Why prove something harder? Because the
+proof builds big graphs from small ones (Cartesian products in Part 11,
+fibres+quotients in Part 13), and:</p>
+<ul>
+<li>a Hamilton <strong>cycle</strong> does <strong>not</strong> survive
+that gluing, but</li>
+<li>Hamilton-<strong>connectedness</strong> and
+<strong>laceability</strong> <strong>do</strong>.</li>
+</ul>
+<p>So the stronger statement is the one that can be passed <em>up</em>
+an induction. (This “strengthen the inductive hypothesis” trick is
+standard.)</p>
+<p><strong>Move 2 — reduce everything to one lemma.</strong> Induct on
+the number of vertices. The (invariant-free) graph is always one of
+three kinds — a <strong>trichotomy</strong>:</p>
+<ol type="1">
+<li>a nontrivial <strong>Cartesian product</strong> A □ B → handle by
+gluing (Parts 11, 16);</li>
+<li><strong>indecomposable</strong> but not a tiny base case → the
+<strong>pivot construction</strong> (Part 17);</li>
+<li>a small <strong>base case</strong> → check directly / cite.</li>
+</ol>
+<p>Cases 1 and 2 use the smaller pieces (induction hypothesis)
+<strong>plus one hard input</strong> about the bipartite atoms:</p>
+<blockquote>
+<p><strong>Block Lemma.</strong> Every balanced bipartite interchange
+graph (= every Cartesian product of <code>CT_a</code>’s) has a strong
+path-covering property called <strong>paired
+2-disjoint-path-coverability</strong>.</p>
+</blockquote>
+<p>Everything funnels into this lemma.</p>
+<p><strong>What that property means</strong> (call it “paired-2-DPC”):
+pick <strong>two</strong> pairs of endpoints, <code>(a1,b1)</code> and
+<code>(a2,b2)</code>. You can always find <strong>two vertex-disjoint
+paths</strong> — one from a1 to b1, one from a2 to b2 — that
+<strong>together cover every vertex</strong>. Requiring this for
+<em>every</em> choice of the two pairs is paired-2-DPC.</p>
+<p>It’s strictly stronger than laceable (laceable = the one-pair
+version), and — crucially — it’s exactly the property that
+<strong>survives Cartesian products</strong>. That’s why it, and not
+bare Hamiltonicity, is the right inductive currency.</p>
+<hr />
+<h2 id="part-16-the-engine-coleman-2024-the-double-induction">Part 16 —
+The engine: Coleman 2024 + the double induction</h2>
+<p>How do we prove the Block Lemma (products of <code>CT_a</code> are
+paired-2-DPC)? The key input is <em>new</em>, which is why this proof
+wasn’t possible until recently:</p>
+<blockquote>
+<p><strong>Coleman, Fischberg, Gong, Harrington, Wong (2024).</strong> A
+broad class of bipartite graphs they call
+<strong>“transposition-like”</strong> have <strong>paired
+(n−1)-disjoint-path covers</strong> (the n−1 version of the property
+above). Each <code>CT_a</code> is one of their examples.</p>
+</blockquote>
+<p>The unlock: in their theorem, the bottom-level building blocks
+(“leaves”) may be <strong>any</strong> even-sized graph that is
+Hamilton-laceable. So we can take an <em>entire product of
+<code>CT_a</code>’s</em> and feed it in <strong>as a single
+leaf</strong>. Then a <strong>double induction</strong> finishes:</p>
+<ul>
+<li><strong>Outer induction</strong> on the number of factors in the
+product. It needs just one fact about the smaller product B: that B is
+Hamilton-laceable (which follows because paired-2-DPC ⇒ laceable).</li>
+<li><strong>Inner induction</strong> is Coleman’s own induction, with B
+fixed as the leaf.</li>
+</ul>
+<p>The two inductions move on different parameters and don’t tangle (no
+circular reasoning). This part is also <strong>machine-checked in the
+Lean proof assistant</strong> (the recursion is verified, no gaps).</p>
+<p><strong>In short:</strong> “Blocks are products of <code>CT_a</code>;
+Coleman 2024 gives the paired cover whenever the leaf is any even
+laceable graph, so a whole <code>CT</code>-product folds in as a leaf,
+and a clean double induction closes it.”</p>
+<hr />
+<h2 id="part-17-the-pivot-construction-our-deepest-part">Part 17 — The
+pivot construction (our deepest part)</h2>
+<p>This handles trichotomy case 2: the graph is
+<strong>indecomposable</strong> (not a product) and not a tiny base
+case. It’s the most original part — and the part most needing
+independent scrutiny, because it’s the one piece the Lean formalization
+does <strong>not</strong> verify (it’s assumed there).</p>
+<p>Goal: a Hamilton path between two chosen vertices <code>a</code> and
+<code>b</code>. The idea, in four beats:</p>
+<ol type="1">
+<li><strong>Pick a pivot line <code>L</code></strong> that “separates”
+<code>a</code> and <code>b</code> — a line where the two matrices
+differ. (A short argument shows such a line exists unless the graph is
+tiny.)</li>
+<li><strong>Look at the quotient <code>Q_L</code></strong> (Part 13) —
+the small graph of legal patterns of that line. A matroid argument
+(using “shifted matroids”) shows <code>Q_L</code> is
+<strong>non-bipartite</strong> here.</li>
+<li><strong><code>Q_L</code> is Hamilton-connected</strong> — because
+it’s a matroid basis-exchange graph, and Naddef– Pulleyblank says those
+are hypercubes or Hamilton-connected (and we’ve just excluded the
+hypercube case via non-bipartiteness).</li>
+<li><strong>Route and lift.</strong> Take a Hamilton path through
+<code>Q_L</code> from a’s pattern to b’s pattern; each step corresponds
+to a whole <strong>fibre</strong> (a smaller interchange graph), which
+by the <strong>induction hypothesis</strong> can itself be traversed by
+a Hamilton path. Stitch the fibres together along the quotient route →
+one Hamilton path through the entire graph.</li>
+</ol>
+<p>The delicate part is the <strong>bookkeeping at the splices</strong>
+— making the colours/parities line up at every junction so the
+fibre-paths actually join into a <em>single</em> path. That’s where an
+error would hide, and it’s the first thing to scrutinise.</p>
+<p><strong>In short:</strong> “Pivot on a separating line; its quotient
+is a Hamilton-connected matroid base graph; route through it and lift
+fibre-by-fibre using the induction hypothesis, matching parities at the
+splices.”</p>
+<hr />
+<h2 id="part-18-the-bonus-corollary-two-communities">Part 18 — The bonus
+corollary: two communities</h2>
+<p>Recall Part 9: a 0/1 matrix <em>is</em> a bipartite graph, fixed
+margins = fixed degrees, an interchange = a 2-switch. So
+<code>G(R,S)</code> is literally the <strong>realization graph (2-switch
+flip graph) of a bipartite degree sequence.</strong></p>
+<p>Therefore our theorem <strong>also</strong> settles Hamiltonicity of
+those realization graphs — a question recorded as open in the
+degree-sequence community (Barrus, 2016), in the bipartite / split-graph
+case (a <strong>split graph</strong> is one whose vertices divide into a
+clique plus an independent set).</p>
+<p>An honest caveat: it’s the <strong>same theorem in two
+languages</strong>, <strong>not</strong> a stronger one. The fully
+general version — realization graphs of <em>arbitrary</em> degree
+sequences, not just bipartite — stays open. But it means the result
+speaks to two research communities at once, which helps its appeal.</p>
+<hr />
+<h2 id="part-19-how-we-know-its-probably-right-and-the-honest-gaps">Part
+19 — How we know it’s (probably) right — and the honest gaps</h2>
+<p>Evidence, strongest first:</p>
+<ul>
+<li><strong>Direct computer check of the theorem itself.</strong> We
+built <strong>144,389</strong> of these graphs (all margins up to 7×7
+reachable in a 2-hour run) and verified maximal Hamiltonicity by
+SAT-solving <strong>every</strong> required Hamilton-path instance —
+<strong>2,555,559</strong> of them — with <strong>zero
+counterexamples</strong>. This tests the <em>conclusion</em> directly,
+so it would catch a mistake <em>anywhere</em> in the argument. It found
+none.</li>
+<li><strong>AI adversarial review.</strong> Many rounds of independent
+“try to break it” passes (Claude + Codex + Gemini), which <em>did</em>
+catch and fix real errors along the way. A strong filter, not a
+proof.</li>
+<li><strong>Partial Lean formalization.</strong> The logical assembly
+and the Block-Lemma double induction (Part 16) are machine-checked, with
+no gaps.</li>
+</ul>
+<p>The honest gaps:</p>
+<ul>
+<li>The <strong>§§3–6 reduction</strong>, especially the <strong>pivot
+construction</strong> (Part 17) and the <strong>product-lifting parity
+bookkeeping</strong> (Part 16), is <strong>not</strong> machine-proved.
+In Lean it’s entered as an assumption. So it rests on the AI review +
+the computations — <strong>this is exactly the part that still needs
+independent human verification.</strong></li>
+<li>“Checked on 144k graphs” is <strong>corroboration on a finite range,
+not a proof.</strong> Important not to oversell that.</li>
+</ul>
+<p>One-sentence status: <em>strong, multi-layered evidence; a candidate
+proof; awaiting human-expert verification of the reduction.</em></p>
+<hr />
+<h2 id="part-20-glossary-one-liners">Part 20 — Glossary
+(one-liners)</h2>
+<ul>
+<li><strong>Graph / vertex / edge / adjacent / degree:</strong> dots,
+lines, “joined,” number of neighbours.</li>
+<li><strong>Walk / path / cycle:</strong> edge-sequence / no repeats /
+closed loop.</li>
+<li><strong>Hamiltonian:</strong> has a cycle through all vertices.
+<strong>Hamilton path:</strong> path through all vertices.</li>
+<li><strong>Bipartite:</strong> 2-colourable so every edge is
+black–white; equivalently, no odd cycle.</li>
+<li><strong>Hamilton-connected:</strong> a Hamilton path between every
+pair. <strong>Laceable:</strong> the bipartite analogue (every
+opposite-colour pair). <strong>Maximally Hamiltonian:</strong> laceable
+if bipartite, else Hamilton-connected.</li>
+<li><strong>Flip graph:</strong> vertices = combinatorial objects, edges
+= single local “flip” moves.</li>
+<li><strong>Margins (marginal totals):</strong> the fixed row-sum vector
+R and column-sum vector S — the totals written down the right edge and
+along the bottom edge of the matrix.</li>
+<li><strong>Contingency table:</strong> a grid of counts
+cross-classified by two attributes; “fixed margins” means the row totals
+and column totals are held fixed.</li>
+<li><strong>Polytope / transportation polytope:</strong> a polytope is
+the higher-D analogue of a polygon (corner vertices, straight edges,
+flat faces). The <em>transportation polytope</em> for margins R,S is the
+set of nonnegative <em>real</em> matrices with those margins; its corner
+vertices are exactly the 0/1 matrices.</li>
+<li><strong>1-skeleton:</strong> a polytope’s vertices-and-edges only
+(higher faces discarded); <code>G(R,S)</code> is the 1-skeleton of the
+transportation polytope with margins R, S.</li>
+<li><strong>Biadjacency matrix:</strong> the 0/1 matrix encoding a
+bipartite graph — rows = left vertices, columns = right vertices, a 1
+means an edge.</li>
+<li><strong>A(R,S):</strong> all 0/1 matrices with margins R, S.
+<strong>2×2 interchange / 2-switch:</strong> flip a 2×2 identity ↔︎
+anti-identity; preserves margins.</li>
+<li><strong>Interchange graph G(R,S):</strong> the flip graph — vertices
+A(R,S), edges single interchanges.</li>
+<li><strong>Cartesian product G □ H:</strong> pairs of vertices; move
+one coordinate at a time.</li>
+<li><strong>CT_a (complete transposition graph):</strong> permutations
+of a items joined by single swaps; the all-1s a×a interchange graph;
+CT_2=K_2, CT_3=K_{3,3}.</li>
+<li><strong>Balanced bipartite block:</strong> a Cartesian product of
+CT_a’s; the hard core of the problem.</li>
+<li><strong>Paired-2-DPC:</strong> for any two endpoint-pairs, two
+disjoint paths covering all vertices; stronger than laceable; survives
+products.</li>
+<li><strong>Line / fibre / quotient:</strong> a row or column / the
+smaller graph from fixing everything else / the graph of a line’s legal
+patterns (a matroid base graph).</li>
+<li><strong>Pivot construction:</strong> prove Hamilton paths in
+indecomposable classes by routing through a separating line’s quotient
+and lifting fibre-by-fibre.</li>
+</ul>
+<hr />
+<p><em>This tutorial accompanies an in-preparation manuscript on
+Brualdi’s conjecture. It is a living document and may be
+revised.</em></p>
+<a href="#" class="topbtn" aria-label="Back to top">&#8593;</a>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");});}</script>
+</body>
+</html>
