@@ -1,11 +1,152 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Brualdi&#39;s Conjecture — a from-scratch tutorial</title>
   <style>
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+background-color: #1a1a1a;
+border: none;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -40,14 +181,14 @@ hr{ border:none; border-top:1px solid var(--border); margin:2rem 0; }
 .topbtn{ position:fixed; right:14px; bottom:14px; background:var(--accent); color:#fff; text-decoration:none; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; box-shadow:0 2px 8px rgba(0,0,0,.25); opacity:.9; }
 @media (max-width:480px){ body{ font-size:17px; padding:.9rem; } h1{ font-size:1.45rem; } }
 </style>
-<meta name="robots" content="noindex, nofollow">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#569BBD">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Brualdi">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" type="image/png" href="icon-192.png">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#569BBD">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Brualdi">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
 </head>
 <body>
 <header id="title-block-header">
@@ -65,7 +206,11 @@ paths, cycles, and “Hamiltonian”</a></li>
 <li><a href="#part-3-bipartite-graphs-and-the-colour-rule" id="toc-part-3-bipartite-graphs-and-the-colour-rule">Part 3 — Bipartite
 graphs and the colour rule</a></li>
 <li><a href="#part-4-the-three-hamilton-properties-we-care-about" id="toc-part-4-the-three-hamilton-properties-we-care-about">Part 4 — The
-three Hamilton properties we care about</a></li>
+three Hamilton properties we care about</a>
+<ul>
+<li><a href="#what-these-actually-look-like-small-checkable-examples" id="toc-what-these-actually-look-like-small-checkable-examples">What
+these actually look like (small, checkable examples)</a></li>
+</ul></li>
 <li><a href="#part-5-flip-graphs-the-general-idea" id="toc-part-5-flip-graphs-the-general-idea">Part 5 — Flip graphs: the
 general idea</a></li>
 <li><a href="#part-6-matrices-with-fixed-margins-what-margins-means" id="toc-part-6-matrices-with-fixed-margins-what-margins-means">Part 6 —
@@ -84,8 +229,8 @@ products of graphs</a></li>
 transposition graphs</a></li>
 <li><a href="#part-13-the-structure-theory-lines-fibres-quotients" id="toc-part-13-the-structure-theory-lines-fibres-quotients">Part 13 —
 The structure theory: lines, fibres, quotients</a></li>
-<li><a href="#part-14-the-bipartite-triangle-free-surprise" id="toc-part-14-the-bipartite-triangle-free-surprise">Part 14 — The
-bipartite = triangle-free surprise</a></li>
+<li><a href="#part-14-the-bipartite-triangle-free-surprise-huiyas-question" id="toc-part-14-the-bipartite-triangle-free-surprise-huiyas-question">Part
+14 — The bipartite = triangle-free surprise (Huiya’s question)</a></li>
 <li><a href="#part-15-the-strategy-strengthen-then-reduce-to-one-lemma" id="toc-part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
 15 — The strategy: strengthen, then reduce to one lemma</a></li>
 <li><a href="#part-16-the-engine-coleman-2024-the-double-induction" id="toc-part-16-the-engine-coleman-2024-the-double-induction">Part 16 —
@@ -96,20 +241,23 @@ pivot construction (our deepest part)</a></li>
 corollary: two communities</a></li>
 <li><a href="#part-19-how-we-know-its-probably-right-and-the-honest-gaps" id="toc-part-19-how-we-know-its-probably-right-and-the-honest-gaps">Part
 19 — How we know it’s (probably) right — and the honest gaps</a></li>
-<li><a href="#part-20-glossary-one-liners" id="toc-part-20-glossary-one-liners">Part 20 — Glossary
+<li><a href="#part-20-cheat-sheet-talking-to-huiya" id="toc-part-20-cheat-sheet-talking-to-huiya">Part 20 — Cheat sheet:
+talking to Huiya</a></li>
+<li><a href="#part-21-glossary-one-liners" id="toc-part-21-glossary-one-liners">Part 21 — Glossary
 (one-liners)</a></li>
 </ul></li>
 </ul>
 </nav>
 <h1 id="brualdis-conjecture-a-from-scratch-tutorial">Brualdi’s
 conjecture — a from-scratch tutorial</h1>
-<p><em>A from-scratch tutorial on Brualdi’s interchange-graph
-conjecture: starting from “what is a flip graph?” and building, with
-worked examples, up to a recent candidate resolution — what is proved,
-how, and what remains to be verified. It assumes comfort with
-undergraduate linear algebra and a little probability, but no
-combinatorics: every term is defined on first use and small cases are
-worked by hand. Short, self-contained parts.</em></p>
+<p><em>For Jeff. Goal: start from “what is a flip graph?” and build,
+patiently and with worked examples, up to “here is what we proved, how,
+and what’s still on faith” — so you can talk about it intelligently with
+Huiya. You have a strong math background but this corner of
+combinatorics is new, so I define every term the first time it appears
+and work small cases by hand. Phone-friendly: short chunks, matrices and
+pictures in monospace blocks, light notation. Read one part at a
+time.</em></p>
 <hr />
 <h2 id="part-1-graphs-in-3-minutes">Part 1 — Graphs, in 3 minutes</h2>
 <p>A <strong>graph</strong> is just a set of <strong>vertices</strong>
@@ -435,8 +583,8 @@ always do this.</em></p>
 — The same object in three other languages (optional)</h2>
 <p><em>You can skip this part and lose nothing essential — it’s just
 three other ways people describe the exact same graph. But one of them
-may make it click, and the third is the one graph theorists usually find
-most natural.</em></p>
+may make it click, and the third is the one Huiya will find most
+natural.</em></p>
 <p><strong>(1) A Markov-chain state graph.</strong> To sample random
 contingency tables with fixed margins, statisticians start from one
 table and repeatedly apply random 2×2 interchanges — a random walk on
@@ -470,12 +618,11 @@ which anything “higher-dimensional” is involved: the polytope has higher
 faces, but the interchange graph itself is just corners and edges — an
 ordinary graph.</p>
 <p><strong>(3) Bipartite graphs under 2-switches (the friendly one for
-graph theorists).</strong> A <strong>bipartite graph</strong> splits its
-vertices into two sides, with edges only <em>between</em> the sides.
-Record one by a <strong>biadjacency matrix</strong>: rows = left-side
-vertices, columns = right-side vertices, and a <code>1</code> in cell
-(i,j) means “there is an edge from left-i to right-j” (0 = no edge).
-Then:</p>
+Huiya).</strong> A <strong>bipartite graph</strong> splits its vertices
+into two sides, with edges only <em>between</em> the sides. Record one
+by a <strong>biadjacency matrix</strong>: rows = left-side vertices,
+columns = right-side vertices, and a <code>1</code> in cell (i,j) means
+“there is an edge from left-i to right-j” (0 = no edge). Then:</p>
 <ul>
 <li>the row sums and column sums are exactly the
 <strong>degrees</strong> (edge-counts) of the vertices on each side, so
@@ -488,8 +635,8 @@ a graph while keeping every vertex’s degree the same.</li>
 <p>So <code>G(R,S)</code> is the <strong>flip graph of all bipartite
 graphs with a prescribed degree sequence, under 2-switches</strong> —
 what graph theorists call a <strong>realization graph</strong> of the
-degree sequence. Graph theorists work on graph Hamiltonicity, so this is
-the dictionary that let that intuition transfer straight in.</p>
+degree sequence. Huiya works on graph Hamiltonicity, so this is the
+dictionary that lets him bring his intuition straight in.</p>
 <p>Picture for #3 — a 2-switch on a little bipartite graph (left side
 1,2; right side a,b):</p>
 <pre><code> 1 — a            1   a
@@ -617,17 +764,17 @@ That matters because there’s a powerful theorem (Naddef–Pulleyblank)
 that such graphs are always either hypercubes or Hamilton-connected —
 which the proof cashes in at Part 17.</p>
 <hr />
-<h2 id="part-14-the-bipartite-triangle-free-surprise">Part 14 — The
-bipartite = triangle-free surprise</h2>
-<p>This is a natural first point of confusion, so it’s worth getting
+<h2 id="part-14-the-bipartite-triangle-free-surprise-huiyas-question">Part
+14 — The bipartite = triangle-free surprise (Huiya’s question)</h2>
+<p>This is the exact point Huiya raised first, so it’s worth getting
 crisp.</p>
 <p>A <strong>triangle</strong> is a 3-cycle (three mutually adjacent
 vertices). “Triangle-free” = no triangles.</p>
 <p><strong>For graphs in general:</strong> bipartite ⇔ no odd cycle
 (Part 3). Being triangle-free is <strong>weaker</strong> — you can be
-triangle-free but still have a 5-cycle, so still not bipartite. That is
-exactly right. (The 5-cycle <code>C_5</code> is the standard example: no
-triangle, not bipartite.)</p>
+triangle-free but still have a 5-cycle, so still not bipartite. Huiya is
+completely right about that. (The 5-cycle <code>C_5</code> is the
+standard example: no triangle, not bipartite.)</p>
 <p><strong>But interchange graphs are special.</strong> Brualdi proved
 (Thm 6.3.4 in his book <em>Combinatorial Matrix Classes</em>): an
 interchange graph that contains <em>any</em> odd cycle already contains
@@ -642,6 +789,12 @@ exceptions</strong>.</p>
 <em>bipartite ⇔ triangle-free ⇔ the class is a Cartesian product of
 complete transposition graphs (and complements)</em>. That last clause
 is the structural gold we use next.</p>
+<p><strong>How to say it to Huiya:</strong> “You’re right it’s false for
+general graphs; it’s a special property of this class (Brualdi 6.3.4) —
+an odd cycle forces a triangle here. We added a line to the paper saying
+so explicitly, and I verified it computationally.” (We did add that
+line.) His instinct landed on the single most confusing spot for a
+newcomer — a good sign for the collaboration.</p>
 <hr />
 <h2 id="part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
 15 — The strategy: strengthen, then reduce to one lemma</h2>
@@ -659,7 +812,7 @@ that gluing, but</li>
 </ul>
 <p>So the stronger statement is the one that can be passed <em>up</em>
 an induction. (This “strengthen the inductive hypothesis” trick is
-standard.)</p>
+standard; Huiya will recognise it instantly.)</p>
 <p><strong>Move 2 — reduce everything to one lemma.</strong> Induct on
 the number of vertices. The (invariant-free) graph is always one of
 three kinds — a <strong>trichotomy</strong>:</p>
@@ -717,18 +870,20 @@ fixed as the leaf.</li>
 <p>The two inductions move on different parameters and don’t tangle (no
 circular reasoning). This part is also <strong>machine-checked in the
 Lean proof assistant</strong> (the recursion is verified, no gaps).</p>
-<p><strong>In short:</strong> “Blocks are products of <code>CT_a</code>;
-Coleman 2024 gives the paired cover whenever the leaf is any even
-laceable graph, so a whole <code>CT</code>-product folds in as a leaf,
-and a clean double induction closes it.”</p>
+<p><strong>One line for Huiya:</strong> “Blocks are products of
+<code>CT_a</code>; Coleman 2024 gives the paired cover whenever the leaf
+is any even laceable graph, so a whole <code>CT</code>-product folds in
+as a leaf, and a clean double induction closes it.”</p>
 <hr />
 <h2 id="part-17-the-pivot-construction-our-deepest-part">Part 17 — The
 pivot construction (our deepest part)</h2>
 <p>This handles trichotomy case 2: the graph is
 <strong>indecomposable</strong> (not a product) and not a tiny base
-case. It’s the most original part — and the part most needing
-independent scrutiny, because it’s the one piece the Lean formalization
-does <strong>not</strong> verify (it’s assumed there).</p>
+case. It’s the most original part — and still the part most worth
+Huiya’s eyes — though the colour bookkeeping that used to be the open
+spot here is now <strong>resolved and computer-verified</strong> (see
+below). It remains the one piece the Lean formalization does
+<strong>not</strong> verify (it’s entered there as an assumption).</p>
 <p>Goal: a Hamilton path between two chosen vertices <code>a</code> and
 <code>b</code>. The idea, in four beats:</p>
 <ol type="1">
@@ -752,13 +907,26 @@ a Hamilton path. Stitch the fibres together along the quotient route →
 one Hamilton path through the entire graph.</li>
 </ol>
 <p>The delicate part is the <strong>bookkeeping at the splices</strong>
-— making the colours/parities line up at every junction so the
-fibre-paths actually join into a <em>single</em> path. That’s where an
-error would hide, and it’s the first thing to scrutinise.</p>
-<p><strong>In short:</strong> “Pivot on a separating line; its quotient
-is a Hamilton-connected matroid base graph; route through it and lift
-fibre-by-fibre using the induction hypothesis, matching parities at the
-splices.”</p>
+— a bipartite fibre forces the path to flip colour as it passes through,
+so a long run of bipartite fibres could chain those flips into a parity
+contradiction. Here is why it doesn’t. A separating pivot always has at
+least one <strong>non-bipartite fibre</strong>, and a non-bipartite
+fibre is <em>flexible</em> — it can be entered and left at whichever
+colour you need. That flexible fibre breaks the chain of forced flips
+into short open stretches, each with a free end, so the colours can
+always be made to line up. A small <strong>interface lemma</strong>
+guarantees that at every junction there are at least <em>two</em>
+distinct vertices to cross on, so no splice ever gets stuck for lack of
+a landing spot. This was the last open spot in the whole argument, and
+it is now closed — we also implemented this exact construction and
+checked by computer that it builds a valid Hamilton path for <strong>all
+251,407 vertex-pairs across every such graph up to order
+90</strong>.</p>
+<p><strong>One line for Huiya:</strong> “Pivot on a separating line; its
+quotient is a Hamilton-connected matroid base graph; route through it
+and lift fibre-by-fibre by induction — the non-bipartite fibre absorbs
+the parity, and an interface lemma keeps two crossing choices at every
+splice.”</p>
 <hr />
 <h2 id="part-18-the-bonus-corollary-two-communities">Part 18 — The bonus
 corollary: two communities</h2>
@@ -771,11 +939,12 @@ those realization graphs — a question recorded as open in the
 degree-sequence community (Barrus, 2016), in the bipartite / split-graph
 case (a <strong>split graph</strong> is one whose vertices divide into a
 clique plus an independent set).</p>
-<p>An honest caveat: it’s the <strong>same theorem in two
-languages</strong>, <strong>not</strong> a stronger one. The fully
-general version — realization graphs of <em>arbitrary</em> degree
-sequences, not just bipartite — stays open. But it means the result
-speaks to two research communities at once, which helps its appeal.</p>
+<p>Be careful (and tell Huiya this honestly): it’s the <strong>same
+theorem in two languages</strong>, <strong>not</strong> a stronger one.
+The fully general version — realization graphs of <em>arbitrary</em>
+degree sequences, not just bipartite — stays open. But it means the
+result speaks to two research communities at once, which helps its
+appeal.</p>
 <hr />
 <h2 id="part-19-how-we-know-its-probably-right-and-the-honest-gaps">Part
 19 — How we know it’s (probably) right — and the honest gaps</h2>
@@ -797,21 +966,55 @@ proof.</li>
 and the Block-Lemma double induction (Part 16) are machine-checked, with
 no gaps.</li>
 </ul>
-<p>The honest gaps:</p>
+<p>The honest gaps — say these plainly to Huiya:</p>
 <ul>
 <li>The <strong>§§3–6 reduction</strong>, especially the <strong>pivot
 construction</strong> (Part 17) and the <strong>product-lifting parity
 bookkeeping</strong> (Part 16), is <strong>not</strong> machine-proved.
 In Lean it’s entered as an assumption. So it rests on the AI review +
-the computations — <strong>this is exactly the part that still needs
-independent human verification.</strong></li>
+the computations — <strong>this is exactly what Huiya is
+verifying.</strong></li>
 <li>“Checked on 144k graphs” is <strong>corroboration on a finite range,
 not a proof.</strong> Important not to oversell that.</li>
 </ul>
 <p>One-sentence status: <em>strong, multi-layered evidence; a candidate
 proof; awaiting human-expert verification of the reduction.</em></p>
 <hr />
-<h2 id="part-20-glossary-one-liners">Part 20 — Glossary
+<h2 id="part-20-cheat-sheet-talking-to-huiya">Part 20 — Cheat sheet:
+talking to Huiya</h2>
+<p><strong>The 4-sentence pitch.</strong> “We prove every interchange
+graph <code>G(R,S)</code> is maximally Hamiltonian, which settles
+Brualdi’s 1980 conjecture. The proof reduces everything to one property
+of the balanced bipartite blocks — that they’re
+paired-2-disjoint-path-coverable — and proves that with Coleman’s 2024
+transposition-graph theorem plus a double induction. The reduction (a
+trichotomy with a pivot construction) is our main new work; it’s
+computer-corroborated on 144k graphs but not yet human-verified.”</p>
+<p><strong>Likely questions → crisp answers:</strong></p>
+<ul>
+<li><em>“Why is bipartite the same as triangle-free here?”</em> →
+Special to this class (Brualdi 6.3.4): an odd cycle forces a triangle.
+False for general graphs; we flag it explicitly and checked it.</li>
+<li><em>“Why prove the stronger ‘maximally Hamiltonian’?”</em> → Because
+Hamilton-connectedness/laceability survive the product and fibre
+gluings, whereas a Hamilton cycle doesn’t — the stronger statement is
+the one the induction can carry.</li>
+<li><em>“What’s actually new versus Li–Zhang 1994?”</em> → Same tool
+<em>family</em>, but they did only one all-1s margin. General margins
+need (a) the stronger disjoint-path-cover property, which needed Coleman
+2024, and (b) the pivot construction for the indecomposable non-product
+classes. Plus the maximal-Hamiltonicity strengthening.</li>
+<li><em>“What exactly do you want me to check?”</em> → The reduction —
+above all Part 17 (pivot) and the Part 16 parity bookkeeping — the
+pieces not machine-checked. The cited theorems (Coleman, Brualdi,
+Naddef–Pulleyblank, Jo–Park–Chwa, Araki, Alspach) can be taken as
+given.</li>
+<li><em>“Is the 144k-graph check a proof?”</em> → No — corroboration on
+a finite range. It would catch errors anywhere but doesn’t prove the
+infinite family.</li>
+</ul>
+<hr />
+<h2 id="part-21-glossary-one-liners">Part 21 — Glossary
 (one-liners)</h2>
 <ul>
 <li><strong>Graph / vertex / edge / adjacent / degree:</strong> dots,
@@ -868,10 +1071,12 @@ indecomposable classes by routing through a separating line’s quotient
 and lifting fibre-by-fibre.</li>
 </ul>
 <hr />
-<p><em>This tutorial accompanies an in-preparation manuscript on
-Brualdi’s conjecture. It is a living document and may be
-revised.</em></p>
-<a href="#" class="topbtn">&#8593;</a>
+<p><em>End of edition 2 (detailed). Want even more on any part —
+e.g. <code>CT_3 = K_{3,3}</code> drawn out fully, a worked
+fibre/quotient split, a 2×3-margin example enumerated by hand, or a
+deeper dive on the Lean side — just say which and I’ll expand
+it.</em></p>
+<a href="#" class="topbtn">↑</a>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");});}</script>
 </body>
 </html>
