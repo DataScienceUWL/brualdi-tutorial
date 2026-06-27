@@ -227,14 +227,14 @@ conjecture and its history</a></li>
 products of graphs</a></li>
 <li><a href="#part-12-complete-transposition-graphs" id="toc-part-12-complete-transposition-graphs">Part 12 — Complete
 transposition graphs</a></li>
-<li><a href="#part-13-the-structure-theory-lines-fibres-quotients" id="toc-part-13-the-structure-theory-lines-fibres-quotients">Part 13 —
-The structure theory: lines, fibres, quotients</a></li>
+<li><a href="#part-13-the-structure-theory-lines-fibers-quotients" id="toc-part-13-the-structure-theory-lines-fibers-quotients">Part 13 —
+The structure theory: lines, fibers, quotients</a></li>
 <li><a href="#part-14-the-bipartite-triangle-free-surprise-huiyas-question" id="toc-part-14-the-bipartite-triangle-free-surprise-huiyas-question">Part
 14 — The bipartite = triangle-free surprise (Huiya’s question)</a></li>
 <li><a href="#part-15-the-strategy-strengthen-then-reduce-to-one-lemma" id="toc-part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
 15 — The strategy: strengthen, then reduce to one lemma</a></li>
-<li><a href="#part-16-the-engine-coleman-2024-the-double-induction" id="toc-part-16-the-engine-coleman-2024-the-double-induction">Part 16 —
-The engine: Coleman 2024 + the double induction</a></li>
+<li><a href="#part-16-the-engine-coleman-et-al.-2025-the-double-induction" id="toc-part-16-the-engine-coleman-et-al.-2025-the-double-induction">Part
+16 — The engine: Coleman et al. 2025 + the double induction</a></li>
 <li><a href="#part-17-the-pivot-construction-our-deepest-part" id="toc-part-17-the-pivot-construction-our-deepest-part">Part 17 — The
 pivot construction (our deepest part)</a></li>
 <li><a href="#part-18-the-bonus-corollary-two-communities" id="toc-part-18-the-bonus-corollary-two-communities">Part 18 — The bonus
@@ -595,13 +595,14 @@ Quick refresher: a <strong>polytope</strong> is the higher-dimensional
 analogue of a polygon (2D) or polyhedron (3D) — the solution set of some
 linear inequalities, with flat <strong>faces</strong>, straight
 <strong>edges</strong>, and corner <strong>vertices</strong>. Now relax
-our matrices: instead of 0/1 entries, allow any <strong>nonnegative
-real</strong> entries that still produce the <strong>same
-margins</strong> R and S. That set of real matrices forms a convex
-polytope — the <strong>transportation polytope</strong> (from the
-“transportation problem”: ship goods from sources with supplies R to
-destinations with demands S; the matrix says how much travels on each
-route). Two facts tie it back to us:</p>
+our matrices: instead of 0/1 entries, allow any real entries
+<strong>between 0 and 1</strong> that still produce the <strong>same
+margins</strong> R and S (the capacity bounds 0 ≤ x_{ij} ≤ 1 are what
+force the corner vertices to be 0/1 matrices). That bounded set of real
+matrices forms a convex polytope — the <strong>transportation
+polytope</strong> (from the “transportation problem”: ship goods from
+sources with supplies R to destinations with demands S; the matrix says
+how much travels on each route). Two facts tie it back to us:</p>
 <ul>
 <li>its <strong>corner vertices are exactly the 0/1 matrices</strong>
 (the integer extreme points), and</li>
@@ -671,8 +672,12 @@ P60</strong> in Mütze’s survey <em>Combinatorial Gray Codes</em> (2024),
 the standard catalogue of open problems in this area.</li>
 </ul>
 <p>So the target is a recognized, named, long-standing open problem with
-only fragments solved. That’s why (if our proof holds) the journal
-ambitions are high.</p>
+only fragments solved. That’s why the journal ambitions are high — the
+paper now contains a complete written proof with all former gaps closed
+and every load-bearing lemma backed by its own passing computational
+check (the verification ledger). It is awaiting human-expert
+verification (not yet referee-final), so “if it holds up under Huiya’s
+review” is the honest hedge.</p>
 <hr />
 <h2 id="part-11-cartesian-products-of-graphs">Part 11 — Cartesian
 products of graphs</h2>
@@ -729,32 +734,49 @@ exactly <strong>Cartesian products of these atoms</strong>,
 e.g. <code>CT_3 □ CT_4</code>. Those products are the single hard family
 the whole proof funnels into.</p>
 <hr />
-<h2 id="part-13-the-structure-theory-lines-fibres-quotients">Part 13 —
-The structure theory: lines, fibres, quotients</h2>
+<h2 id="part-13-the-structure-theory-lines-fibers-quotients">Part 13 —
+The structure theory: lines, fibers, quotients</h2>
 <p>To run an induction on these graphs, we need to know how they’re
 <em>shaped</em>. Three ideas; learn the words, not the fine print.</p>
 <ul>
 <li><strong>Line</strong> = a row or a column of the matrix.</li>
-<li><strong>Invariant cell</strong> = a cell that has the <em>same</em>
-value in <strong>every</strong> matrix of <code>A(R,S)</code>. Such a
-cell never takes part in any interchange (it can’t — it’s frozen).
-Delete all invariant cells and you get the <strong>invariant-free
-core</strong>; its interchange graph is <em>the same graph</em>, just
-described more cleanly. We always reduce to the invariant-free case.
-(“Active” cell = not invariant.)</li>
-<li><strong>Fibre and quotient.</strong> Freeze one line <code>L</code>
-(say, fix the first row to a specific 0/1 pattern).
+<li><strong>Invariant cell</strong> = a cell with the <em>same</em>
+value in <strong>every</strong> matrix of <code>A(R,S)</code> — frozen,
+so it never takes part in any interchange. These come in two flavours.
+Cells filling an <strong>inactive line</strong> (a row or column that is
+all-0 or all-max) can be deleted harmlessly: you get the <em>same</em>
+interchange graph, just smaller and cleaner — we always do this first
+(“active” line = not inactive). Any invariant cells that <em>remain</em>
+are a signal that the class <strong>factors as a Cartesian
+product</strong> (the block decomposition, Part 15 case 1). A class with
+active lines and <strong>no</strong> invariant cell is
+<strong>prime</strong> (invariant-free) — these indecomposable atoms are
+what the induction drills into.</li>
+<li><strong>Fiber and quotient.</strong> Freeze one line <code>L</code>
+(say, fix the first row to a specific 0/1 pattern <code>p</code>).
 <ul>
-<li>The matrices that share a given everything-except-<code>L</code>
-form a <strong>fibre</strong> — and a fibre is itself a smaller
-interchange graph.</li>
+<li>The matrices that all have <em>that same</em> frozen line — they
+<strong>agree on <code>L</code></strong> and differ only in the
+<em>other</em> lines — form a <strong>fiber</strong> <code>F_p</code>.
+(Careful: it is <strong>not</strong> the matrices that differ in
+<code>L</code>; those land in <em>different</em> fibers.) Because every
+matrix in the fiber shares <code>L</code>, a <code>2×2</code>
+interchange between two of them can never touch <code>L</code> — it acts
+entirely on the other lines. So, after you delete the frozen line
+<code>L</code>, a fiber is literally the interchange graph of the
+<strong>smaller</strong> class on the remaining lines: a smaller version
+of the same kind of object.</li>
 <li>The collection of all <em>legal patterns</em> the line
-<code>L</code> can take, joined by single interchanges inside
-<code>L</code>, is the <strong>quotient</strong> <code>Q_L</code>.</li>
-<li>So <code>G(R,S)</code> looks like: copies of fibres (smaller
+<code>L</code> can take — with two patterns joined when a single
+interchange (one that <em>does</em> touch <code>L</code>) carries a
+matrix of one fiber to a matrix of the other — is the
+<strong>quotient</strong> <code>Q_L</code>. (These are exactly the
+interchanges that a fiber <em>excludes</em>.)</li>
+<li>So <code>G(R,S)</code> looks like: copies of fibers (smaller
 versions of the same kind of object), laid out over the quotient
-<code>Q_L</code>, glued along edges. This “split along a line into
-fibres + a quotient” is the engine of the induction.</li>
+<code>Q_L</code>, glued along the <code>L</code>-touching edges. This
+“split along a line into fibers + a quotient” is the engine of the
+induction.</li>
 </ul></li>
 </ul>
 <p>One deep bonus fact you only need to <em>recognize</em>: the legal
@@ -785,10 +807,13 @@ and the two notions coincide.</p>
 graphs with margins up to 6×6</strong>, every non-bipartite one has a
 triangle and every bipartite one is triangle-free — <strong>0
 exceptions</strong>.</p>
-<p>And Brualdi’s theorem says more: for an invariant-free class,
-<em>bipartite ⇔ triangle-free ⇔ the class is a Cartesian product of
-complete transposition graphs (and complements)</em>. That last clause
-is the structural gold we use next.</p>
+<p>And Brualdi’s theorem says more: for an <strong>active
+invariant-free</strong> (prime) class, <em>bipartite ⇔ triangle-free ⇔
+the class IS a single complete-transposition or co-permutation
+block</em>. For a non-prime (decomposable) class, the bipartite
+interchange graphs are exactly the <strong>Cartesian products</strong>
+of such blocks. Either way, bipartite structure reduces to these atomic
+blocks — the structural gold we use next.</p>
 <p><strong>How to say it to Huiya:</strong> “You’re right it’s false for
 general graphs; it’s a special property of this class (Brualdi 6.3.4) —
 an odd cycle forces a triangle here. We added a line to the paper saying
@@ -803,7 +828,7 @@ newcomer — a good sign for the collaboration.</p>
 essential). We prove not “Hamiltonian” but “<strong>maximally
 Hamiltonian</strong>” (Part 4). Why prove something harder? Because the
 proof builds big graphs from small ones (Cartesian products in Part 11,
-fibres+quotients in Part 13), and:</p>
+fibers+quotients in Part 13), and:</p>
 <ul>
 <li>a Hamilton <strong>cycle</strong> does <strong>not</strong> survive
 that gluing, but</li>
@@ -814,17 +839,38 @@ that gluing, but</li>
 an induction. (This “strengthen the inductive hypothesis” trick is
 standard; Huiya will recognise it instantly.)</p>
 <p><strong>Move 2 — reduce everything to one lemma.</strong> Induct on
-the number of vertices. The (invariant-free) graph is always one of
-three kinds — a <strong>trichotomy</strong>:</p>
+the number of vertices. After the harmless normalisation (delete
+inactive lines, Part 13), every graph falls into a clean
+<strong>trichotomy</strong>:</p>
 <ol type="1">
-<li>a nontrivial <strong>Cartesian product</strong> A □ B → handle by
-gluing (Parts 11, 16);</li>
-<li><strong>indecomposable</strong> but not a tiny base case → the
-<strong>pivot construction</strong> (Part 17);</li>
+<li><strong>Decomposable</strong> — it factors as a nontrivial
+<strong>Cartesian product</strong> A □ B. By Brualdi–Manber this is
+<em>exactly</em> the case where an invariant cell remains, so a
+<em>prime</em> graph never lands here. Glue the factors (each smaller)
+via the induction hypothesis (§4 / Parts 11 + the product lift). That
+lift works in three sub-cases:
+<ul>
+<li><strong>Both factors non-bipartite:</strong> thread Hamilton paths
+directly — view from whichever factor’s coordinate the two endpoints
+differ in.</li>
+<li><strong>One bipartite factor:</strong> controlled spanning walk of
+the non-bipartite factor + paired-2-DPC on the doubled layers of the
+bipartite factor + a colour-parity check to align endpoints.</li>
+<li><strong>K_2 □ B prism case:</strong> a clean two-case comb handles
+the degenerate prism separately.</li>
+</ul></li>
+<li><strong>Prime (indecomposable) and not tiny</strong> — if it’s
+<strong>bipartite</strong>, it’s one of the balanced-bipartite
+<em>atoms</em>, handled directly by the Block Lemma below; if
+<strong>non-bipartite</strong> and at most two lines are active, then G
+≅ J(f,k) (a <strong>Johnson graph</strong>), handled in the base section
+(Alspach); if <strong>non-bipartite</strong> with ≥ 3 active rows AND
+columns and |V| &gt; 6, by the <strong>pivot construction</strong> (Part
+17).</li>
 <li>a small <strong>base case</strong> → check directly / cite.</li>
 </ol>
-<p>Cases 1 and 2 use the smaller pieces (induction hypothesis)
-<strong>plus one hard input</strong> about the bipartite atoms:</p>
+<p>The bipartite atoms are the <strong>one hard input</strong> the whole
+thing funnels into:</p>
 <blockquote>
 <p><strong>Block Lemma.</strong> Every balanced bipartite interchange
 graph (= every Cartesian product of <code>CT_a</code>’s) has a strong
@@ -834,22 +880,26 @@ path-covering property called <strong>paired
 <p>Everything funnels into this lemma.</p>
 <p><strong>What that property means</strong> (call it “paired-2-DPC”):
 pick <strong>two</strong> pairs of endpoints, <code>(a1,b1)</code> and
-<code>(a2,b2)</code>. You can always find <strong>two vertex-disjoint
-paths</strong> — one from a1 to b1, one from a2 to b2 — that
-<strong>together cover every vertex</strong>. Requiring this for
-<em>every</em> choice of the two pairs is paired-2-DPC.</p>
+<code>(a2,b2)</code>, with <strong>all four endpoints distinct</strong>
+and <strong>each pair opposite-coloured</strong> (one black vertex, one
+white vertex per pair — required because the graph is bipartite here).
+You can always find <strong>two vertex-disjoint paths</strong> — one
+from a1 to b1, one from a2 to b2 — that <strong>together cover every
+vertex</strong>. This “balanced” restriction is essential: the
+same-colour version fails even for C_4. Requiring this for
+<em>every</em> valid balanced choice of two pairs is paired-2-DPC.</p>
 <p>It’s strictly stronger than laceable (laceable = the one-pair
 version), and — crucially — it’s exactly the property that
 <strong>survives Cartesian products</strong>. That’s why it, and not
 bare Hamiltonicity, is the right inductive currency.</p>
 <hr />
-<h2 id="part-16-the-engine-coleman-2024-the-double-induction">Part 16 —
-The engine: Coleman 2024 + the double induction</h2>
+<h2 id="part-16-the-engine-coleman-et-al.-2025-the-double-induction">Part 16
+— The engine: Coleman et al. 2025 + the double induction</h2>
 <p>How do we prove the Block Lemma (products of <code>CT_a</code> are
 paired-2-DPC)? The key input is <em>new</em>, which is why this proof
 wasn’t possible until recently:</p>
 <blockquote>
-<p><strong>Coleman, Fischberg, Gong, Harrington, Wong (2024).</strong> A
+<p><strong>Coleman, Fischberg, Gong, Harrington, Wong (2025).</strong> A
 broad class of bipartite graphs they call
 <strong>“transposition-like”</strong> have <strong>paired
 (n−1)-disjoint-path covers</strong> (the n−1 version of the property
@@ -864,22 +914,28 @@ leaf</strong>. Then a <strong>double induction</strong> finishes:</p>
 <li><strong>Outer induction</strong> on the number of factors in the
 product. It needs just one fact about the smaller product B: that B is
 Hamilton-laceable (which follows because paired-2-DPC ⇒ laceable).</li>
-<li><strong>Inner induction</strong> is Coleman’s own induction, with B
-fixed as the leaf.</li>
+<li><strong>Inner induction</strong> is Coleman et al.’s own induction,
+with B fixed as the leaf.</li>
 </ul>
 <p>The two inductions move on different parameters and don’t tangle (no
 circular reasoning). This part is also <strong>machine-checked in the
-Lean proof assistant</strong> (the recursion is verified, no gaps).</p>
+Lean proof assistant</strong> — the logical assembly and the Block-Lemma
+double induction are verified <em>given</em> the cited Coleman et
+al. 2025 theorem and the CT-structure as inputs (it verifies the
+composition, not those external inputs).</p>
 <p><strong>One line for Huiya:</strong> “Blocks are products of
-<code>CT_a</code>; Coleman 2024 gives the paired cover whenever the leaf
-is any even laceable graph, so a whole <code>CT</code>-product folds in
-as a leaf, and a clean double induction closes it.”</p>
+<code>CT_a</code>; Coleman et al. 2025 gives the paired cover whenever
+the leaf is any even laceable graph, so a whole <code>CT</code>-product
+folds in as a leaf, and a clean double induction closes it.”</p>
 <hr />
 <h2 id="part-17-the-pivot-construction-our-deepest-part">Part 17 — The
 pivot construction (our deepest part)</h2>
-<p>This handles trichotomy case 2: the graph is
-<strong>indecomposable</strong> (not a product) and not a tiny base
-case. It’s the most original part — and still the part most worth
+<p>This handles trichotomy case 2 precisely: the graph is
+<strong>active, invariant-free, non-bipartite, and
+indecomposable</strong> (not a product), with <strong>≥ 3 active rows
+AND ≥ 3 active columns</strong> and <strong>|V| &gt; 6</strong>. Classes
+with ≤ 2 active lines (Johnson graphs) are handled in the base section,
+not here. It’s the most original part — and still the part most worth
 Huiya’s eyes — though the colour bookkeeping that used to be the open
 spot here is now <strong>resolved and computer-verified</strong> (see
 below). It remains the one piece the Lean formalization does
@@ -887,44 +943,46 @@ below). It remains the one piece the Lean formalization does
 <p>Goal: a Hamilton path between two chosen vertices <code>a</code> and
 <code>b</code>. The idea, in four beats:</p>
 <ol type="1">
-<li><strong>Pick a pivot line <code>L</code></strong> that “separates”
-<code>a</code> and <code>b</code> — a line where the two matrices
-differ. (A short argument shows such a line exists unless the graph is
-tiny.)</li>
+<li><strong>Choose the buffer line <code>L</code></strong> using the
+<strong>buffer-existence lemma</strong>: this supplies a separating line
+(one where <code>a</code> and <code>b</code> differ) whose corresponding
+fiber is <strong>non-bipartite</strong>. A general separating line might
+have only bipartite fibers; the lemma guarantees one that does not.</li>
 <li><strong>Look at the quotient <code>Q_L</code></strong> (Part 13) —
-the small graph of legal patterns of that line. A matroid argument
-(using “shifted matroids”) shows <code>Q_L</code> is
-<strong>non-bipartite</strong> here.</li>
+the small graph of legal patterns of that chosen line. A shifted-matroid
+argument shows that <em>this particular</em> <code>Q_L</code> is
+<strong>non-bipartite</strong> (the argument exploits the buffer line’s
+specific properties — it does not apply to an arbitrary separating
+line).</li>
 <li><strong><code>Q_L</code> is Hamilton-connected</strong> — because
 it’s a matroid basis-exchange graph, and Naddef– Pulleyblank says those
 are hypercubes or Hamilton-connected (and we’ve just excluded the
 hypercube case via non-bipartiteness).</li>
 <li><strong>Route and lift.</strong> Take a Hamilton path through
 <code>Q_L</code> from a’s pattern to b’s pattern; each step corresponds
-to a whole <strong>fibre</strong> (a smaller interchange graph), which
+to a whole <strong>fiber</strong> (a smaller interchange graph), which
 by the <strong>induction hypothesis</strong> can itself be traversed by
-a Hamilton path. Stitch the fibres together along the quotient route →
+a Hamilton path. Stitch the fibers together along the quotient route →
 one Hamilton path through the entire graph.</li>
 </ol>
 <p>The delicate part is the <strong>bookkeeping at the splices</strong>
-— a bipartite fibre forces the path to flip colour as it passes through,
-so a long run of bipartite fibres could chain those flips into a parity
+— a bipartite fiber forces the path to flip colour as it passes through,
+so a long run of bipartite fibers could chain those flips into a parity
 contradiction. Here is why it doesn’t. A separating pivot always has at
-least one <strong>non-bipartite fibre</strong>, and a non-bipartite
-fibre is <em>flexible</em> — it can be entered and left at whichever
-colour you need. That flexible fibre breaks the chain of forced flips
+least one <strong>non-bipartite fiber</strong>, and a non-bipartite
+fiber is <em>flexible</em> — it can be entered and left at whichever
+colour you need. That flexible fiber breaks the chain of forced flips
 into short open stretches, each with a free end, so the colours can
 always be made to line up. A small <strong>interface lemma</strong>
 guarantees that at every junction there are at least <em>two</em>
 distinct vertices to cross on, so no splice ever gets stuck for lack of
 a landing spot. This was the last open spot in the whole argument, and
 it is now closed — we also implemented this exact construction and
-checked by computer that it builds a valid Hamilton path for <strong>all
-251,407 vertex-pairs across every such graph up to order
-90</strong>.</p>
+verified it produces a valid Hamilton path on every pair of every small
+class we tested, with no failure.</p>
 <p><strong>One line for Huiya:</strong> “Pivot on a separating line; its
 quotient is a Hamilton-connected matroid base graph; route through it
-and lift fibre-by-fibre by induction — the non-bipartite fibre absorbs
+and lift fiber-by-fiber by induction — the non-bipartite fiber absorbs
 the parity, and an interface lemma keeps two crossing choices at every
 splice.”</p>
 <hr />
@@ -934,11 +992,12 @@ corollary: two communities</h2>
 margins = fixed degrees, an interchange = a 2-switch. So
 <code>G(R,S)</code> is literally the <strong>realization graph (2-switch
 flip graph) of a bipartite degree sequence.</strong></p>
-<p>Therefore our theorem <strong>also</strong> settles Hamiltonicity of
-those realization graphs — a question recorded as open in the
-degree-sequence community (Barrus, 2016), in the bipartite / split-graph
-case (a <strong>split graph</strong> is one whose vertices divide into a
-clique plus an independent set).</p>
+<p>Therefore our theorem <strong>also</strong> settles
+<strong>maximal</strong> Hamiltonicity of those realization graphs — a
+question recorded as open in the degree-sequence community (Barrus,
+2016), in the bipartite / split-graph case (a <strong>split
+graph</strong> is one whose vertices divide into a clique plus an
+independent set).</p>
 <p>Be careful (and tell Huiya this honestly): it’s the <strong>same
 theorem in two languages</strong>, <strong>not</strong> a stronger one.
 The fully general version — realization graphs of <em>arbitrary</em>
@@ -958,27 +1017,48 @@ SAT-solving <strong>every</strong> required Hamilton-path instance —
 counterexamples</strong>. This tests the <em>conclusion</em> directly,
 so it would catch a mistake <em>anywhere</em> in the argument. It found
 none.</li>
+<li><strong>Per-lemma computational checks (the verification
+ledger).</strong> Beyond the conclusion check, <em>each</em>
+load-bearing lemma now has its own script confirming it on all small
+classes — the quotient/matroid identity (5.4a), NEST (5.6), the triangle
+classification (5.7b), the buffer lemmas (5.8/5.8a), pivot-freedom and
+the #2-nail (5.2/5.3), the canonical fibre reduction (5.1), and the §4
+product-lift and K₂ comb — all passing, <strong>0 violations</strong>.
+(Full table: <code>results/VERIFICATION_LEDGER.md</code>.) This is what
+makes the recent definition and lemma fixes <em>checked</em>, not merely
+asserted.</li>
 <li><strong>AI adversarial review.</strong> Many rounds of independent
 “try to break it” passes (Claude + Codex + Gemini), which <em>did</em>
 catch and fix real errors along the way. A strong filter, not a
 proof.</li>
 <li><strong>Partial Lean formalization.</strong> The logical assembly
-and the Block-Lemma double induction (Part 16) are machine-checked, with
-no gaps.</li>
+and the Block-Lemma double induction (Part 16) are machine-checked
+<em>given the cited Coleman et al. 2025 theorem and the CT-structure as
+inputs</em> (it verifies the composition, not those external inputs; the
+pivot construction is assumed, not proved).</li>
 </ul>
-<p>The honest gaps — say these plainly to Huiya:</p>
+<p>The honest position — say this plainly to Huiya:</p>
 <ul>
 <li>The <strong>§§3–6 reduction</strong>, especially the <strong>pivot
 construction</strong> (Part 17) and the <strong>product-lifting parity
-bookkeeping</strong> (Part 16), is <strong>not</strong> machine-proved.
-In Lean it’s entered as an assumption. So it rests on the AI review +
-the computations — <strong>this is exactly what Huiya is
-verifying.</strong></li>
-<li>“Checked on 144k graphs” is <strong>corroboration on a finite range,
-not a proof.</strong> Important not to oversell that.</li>
+bookkeeping</strong> (§4), is <strong>not</strong> machine-proved in
+Lean (entered as an assumption). Both former §5 gaps are now proved and
+independently re-audited — but <strong>this is exactly what Huiya is
+verifying</strong>; no human expert has checked it yet.</li>
+<li>“Checked on 144,389 graphs / 2,555,559 instances” is
+<strong>corroboration on a finite range, not a proof of the infinite
+family</strong>. It independently checks the conclusion; it does not
+substitute for the written proof. Important not to oversell that.</li>
 </ul>
-<p>One-sentence status: <em>strong, multi-layered evidence; a candidate
-proof; awaiting human-expert verification of the reduction.</em></p>
+<p>One-sentence status: <em>the paper now contains a complete written
+proof — the reduction (§3–§6) plus the Block Lemma (§7) — with the two
+former §5 gaps closed and <strong>every load-bearing lemma backed by its
+own passing computational check</strong> (the verification ledger,
+<code>results/VERIFICATION_LEDGER.md</code>); it is awaiting
+human-expert verification (not yet referee-final), and the independent
+SAT check (144,389 classes / 2,555,559 instances / zero exceptions)
+corroborates the conclusion but is not a substitute for the
+proof.</em></p>
 <hr />
 <h2 id="part-20-cheat-sheet-talking-to-huiya">Part 20 — Cheat sheet:
 talking to Huiya</h2>
@@ -986,24 +1066,26 @@ talking to Huiya</h2>
 graph <code>G(R,S)</code> is maximally Hamiltonian, which settles
 Brualdi’s 1980 conjecture. The proof reduces everything to one property
 of the balanced bipartite blocks — that they’re
-paired-2-disjoint-path-coverable — and proves that with Coleman’s 2024
-transposition-graph theorem plus a double induction. The reduction (a
-trichotomy with a pivot construction) is our main new work; it’s
-computer-corroborated on 144k graphs but not yet human-verified.”</p>
+paired-2-disjoint-path-coverable — and proves that with Coleman et
+al. 2025’s transposition-like-graph theorem plus a double induction. The
+reduction (a trichotomy with a pivot construction) is our main new work;
+the paper contains a complete written proof with all gaps closed,
+computer-corroborated on 144k graphs, and awaiting human-expert
+verification.”</p>
 <p><strong>Likely questions → crisp answers:</strong></p>
 <ul>
 <li><em>“Why is bipartite the same as triangle-free here?”</em> →
 Special to this class (Brualdi 6.3.4): an odd cycle forces a triangle.
 False for general graphs; we flag it explicitly and checked it.</li>
 <li><em>“Why prove the stronger ‘maximally Hamiltonian’?”</em> → Because
-Hamilton-connectedness/laceability survive the product and fibre
+Hamilton-connectedness/laceability survive the product and fiber
 gluings, whereas a Hamilton cycle doesn’t — the stronger statement is
 the one the induction can carry.</li>
 <li><em>“What’s actually new versus Li–Zhang 1994?”</em> → Same tool
 <em>family</em>, but they did only one all-1s margin. General margins
 need (a) the stronger disjoint-path-cover property, which needed Coleman
-2024, and (b) the pivot construction for the indecomposable non-product
-classes. Plus the maximal-Hamiltonicity strengthening.</li>
+et al. 2025, and (b) the pivot construction for the indecomposable
+non-product classes. Plus the maximal-Hamiltonicity strengthening.</li>
 <li><em>“What exactly do you want me to check?”</em> → The reduction —
 above all Part 17 (pivot) and the Part 16 parity bookkeeping — the
 pieces not machine-checked. The cited theorems (Coleman, Brualdi,
@@ -1039,9 +1121,11 @@ cross-classified by two attributes; “fixed margins” means the row totals
 and column totals are held fixed.</li>
 <li><strong>Polytope / transportation polytope:</strong> a polytope is
 the higher-D analogue of a polygon (corner vertices, straight edges,
-flat faces). The <em>transportation polytope</em> for margins R,S is the
-set of nonnegative <em>real</em> matrices with those margins; its corner
-vertices are exactly the 0/1 matrices.</li>
+flat faces). The <em>bounded transportation polytope</em> for margins
+R,S is the set of real matrices with those margins and every entry in
+[0,1]; its corner vertices are exactly the 0/1 matrices (permutation
+matrices when all margins are 1, doubly-stochastic integer matrices in
+general).</li>
 <li><strong>1-skeleton:</strong> a polytope’s vertices-and-edges only
 (higher faces discarded); <code>G(R,S)</code> is the 1-skeleton of the
 transportation polytope with margins R, S.</li>
@@ -1060,20 +1144,24 @@ of a items joined by single swaps; the all-1s a×a interchange graph;
 CT_2=K_2, CT_3=K_{3,3}.</li>
 <li><strong>Balanced bipartite block:</strong> a Cartesian product of
 CT_a’s; the hard core of the problem.</li>
-<li><strong>Paired-2-DPC:</strong> for any two endpoint-pairs, two
-disjoint paths covering all vertices; stronger than laceable; survives
-products.</li>
-<li><strong>Line / fibre / quotient:</strong> a row or column / the
-smaller graph from fixing everything else / the graph of a line’s legal
-patterns (a matroid base graph).</li>
+<li><strong>Paired-2-DPC:</strong> for any two <strong>balanced</strong>
+endpoint-pairs — four distinct endpoints where each pair is
+opposite-coloured (one black, one white) — two vertex-disjoint paths
+covering all vertices; strictly stronger than laceable; survives
+Cartesian products. (Same-colour pairs excluded: the unrestricted
+version fails even on C_4.)</li>
+<li><strong>Line / fiber / quotient:</strong> a row or column / the
+smaller interchange graph of the matrices that all <em>share one fixed
+line</em> (then delete that line) / the graph of a line’s legal patterns
+(a matroid base graph).</li>
 <li><strong>Pivot construction:</strong> prove Hamilton paths in
 indecomposable classes by routing through a separating line’s quotient
-and lifting fibre-by-fibre.</li>
+and lifting fiber-by-fiber.</li>
 </ul>
 <hr />
 <p><em>End of edition 2 (detailed). Want even more on any part —
 e.g. <code>CT_3 = K_{3,3}</code> drawn out fully, a worked
-fibre/quotient split, a 2×3-margin example enumerated by hand, or a
+fiber/quotient split, a 2×3-margin example enumerated by hand, or a
 deeper dive on the Lean side — just say which and I’ll expand
 it.</em></p>
 <a href="#" class="topbtn">↑</a>
