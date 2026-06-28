@@ -818,12 +818,28 @@ interchanges — the “copies of fibers over the quotient” picture, made
 concrete. (A fiber collects the matrices that <em>share</em> the frozen
 line; matrices that <em>differ</em> in that line lie in different fibers
 and are linked through the quotient.)</p>
-<p>One deep bonus fact you only need to <em>recognize</em>: the legal
-patterns of a line are the <strong>bases of a matroid</strong>, so
-<code>Q_L</code> is a <strong>matroid basis-exchange graph</strong>.
-That matters because there’s a powerful theorem (Naddef–Pulleyblank)
-that such graphs are always either hypercubes or Hamilton-connected —
-which the proof cashes in at Part 17.</p>
+<p>One deep bonus fact, worth meeting now because it powers Part 17 — it
+needs one new word, <strong>matroid</strong>.</p>
+<p>A <strong>matroid</strong> is the abstract notion of “independence,”
+modelled on linear algebra. Picture the columns of a matrix: some sets
+of columns are <strong>independent</strong> (linearly independent), and
+a maximal one — you can’t add another column and stay independent — is a
+<strong>basis</strong>. Two features always hold, and a matroid is
+<em>any</em> system with just those features: (i) all bases have the
+same size; (ii) the <strong>exchange rule</strong> — given two bases and
+an element of the first, you can swap it out for <em>some</em> element
+of the second and still have a basis. The <strong>basis-exchange
+graph</strong> of a matroid has the bases as its vertices, with two
+joined whenever they differ by a single such swap.</p>
+<p>The fact: the legal patterns of a line <code>L</code> are exactly the
+<strong>bases of a matroid</strong> (the columns that line can “use,”
+with the realizable patterns as the bases), so the quotient
+<code>Q_L</code> <em>is</em> that matroid’s basis-exchange graph. Why it
+matters: a powerful theorem of <strong>Naddef–Pulleyblank</strong> says
+the basis-exchange graph of <em>any</em> matroid is either a hypercube
+or Hamilton-connected. The proof cashes this in at Part 17 — once a
+quotient is shown non-bipartite (so it can’t be a hypercube), it is
+automatically Hamilton-connected.</p>
 <hr />
 <h2 id="part-14-the-bipartite-triangle-free-surprise">Part 14 — The
 bipartite = triangle-free surprise</h2>
@@ -1191,6 +1207,14 @@ version fails even on C_4.)</li>
 smaller interchange graph of the matrices that all <em>share one fixed
 line</em> (then delete that line) / the graph of a line’s legal patterns
 (a matroid base graph).</li>
+<li><strong>Matroid / basis / basis-exchange graph:</strong> an abstract
+“independence” system (think linear independence of a matrix’s columns);
+a <strong>basis</strong> is a maximal independent set (all bases share
+one size); the <strong>basis-exchange graph</strong> has the bases as
+vertices, joined when they differ by a single swap. A line’s legal
+patterns form a matroid, so <code>Q_L</code> is its basis-exchange graph
+(Naddef–Pulleyblank: such graphs are hypercubes or
+Hamilton-connected).</li>
 <li><strong>Pivot construction:</strong> prove Hamilton paths in
 indecomposable classes by routing through a separating line’s quotient
 and lifting fiber-by-fiber.</li>
