@@ -364,9 +364,14 @@ end the path immediately, skipping everyone) — so the path takes a
 scenic route. Hamilton- connectedness just says a scenic route always
 exists. (Every path below is real, machine-checked.)</p>
 <p><strong>K₄ — the complete graph on 4 vertices (every pair
-joined).</strong> Total freedom: pick a start, pick an end, list the
-other two between them in any order — every step is automatically an
-edge.</p>
+joined).</strong> (Notation: <code>K_n</code> is the <strong>complete
+graph</strong> on <code>n</code> vertices — every pair joined by an edge
+— so <code>K_2</code> is a single edge and <code>K_3</code> a triangle;
+and <code>K_{m,n}</code> is the <strong>complete bipartite</strong>
+graph, every one of <code>m</code> vertices on one side joined to every
+one of <code>n</code> on the other, e.g. <code>K_{3,3}</code>.) Total
+freedom: pick a start, pick an end, list the other two between them in
+any order — every step is automatically an edge.</p>
 <pre><code>0→1: 0-2-3-1     0→2: 0-1-3-2     0→3: 0-1-2-3
 1→2: 1-0-3-2     1→3: 1-0-2-3     2→3: 2-0-1-3</code></pre>
 <figure>
