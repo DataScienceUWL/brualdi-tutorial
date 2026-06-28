@@ -162,18 +162,18 @@ vertical-align: middle;
 }
 .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 </style>
-  <style type="text/css">:root{ --accent:#569BBD; --accent-dk:#3d7a97; --bg:#fff; --fg:#1d1d1f; --muted:#5b6470; --code-bg:#f5f7f9; --border:#e2e6ea; --quote-bg:#eef5f9; }
-@media (prefers-color-scheme: dark){ :root{ --bg:#15181b; --fg:#e7e9ec; --muted:#9aa3ad; --code-bg:#1e2329; --border:#2c333a; --quote-bg:#1a2530; } }
+  <style type="text/css">:root{ --accent:#569BBD; --accent-dk:#3d7a97; --bg:#fff; --fg:#1d1d1f; --muted:#5b6470; --code-bg:#f5f7f9; --border:#e2e6ea; --quote-bg:#f4f7fa; }
+@media (prefers-color-scheme: dark){ :root{ --bg:#15181b; --fg:#e7e9ec; --muted:#9aa3ad; --code-bg:#1e2329; --border:#2c333a; --quote-bg:#1a2530; } blockquote{ color:var(--fg); } #TOC a:visited{ color:var(--accent-dk); } }
 *{ box-sizing:border-box; } html{ -webkit-text-size-adjust:100%; }
 body{ margin:0 auto; max-width:740px; padding:1.1rem 1.1rem 4rem; background:var(--bg); color:var(--fg); line-height:1.65; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; font-size:18px; }
 h1{ font-size:1.7rem; line-height:1.25; margin:.6rem 0 .2rem; color:var(--accent-dk); }
 h2{ font-size:1.32rem; margin:2.2rem 0 .6rem; padding-top:1.2rem; border-top:3px solid var(--accent); line-height:1.3; }
 h3{ font-size:1.1rem; margin:1.4rem 0 .4rem; color:var(--accent-dk); }
-a{ color:var(--accent-dk); } p,li{ overflow-wrap:break-word; }
+a,a:visited{ color:var(--accent-dk); } p,li{ overflow-wrap:break-word; }
 img{ max-width:100%; height:auto; display:block; margin:1rem auto; border-radius:6px; }
 code{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--code-bg); padding:.1em .35em; border-radius:4px; font-size:.92em; }
 pre{ background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-size:.9rem; line-height:1.45; } pre code{ background:none; padding:0; }
-blockquote{ margin:1rem 0; padding:.7rem 1rem; background:var(--quote-bg); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; }
+blockquote{ margin:1rem 0; padding:.7rem 1rem; background:var(--quote-bg); color:#11141a; border-left:4px solid var(--accent); border-radius:0 8px 8px 0; }
 hr{ border:none; border-top:1px solid var(--border); margin:2rem 0; }
 #TOC{ background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:.6rem 1rem; margin:1rem 0 2rem; }
 #TOC::before{ content:"Contents"; display:block; font-weight:700; color:var(--accent-dk); margin:.2rem 0 .4rem; font-size:.95rem; }
@@ -224,9 +224,17 @@ The interchange graph (our flip graph), by hand</a></li>
 <li><a href="#part-10-brualdis-conjecture-and-its-history" id="toc-part-10-brualdis-conjecture-and-its-history">Part 10 — Brualdi’s
 conjecture and its history</a></li>
 <li><a href="#part-11-cartesian-products-of-graphs" id="toc-part-11-cartesian-products-of-graphs">Part 11 — Cartesian
-products of graphs</a></li>
+products of graphs</a>
+<ul>
+<li><a href="#worked-example-k_3-k_2-is-the-triangular-prism" id="toc-worked-example-k_3-k_2-is-the-triangular-prism">Worked example:
+<code>K_3 □ K_2</code> is the triangular prism</a></li>
+</ul></li>
 <li><a href="#part-12-complete-transposition-graphs" id="toc-part-12-complete-transposition-graphs">Part 12 — Complete
-transposition graphs</a></li>
+transposition graphs</a>
+<ul>
+<li><a href="#worked-example-ct_3-spelled-out" id="toc-worked-example-ct_3-spelled-out">Worked example:
+<code>CT_3</code> spelled out</a></li>
+</ul></li>
 <li><a href="#part-13-the-structure-theory-lines-fibers-quotients" id="toc-part-13-the-structure-theory-lines-fibers-quotients">Part 13 —
 The structure theory: lines, fibers, quotients</a>
 <ul>
@@ -236,11 +244,19 @@ example: fibers and quotients of <code>CT_3 = K_{3,3}</code></a></li>
 <li><a href="#part-14-the-bipartite-triangle-free-surprise" id="toc-part-14-the-bipartite-triangle-free-surprise">Part 14 — The
 bipartite = triangle-free surprise</a></li>
 <li><a href="#part-15-the-strategy-strengthen-then-reduce-to-one-lemma" id="toc-part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
-15 — The strategy: strengthen, then reduce to one lemma</a></li>
+15 — The strategy: strengthen, then reduce to one lemma</a>
+<ul>
+<li><a href="#worked-example-paired-2-dpc-on-ct_3-k_33" id="toc-worked-example-paired-2-dpc-on-ct_3-k_33">Worked example:
+paired-2-DPC on <code>CT_3 = K_{3,3}</code></a></li>
+</ul></li>
 <li><a href="#part-16-the-engine-coleman-et-al.-2025-the-double-induction" id="toc-part-16-the-engine-coleman-et-al.-2025-the-double-induction">Part
 16 — The engine: Coleman et al. 2025 + the double induction</a></li>
 <li><a href="#part-17-the-pivot-construction-our-deepest-part" id="toc-part-17-the-pivot-construction-our-deepest-part">Part 17 — The
-pivot construction (our deepest part)</a></li>
+pivot construction (our deepest part)</a>
+<ul>
+<li><a href="#worked-example-a-pivot-on-a-12-vertex-class" id="toc-worked-example-a-pivot-on-a-12-vertex-class">Worked example: a
+pivot on a 12-vertex class</a></li>
+</ul></li>
 <li><a href="#part-18-the-bonus-corollary-two-communities" id="toc-part-18-the-bonus-corollary-two-communities">Part 18 — The bonus
 corollary: two communities</a></li>
 <li><a href="#part-19-how-we-know-its-probably-right-and-the-honest-gaps" id="toc-part-19-how-we-know-its-probably-right-and-the-honest-gaps">Part
@@ -710,6 +726,40 @@ grid).</li>
 strings, flip one bit — itself a famous flip graph / Gray code!).</li>
 <li><code>(path) □ (path)</code> = a rectangular grid graph.</li>
 </ul>
+<h3 id="worked-example-k_3-k_2-is-the-triangular-prism">Worked example:
+<code>K_3 □ K_2</code> is the triangular prism</h3>
+<p>Let <code>K_3</code> be a triangle on <code>{a,b,c}</code> and
+<code>K_2</code> a single edge on <code>{0,1}</code>. The product has
+the <strong>six pairs</strong> as vertices; write <code>a0</code> for
+<code>(a,0)</code>, and so on.</p>
+<pre><code>layer 0:  a0  b0  c0
+layer 1:  a1  b1  c1
+rungs:    a0–a1  b0–b1  c0–c1</code></pre>
+<p>Each <strong>layer</strong> (same 2nd coordinate) is a copy of
+<code>K_3</code> — a triangle, since <code>K_3</code>’s edges carry
+over; the <strong>rungs</strong> (same 1st coordinate) are copies of the
+single <code>K_2</code> edge. Two triangles joined by three rungs is
+exactly the <strong>triangular prism</strong> from Part 4 — so that
+prism <em>is</em> <code>K_3 □ K_2</code>: two copies (“layers”) of
+<code>K_3</code>, indexed by <code>K_2</code>, stitched by rungs. That
+“layers of <code>G</code> indexed by <code>H</code>” picture is the one
+the proof uses to thread a path through a product.</p>
+<p><strong>Which pairs become adjacent (the rule in action).</strong>
+The rule: <code>(g,h) ~ (g&#39;,h&#39;)</code> exactly when one coordinate is
+<em>equal</em> and the other is an <em>edge</em>. Checking every
+candidate neighbour of <code>a0 = (a,0)</code> — the parenthetical notes
+which coordinate matches and whether the other is an edge:</p>
+<pre><code>a0 — b0   edge   (0=0, a~b)
+a0 — c0   edge   (0=0, a~c)
+a0 — a1   edge   (a=a, 0~1)
+a0 — b1   none   (a≠b, 0≠1)
+a0 — c1   none   (a≠c, 0≠1)</code></pre>
+<p>So <code>a0</code>’s neighbours are exactly <code>b0, c0</code> (its
+layer-triangle) and <code>a1</code> (its rung) — degree 3, as in the
+prism. The only two ways to get an edge are “stay in a layer and move
+along a <code>K_3</code> edge” or “stay in a column and take the
+<code>K_2</code> rung”; changing <em>both</em> coordinates at once is
+never an edge. Every vertex behaves the same way.</p>
 <p>Key intuition for later: a Cartesian product is “layers of
 <code>G</code>, indexed by <code>H</code>, stitched together.” To thread
 a single path through the whole product you traverse layers and hop
@@ -735,12 +785,40 @@ Equivalently again, it’s <code>G(R,S)</code> for the all-1s
 <li><code>CT_3</code> = <code>K_{3,3}</code> (Part 8).</li>
 <li><code>CT_4</code> has <code>4! = 24</code> vertices, and so on.</li>
 </ul>
+<h3 id="worked-example-ct_3-spelled-out">Worked example:
+<code>CT_3</code> spelled out</h3>
+<p>The six permutations of <code>{1,2,3}</code>, written as the image
+word <code>σ(1)σ(2)σ(3)</code>:</p>
+<pre><code>even:  123   231   312
+odd:   132   213   321</code></pre>
+<p>Two are joined when they differ by <strong>one transposition</strong>
+— swapping the symbols in two positions. From <code>123</code>: swap
+positions 1,2 → <code>213</code>; positions 2,3 → <code>132</code>;
+positions 1,3 → <code>321</code>. So <code>123</code> is joined to all
+three <em>odd</em> words, and to no even one (a single swap flips
+parity). The same holds for every even word, so each of
+<code>{123, 231, 312}</code> is joined to each of
+<code>{132, 213, 321}</code> — exactly <code>K_{3,3}</code>, the colour
+classes being the even and odd permutations.</p>
 <p>Each <code>CT_a</code> is bipartite (parity again),
 vertex-transitive, and very symmetric. These are the “atoms.” The
 structure theorem (next part) says the bipartite interchange graphs are
 exactly <strong>Cartesian products of these atoms</strong>,
 e.g. <code>CT_3 □ CT_4</code>. Those products are the single hard family
 the whole proof funnels into.</p>
+<p><strong>A twin atom: co-permutation blocks.</strong> Complement every
+entry (<code>0 ↔︎ 1</code>) of an <code>a×a</code> permutation matrix and
+you get a matrix with a single <code>0</code> — so <code>a-1</code> ones
+— in each row and column: the margins
+<code>R = S = (a-1, …, a-1)</code>. These
+<strong>co-permutation</strong> matrices form their own interchange
+class, but complementing is a graph isomorphism (it carries interchanges
+to interchanges), so a co-permutation block is just a relabelled
+<code>CT_a</code>. Both therefore count as the <em>same</em> atom —
+which is why the structure theorem is phrased as “products of
+<code>CT_a</code>’s,” with co-permutation blocks folded in. (The phrase
+“complete-transposition or co-permutation block” appears in Part 14; the
+second is a disguised <code>CT_a</code>.)</p>
 <hr />
 <h2 id="part-13-the-structure-theory-lines-fibers-quotients">Part 13 —
 The structure theory: lines, fibers, quotients</h2>
@@ -797,11 +875,20 @@ interchange graph is <code>CT_3 = K_{3,3}</code>.</p>
 a single <code>1</code>, in column 1, 2, or 3 — three patterns — so the
 six matrices split into <strong>three fibers</strong> of two matrices
 each:</p>
-<pre><code>   row 1 = (1 0 0)          row 1 = (0 1 0)          row 1 = (0 0 1)
-    1 0 0    1 0 0           0 1 0    0 1 0           0 0 1    0 0 1
-    0 1 0    0 0 1           1 0 0    0 0 1           1 0 0    0 1 0
-    0 0 1    0 1 0           0 0 1    1 0 0           0 1 0    1 0 0
-   └─ fiber F(100) ─┘       └─ fiber F(010) ─┘       └─ fiber F(001) ─┘</code></pre>
+<pre><code>fiber F(100)   (row 1 = 1 0 0):
+   1 0 0    1 0 0
+   0 1 0    0 0 1
+   0 0 1    0 1 0
+
+fiber F(010)   (row 1 = 0 1 0):
+   0 1 0    0 1 0
+   1 0 0    0 0 1
+   0 0 1    1 0 0
+
+fiber F(001)   (row 1 = 0 0 1):
+   0 0 1    0 0 1
+   1 0 0    0 1 0
+   0 1 0    1 0 0</code></pre>
 <p>Take one fiber, say <code>F(100)</code>. Both matrices share row 1;
 they differ only in rows 2–3, and one becomes the other by a single
 interchange on rows <code>{2,3}</code>, columns <code>{2,3}</code>.
@@ -947,6 +1034,22 @@ from a1 to b1, one from a2 to b2 — that <strong>together cover every
 vertex</strong>. This “balanced” restriction is essential: the
 same-colour version fails even for C_4. Requiring this for
 <em>every</em> valid balanced choice of two pairs is paired-2-DPC.</p>
+<h3 id="worked-example-paired-2-dpc-on-ct_3-k_33">Worked example:
+paired-2-DPC on <code>CT_3 = K_{3,3}</code></h3>
+<p>Label the colour classes <code>A = {a1,a2,a3}</code> and
+<code>B = {b1,b2,b3}</code> — every <code>a</code> joined to every
+<code>b</code>. Pick two opposite-colour pairs, say <code>a1→b1</code>
+and <code>a2→b2</code> (four distinct vertices). Paired-2-DPC asks for
+two <strong>vertex-disjoint</strong> paths, one per pair, that
+<strong>together use all six</strong> vertices. One solution:</p>
+<pre><code>a1 → b1:   a1 — b3 — a3 — b1
+a2 → b2:   a2 — b2</code></pre>
+<p>Path 1 uses <code>{a1, b3, a3, b1}</code>, path 2 uses
+<code>{a2, b2}</code>: disjoint, and together all six. The spare
+vertices <code>a3, b3</code> got soaked up into path 1 — that absorbing
+move is the whole point, and it can be done for <em>every</em> valid
+pair of opposite-colour demands, which is what makes
+<code>K_{3,3}</code> paired-2-DPC.</p>
 <p>It’s strictly stronger than laceable (laceable = the one-pair
 version), and — crucially — it’s exactly the property that
 <strong>survives Cartesian products</strong>. That’s why it, and not
@@ -1044,6 +1147,37 @@ quotient is a Hamilton-connected matroid base graph; route through it
 and lift fiber-by-fiber by induction — the non-bipartite fiber absorbs
 the parity, and an interface lemma keeps two crossing choices at every
 splice.”</p>
+<h3 id="worked-example-a-pivot-on-a-12-vertex-class">Worked example: a
+pivot on a 12-vertex class</h3>
+<p>Take the <code>3×4</code> binary matrices with row sums
+<code>(2,1,1)</code> and columns all <code>1</code> — there are
+<code>12</code>, and the interchange graph is non-bipartite, prime (no
+invariant cell), and not a product, so it sits squarely in this case.
+Pick the <strong>pivot line</strong> <code>L</code> = the <strong>second
+row</strong> (a row holding a single <code>1</code>). Its legal patterns
+are the four columns that <code>1</code> could occupy, and:</p>
+<ul>
+<li><strong>Quotient <code>Q_L</code>:</strong> those <strong>4
+patterns</strong> as vertices; moving the <code>1</code> between two
+columns is one interchange, so every pair is joined —
+<code>Q_L = K_4</code>, a matroid base graph (hence
+Hamilton-connected).</li>
+<li><strong>Each fiber</strong> (fix which column holds the row’s
+<code>1</code>) is the leftover <code>2×3</code> class on the other rows
+and columns — row sums <code>(2,1)</code>, columns all <code>1</code> —
+which is <strong>3 matrices forming a triangle
+<code>K_3</code></strong>. A triangle is non-bipartite: that is the
+flexible, parity-absorbing fiber this case needs.</li>
+</ul>
+<p>So the whole 12-vertex graph is <strong>four triangles laid over a
+<code>K_4</code> quotient</strong>. To get a Hamilton path between a
+chosen pair: take a Hamilton path of <code>K_4</code> through the
+patterns (<code>p1 → p2 → p3 → p4</code>) and <strong>thread</strong> it
+— walk all of fiber <code>p1</code>’s triangle, cross one interchange
+into <code>p2</code>, walk its triangle, and so on. Making each crossing
+enter and leave so that no vertex is missed or repeated is exactly the
+interface/parity bookkeeping above; the payoff is a single path through
+all <code>12</code> vertices.</p>
 <hr />
 <h2 id="part-18-the-bonus-corollary-two-communities">Part 18 — The bonus
 corollary: two communities</h2>
@@ -1200,6 +1334,10 @@ one coordinate at a time.</li>
 <li><strong>CT_a (complete transposition graph):</strong> permutations
 of a items joined by single swaps; the all-1s a×a interchange graph;
 CT_2=K_2, CT_3=K_{3,3}.</li>
+<li><strong>Co-permutation block:</strong> the <code>0↔︎1</code>
+complement of a permutation block — margins all <code>a-1</code>, a
+single <code>0</code> per row and column; complementing is a graph
+isomorphism, so it is isomorphic to <code>CT_a</code> (same atom).</li>
 <li><strong>Balanced bipartite block:</strong> a Cartesian product of
 CT_a’s; the hard core of the problem.</li>
 <li><strong>Paired-2-DPC:</strong> for any two <strong>balanced</strong>
