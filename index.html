@@ -228,9 +228,13 @@ products of graphs</a></li>
 <li><a href="#part-12-complete-transposition-graphs" id="toc-part-12-complete-transposition-graphs">Part 12 — Complete
 transposition graphs</a></li>
 <li><a href="#part-13-the-structure-theory-lines-fibers-quotients" id="toc-part-13-the-structure-theory-lines-fibers-quotients">Part 13 —
-The structure theory: lines, fibers, quotients</a></li>
-<li><a href="#part-14-the-bipartite-triangle-free-surprise-huiyas-question" id="toc-part-14-the-bipartite-triangle-free-surprise-huiyas-question">Part
-14 — The bipartite = triangle-free surprise (Huiya’s question)</a></li>
+The structure theory: lines, fibers, quotients</a>
+<ul>
+<li><a href="#a-worked-example-fibers-and-quotients-of-ct_3-k_33" id="toc-a-worked-example-fibers-and-quotients-of-ct_3-k_33">A worked
+example: fibers and quotients of <code>CT_3 = K_{3,3}</code></a></li>
+</ul></li>
+<li><a href="#part-14-the-bipartite-triangle-free-surprise" id="toc-part-14-the-bipartite-triangle-free-surprise">Part 14 — The
+bipartite = triangle-free surprise</a></li>
 <li><a href="#part-15-the-strategy-strengthen-then-reduce-to-one-lemma" id="toc-part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
 15 — The strategy: strengthen, then reduce to one lemma</a></li>
 <li><a href="#part-16-the-engine-coleman-et-al.-2025-the-double-induction" id="toc-part-16-the-engine-coleman-et-al.-2025-the-double-induction">Part
@@ -241,8 +245,8 @@ pivot construction (our deepest part)</a></li>
 corollary: two communities</a></li>
 <li><a href="#part-19-how-we-know-its-probably-right-and-the-honest-gaps" id="toc-part-19-how-we-know-its-probably-right-and-the-honest-gaps">Part
 19 — How we know it’s (probably) right — and the honest gaps</a></li>
-<li><a href="#part-20-cheat-sheet-talking-to-huiya" id="toc-part-20-cheat-sheet-talking-to-huiya">Part 20 — Cheat sheet:
-talking to Huiya</a></li>
+<li><a href="#part-20-cheat-sheet-the-short-version" id="toc-part-20-cheat-sheet-the-short-version">Part 20 — Cheat sheet:
+the short version</a></li>
 <li><a href="#part-21-glossary-one-liners" id="toc-part-21-glossary-one-liners">Part 21 — Glossary
 (one-liners)</a></li>
 </ul></li>
@@ -250,14 +254,14 @@ talking to Huiya</a></li>
 </nav>
 <h1 id="brualdis-conjecture-a-from-scratch-tutorial">Brualdi’s
 conjecture — a from-scratch tutorial</h1>
-<p><em>For Jeff. Goal: start from “what is a flip graph?” and build,
-patiently and with worked examples, up to “here is what we proved, how,
-and what’s still on faith” — so you can talk about it intelligently with
-Huiya. You have a strong math background but this corner of
-combinatorics is new, so I define every term the first time it appears
-and work small cases by hand. Phone-friendly: short chunks, matrices and
-pictures in monospace blocks, light notation. Read one part at a
-time.</em></p>
+<p><em>A from-scratch, plain-language tour of Brualdi’s
+interchange-graph conjecture and its proof: starting from “what is a
+flip graph?” and building, patiently and with worked examples, up to
+“here is what was proved, how, and what is still on faith.” It assumes
+general mathematical comfort but treats this corner of combinatorics as
+new, defining every term the first time it appears and working small
+cases by hand. Phone-friendly: short chunks, matrices and pictures in
+monospace blocks, light notation. Read one part at a time.</em></p>
 <hr />
 <h2 id="part-1-graphs-in-3-minutes">Part 1 — Graphs, in 3 minutes</h2>
 <p>A <strong>graph</strong> is just a set of <strong>vertices</strong>
@@ -583,8 +587,7 @@ always do this.</em></p>
 — The same object in three other languages (optional)</h2>
 <p><em>You can skip this part and lose nothing essential — it’s just
 three other ways people describe the exact same graph. But one of them
-may make it click, and the third is the one Huiya will find most
-natural.</em></p>
+may make it click, and the third may feel the most natural.</em></p>
 <p><strong>(1) A Markov-chain state graph.</strong> To sample random
 contingency tables with fixed margins, statisticians start from one
 table and repeatedly apply random 2×2 interchanges — a random walk on
@@ -618,8 +621,8 @@ polytope with margins R, S.</strong> That’s the <em>only</em> sense in
 which anything “higher-dimensional” is involved: the polytope has higher
 faces, but the interchange graph itself is just corners and edges — an
 ordinary graph.</p>
-<p><strong>(3) Bipartite graphs under 2-switches (the friendly one for
-Huiya).</strong> A <strong>bipartite graph</strong> splits its vertices
+<p><strong>(3) Bipartite graphs under 2-switches (the graph-theory
+view).</strong> A <strong>bipartite graph</strong> splits its vertices
 into two sides, with edges only <em>between</em> the sides. Record one
 by a <strong>biadjacency matrix</strong>: rows = left-side vertices,
 columns = right-side vertices, and a <code>1</code> in cell (i,j) means
@@ -636,8 +639,8 @@ a graph while keeping every vertex’s degree the same.</li>
 <p>So <code>G(R,S)</code> is the <strong>flip graph of all bipartite
 graphs with a prescribed degree sequence, under 2-switches</strong> —
 what graph theorists call a <strong>realization graph</strong> of the
-degree sequence. Huiya works on graph Hamiltonicity, so this is the
-dictionary that lets him bring his intuition straight in.</p>
+degree sequence. For anyone working on graph Hamiltonicity, this is the
+dictionary that brings that intuition straight in.</p>
 <p>Picture for #3 — a 2-switch on a little bipartite graph (left side
 1,2; right side a,b):</p>
 <pre><code> 1 — a            1   a
@@ -676,7 +679,7 @@ only fragments solved. That’s why the journal ambitions are high — the
 paper now contains a complete written proof with all former gaps closed
 and every load-bearing lemma backed by its own passing computational
 check (the verification ledger). It is awaiting human-expert
-verification (not yet referee-final), so “if it holds up under Huiya’s
+verification (not yet referee-final), so “if it holds up under expert
 review” is the honest hedge.</p>
 <hr />
 <h2 id="part-11-cartesian-products-of-graphs">Part 11 — Cartesian
@@ -779,6 +782,42 @@ versions of the same kind of object), laid out over the quotient
 induction.</li>
 </ul></li>
 </ul>
+<h3 id="a-worked-example-fibers-and-quotients-of-ct_3-k_33">A worked
+example: fibers and quotients of <code>CT_3 = K_{3,3}</code></h3>
+<p>The smallest instructive case is the <code>3×3</code> permutation
+matrices — row and column sums all <code>1</code>, so exactly one
+<code>1</code> in each row and column. There are six of them, and their
+interchange graph is <code>CT_3 = K_{3,3}</code>.</p>
+<p>Freeze the line <code>L</code> = <strong>row 1</strong>. Row 1 holds
+a single <code>1</code>, in column 1, 2, or 3 — three patterns — so the
+six matrices split into <strong>three fibers</strong> of two matrices
+each:</p>
+<pre><code>   row 1 = (1 0 0)          row 1 = (0 1 0)          row 1 = (0 0 1)
+    1 0 0    1 0 0           0 1 0    0 1 0           0 0 1    0 0 1
+    0 1 0    0 0 1           1 0 0    0 0 1           1 0 0    0 1 0
+    0 0 1    0 1 0           0 0 1    1 0 0           0 1 0    1 0 0
+   └─ fiber F(100) ─┘       └─ fiber F(010) ─┘       └─ fiber F(001) ─┘</code></pre>
+<p>Take one fiber, say <code>F(100)</code>. Both matrices share row 1;
+they differ only in rows 2–3, and one becomes the other by a single
+interchange on rows <code>{2,3}</code>, columns <code>{2,3}</code>.
+Deleting the shared row 1, the fiber is exactly the interchange graph of
+the <code>2×2</code> permutation class on rows 2–3 — which is
+<code>K_2</code>, a single edge. All three fibers are <code>K_2</code>:
+each a <strong>smaller interchange graph</strong>.</p>
+<p>The <strong>quotient</strong> <code>Q_L</code> has those three row-1
+patterns as its vertices. Two patterns are joined when one interchange
+that <em>touches</em> row 1 carries a matrix of one fiber to a matrix of
+another — for instance the interchange on rows <code>{1,2}</code>,
+columns <code>{1,2}</code> turns <code>(1 0 0)</code> into
+<code>(0 1 0)</code>, joining <code>F(100)</code> to
+<code>F(010)</code>; every pair is joined the same way, so
+<code>Q_L = K_3</code>, a triangle.</p>
+<p>So <code>K_{3,3}</code> is <strong>three <code>K_2</code> fibers laid
+over a <code>K_3</code> quotient</strong>, glued by the row-1-touching
+interchanges — the “copies of fibers over the quotient” picture, made
+concrete. (A fiber collects the matrices that <em>share</em> the frozen
+line; matrices that <em>differ</em> in that line lie in different fibers
+and are linked through the quotient.)</p>
 <p>One deep bonus fact you only need to <em>recognize</em>: the legal
 patterns of a line are the <strong>bases of a matroid</strong>, so
 <code>Q_L</code> is a <strong>matroid basis-exchange graph</strong>.
@@ -786,17 +825,17 @@ That matters because there’s a powerful theorem (Naddef–Pulleyblank)
 that such graphs are always either hypercubes or Hamilton-connected —
 which the proof cashes in at Part 17.</p>
 <hr />
-<h2 id="part-14-the-bipartite-triangle-free-surprise-huiyas-question">Part
-14 — The bipartite = triangle-free surprise (Huiya’s question)</h2>
-<p>This is the exact point Huiya raised first, so it’s worth getting
+<h2 id="part-14-the-bipartite-triangle-free-surprise">Part 14 — The
+bipartite = triangle-free surprise</h2>
+<p>This is the subtlest point for a newcomer, so it’s worth getting
 crisp.</p>
 <p>A <strong>triangle</strong> is a 3-cycle (three mutually adjacent
 vertices). “Triangle-free” = no triangles.</p>
 <p><strong>For graphs in general:</strong> bipartite ⇔ no odd cycle
 (Part 3). Being triangle-free is <strong>weaker</strong> — you can be
-triangle-free but still have a 5-cycle, so still not bipartite. Huiya is
-completely right about that. (The 5-cycle <code>C_5</code> is the
-standard example: no triangle, not bipartite.)</p>
+triangle-free but still have a 5-cycle, so still not bipartite — a
+genuine distinction. (The 5-cycle <code>C_5</code> is the standard
+example: no triangle, not bipartite.)</p>
 <p><strong>But interchange graphs are special.</strong> Brualdi proved
 (Thm 6.3.4 in his book <em>Combinatorial Matrix Classes</em>): an
 interchange graph that contains <em>any</em> odd cycle already contains
@@ -814,12 +853,11 @@ block</em>. For a non-prime (decomposable) class, the bipartite
 interchange graphs are exactly the <strong>Cartesian products</strong>
 of such blocks. Either way, bipartite structure reduces to these atomic
 blocks — the structural gold we use next.</p>
-<p><strong>How to say it to Huiya:</strong> “You’re right it’s false for
-general graphs; it’s a special property of this class (Brualdi 6.3.4) —
-an odd cycle forces a triangle here. We added a line to the paper saying
-so explicitly, and I verified it computationally.” (We did add that
-line.) His instinct landed on the single most confusing spot for a
-newcomer — a good sign for the collaboration.</p>
+<p><strong>In short:</strong> it is false for general graphs; it is a
+special property of this class (Brualdi 6.3.4) — an odd cycle forces a
+triangle here. The paper states this explicitly, and it is checked
+computationally. This is the single most confusing spot for a newcomer,
+which is why it gets its own part.</p>
 <hr />
 <h2 id="part-15-the-strategy-strengthen-then-reduce-to-one-lemma">Part
 15 — The strategy: strengthen, then reduce to one lemma</h2>
@@ -837,7 +875,7 @@ that gluing, but</li>
 </ul>
 <p>So the stronger statement is the one that can be passed <em>up</em>
 an induction. (This “strengthen the inductive hypothesis” trick is
-standard; Huiya will recognise it instantly.)</p>
+standard and widely used.)</p>
 <p><strong>Move 2 — reduce everything to one lemma.</strong> Induct on
 the number of vertices. After the harmless normalisation (delete
 inactive lines, Part 13), every graph falls into a clean
@@ -923,7 +961,7 @@ Lean proof assistant</strong> — the logical assembly and the Block-Lemma
 double induction are verified <em>given</em> the cited Coleman et
 al. 2025 theorem and the CT-structure as inputs (it verifies the
 composition, not those external inputs).</p>
-<p><strong>One line for Huiya:</strong> “Blocks are products of
+<p><strong>In one line:</strong> “Blocks are products of
 <code>CT_a</code>; Coleman et al. 2025 gives the paired cover whenever
 the leaf is any even laceable graph, so a whole <code>CT</code>-product
 folds in as a leaf, and a clean double induction closes it.”</p>
@@ -935,8 +973,8 @@ pivot construction (our deepest part)</h2>
 indecomposable</strong> (not a product), with <strong>≥ 3 active rows
 AND ≥ 3 active columns</strong> and <strong>|V| &gt; 6</strong>. Classes
 with ≤ 2 active lines (Johnson graphs) are handled in the base section,
-not here. It’s the most original part — and still the part most worth
-Huiya’s eyes — though the colour bookkeeping that used to be the open
+not here. It’s the most original part — and still the part most worth an
+expert’s eyes — though the colour bookkeeping that used to be the open
 spot here is now <strong>resolved and computer-verified</strong> (see
 below). It remains the one piece the Lean formalization does
 <strong>not</strong> verify (it’s entered there as an assumption).</p>
@@ -980,7 +1018,7 @@ a landing spot. This was the last open spot in the whole argument, and
 it is now closed — we also implemented this exact construction and
 verified it produces a valid Hamilton path on every pair of every small
 class we tested, with no failure.</p>
-<p><strong>One line for Huiya:</strong> “Pivot on a separating line; its
+<p><strong>In one line:</strong> “Pivot on a separating line; its
 quotient is a Hamilton-connected matroid base graph; route through it
 and lift fiber-by-fiber by induction — the non-bipartite fiber absorbs
 the parity, and an interface lemma keeps two crossing choices at every
@@ -998,12 +1036,11 @@ question recorded as open in the degree-sequence community (Barrus,
 2016), in the bipartite / split-graph case (a <strong>split
 graph</strong> is one whose vertices divide into a clique plus an
 independent set).</p>
-<p>Be careful (and tell Huiya this honestly): it’s the <strong>same
-theorem in two languages</strong>, <strong>not</strong> a stronger one.
-The fully general version — realization graphs of <em>arbitrary</em>
-degree sequences, not just bipartite — stays open. But it means the
-result speaks to two research communities at once, which helps its
-appeal.</p>
+<p>Be careful (an honest point): it’s the <strong>same theorem in two
+languages</strong>, <strong>not</strong> a stronger one. The fully
+general version — realization graphs of <em>arbitrary</em> degree
+sequences, not just bipartite — stays open. But it means the result
+speaks to two research communities at once, which helps its appeal.</p>
 <hr />
 <h2 id="part-19-how-we-know-its-probably-right-and-the-honest-gaps">Part
 19 — How we know it’s (probably) right — and the honest gaps</h2>
@@ -1022,7 +1059,7 @@ ledger).</strong> Beyond the conclusion check, <em>each</em>
 load-bearing lemma now has its own script confirming it on all small
 classes — the quotient/matroid identity (5.4a), NEST (5.6), the triangle
 classification (5.7b), the buffer lemmas (5.8/5.8a), pivot-freedom and
-the #2-nail (5.2/5.3), the canonical fibre reduction (5.1), and the §4
+the #2-nail (5.2/5.3), the canonical fiber reduction (5.1), and the §4
 product-lift and K₂ comb — all passing, <strong>0 violations</strong>.
 (Full table: <code>results/VERIFICATION_LEDGER.md</code>.) This is what
 makes the recent definition and lemma fixes <em>checked</em>, not merely
@@ -1037,14 +1074,14 @@ and the Block-Lemma double induction (Part 16) are machine-checked
 inputs</em> (it verifies the composition, not those external inputs; the
 pivot construction is assumed, not proved).</li>
 </ul>
-<p>The honest position — say this plainly to Huiya:</p>
+<p>The honest position, stated plainly:</p>
 <ul>
 <li>The <strong>§§3–6 reduction</strong>, especially the <strong>pivot
 construction</strong> (Part 17) and the <strong>product-lifting parity
 bookkeeping</strong> (§4), is <strong>not</strong> machine-proved in
 Lean (entered as an assumption). Both former §5 gaps are now proved and
-independently re-audited — but <strong>this is exactly what Huiya is
-verifying</strong>; no human expert has checked it yet.</li>
+independently re-audited — but <strong>this is exactly what a human
+reviewer must verify</strong>; no human expert has checked it yet.</li>
 <li>“Checked on 144,389 graphs / 2,555,559 instances” is
 <strong>corroboration on a finite range, not a proof of the infinite
 family</strong>. It independently checks the conclusion; it does not
@@ -1060,8 +1097,8 @@ SAT check (144,389 classes / 2,555,559 instances / zero exceptions)
 corroborates the conclusion but is not a substitute for the
 proof.</em></p>
 <hr />
-<h2 id="part-20-cheat-sheet-talking-to-huiya">Part 20 — Cheat sheet:
-talking to Huiya</h2>
+<h2 id="part-20-cheat-sheet-the-short-version">Part 20 — Cheat sheet:
+the short version</h2>
 <p><strong>The 4-sentence pitch.</strong> “We prove every interchange
 graph <code>G(R,S)</code> is maximally Hamiltonian, which settles
 Brualdi’s 1980 conjecture. The proof reduces everything to one property
@@ -1086,9 +1123,9 @@ the one the induction can carry.</li>
 need (a) the stronger disjoint-path-cover property, which needed Coleman
 et al. 2025, and (b) the pivot construction for the indecomposable
 non-product classes. Plus the maximal-Hamiltonicity strengthening.</li>
-<li><em>“What exactly do you want me to check?”</em> → The reduction —
-above all Part 17 (pivot) and the Part 16 parity bookkeeping — the
-pieces not machine-checked. The cited theorems (Coleman, Brualdi,
+<li><em>“What should a reviewer focus on?”</em> → The reduction — above
+all Part 17 (pivot) and the Part 16 parity bookkeeping — the pieces not
+machine-checked. The cited theorems (Coleman, Brualdi,
 Naddef–Pulleyblank, Jo–Park–Chwa, Araki, Alspach) can be taken as
 given.</li>
 <li><em>“Is the 144k-graph check a proof?”</em> → No — corroboration on
