@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>The paper, walked through</title>
+  <style>
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+background-color: #1a1a1a;
+border: none;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">:root{ --accent:#569BBD; --accent-dk:#3d7a97; --bg:#fff; --fg:#1d1d1f; --muted:#5b6470; --code-bg:#f5f7f9; --border:#e2e6ea; --quote-bg:#f4f7fa; --quote-fg:#11141a; }
+@media (prefers-color-scheme: dark){ :root{ --bg:#15181b; --fg:#e7e9ec; --muted:#9aa3ad; --code-bg:#1e2329; --border:#2c333a; --quote-bg:#1a2530; --quote-fg:#e7e9ec; } #TOC a:visited{ color:var(--accent-dk); } }
+*{ box-sizing:border-box; } html{ -webkit-text-size-adjust:100%; }
+body{ margin:0 auto; max-width:740px; padding:1.1rem 1.1rem 4rem; background:var(--bg); color:var(--fg); line-height:1.65; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; font-size:18px; }
+h1{ font-size:1.7rem; line-height:1.25; margin:.6rem 0 .2rem; color:var(--accent-dk); }
+h2{ font-size:1.32rem; margin:2.2rem 0 .6rem; padding-top:1.2rem; border-top:3px solid var(--accent); line-height:1.3; }
+h3{ font-size:1.1rem; margin:1.4rem 0 .4rem; color:var(--accent-dk); }
+a,a:visited{ color:var(--accent-dk); } p,li{ overflow-wrap:break-word; }
+img{ max-width:100%; height:auto; display:block; margin:1rem auto; border-radius:6px; }
+code{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--code-bg); padding:.1em .35em; border-radius:4px; font-size:.92em; }
+pre{ background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-size:.9rem; line-height:1.45; } pre code{ background:none; padding:0; }
+blockquote{ margin:1rem 0; padding:.7rem 1rem; background:var(--quote-bg); color:var(--quote-fg); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; }
+hr{ border:none; border-top:1px solid var(--border); margin:2rem 0; }
+#TOC{ background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:.6rem 1rem; margin:1rem 0 2rem; }
+#TOC::before{ content:"Contents"; display:block; font-weight:700; color:var(--accent-dk); margin:.2rem 0 .4rem; font-size:.95rem; }
+#TOC ul{ margin:.2rem 0; padding-left:1.1rem; } #TOC li{ margin:.15rem 0; } #TOC a{ text-decoration:none; }
+.topbtn{ position:fixed; right:14px; bottom:14px; background:var(--accent); color:#fff; text-decoration:none; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; box-shadow:0 2px 8px rgba(0,0,0,.25); opacity:.9; }
+@media (max-width:480px){ body{ font-size:17px; padding:.9rem; } h1{ font-size:1.45rem; } }
+</style>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+details{border:1px solid var(--accent-dk,#888);border-radius:6px;padding:.4em .9em;margin:1em 0;background:rgba(127,127,127,.06)}
+summary{cursor:pointer;font-weight:600;color:var(--accent-dk,#0a58ca)}
+details[open]>summary{margin-bottom:.6em}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">The paper, walked through</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#the-paper-walked-through-with-a-worked-example-at-every-step" id="toc-the-paper-walked-through-with-a-worked-example-at-every-step">The
+paper, walked through — with a worked example at every step</a></li>
+<li><a href="#introduction" id="toc-introduction">§1. Introduction</a>
+<ul>
+<li><a href="#the-objects-matrices-interchanges-and-the-interchange-graph" id="toc-the-objects-matrices-interchanges-and-the-interchange-graph">The
+objects: matrices, interchanges, and the interchange graph</a></li>
+<li><a href="#brualdis-conjecture-and-the-theorem-we-prove" id="toc-brualdis-conjecture-and-the-theorem-we-prove">Brualdi’s
+conjecture, and the theorem we prove</a></li>
+<li><a href="#the-corollary-and-the-one-lemma-everything-reduces-to" id="toc-the-corollary-and-the-one-lemma-everything-reduces-to">The
+corollary, and the one lemma everything reduces to</a></li>
+</ul></li>
+<li><a href="#preliminaries" id="toc-preliminaries">§2.
+Preliminaries</a>
+<ul>
+<li><a href="#lines-fibers-and-quotients" id="toc-lines-fibers-and-quotients">§2.1 Lines, fibers, and
+quotients</a></li>
+<li><a href="#invariant-positions" id="toc-invariant-positions">§2.2
+Invariant positions</a></li>
+<li><a href="#bipartiteness" id="toc-bipartiteness">§2.3
+Bipartiteness</a></li>
+<li><a href="#disjoint-path-covers" id="toc-disjoint-path-covers">§2.4
+Disjoint path covers</a></li>
+<li><a href="#complete-transposition-graphs" id="toc-complete-transposition-graphs">§2.5 Complete transposition
+graphs</a></li>
+</ul></li>
+<li><a href="#the-reduction" id="toc-the-reduction">§3. The
+reduction</a></li>
+<li><a href="#cartesian-products" id="toc-cartesian-products">§4.
+Cartesian products</a></li>
+<li><a href="#the-pivot-construction" id="toc-the-pivot-construction">§5. The pivot construction</a>
+<ul>
+<li><a href="#setup-5.15.3" id="toc-setup-5.15.3">Setup
+(5.1–5.3)</a></li>
+<li><a href="#the-quotient-is-a-hamilton-connected-matroid-graph-5.45.5" id="toc-the-quotient-is-a-hamilton-connected-matroid-graph-5.45.5">The
+quotient is a Hamilton-connected matroid graph (5.4–5.5)</a></li>
+<li><a href="#the-interface-room-to-splice-5.6-5.7-5.7c-5.7b" id="toc-the-interface-room-to-splice-5.6-5.7-5.7c-5.7b">The interface:
+room to splice (5.6, 5.7, 5.7c, 5.7b)</a></li>
+<li><a href="#the-buffer-exists-5.8-5.8a" id="toc-the-buffer-exists-5.8-5.8a">The buffer exists (5.8,
+5.8a)</a></li>
+<li><a href="#assembly-lift-the-quotient-path-5.95.11" id="toc-assembly-lift-the-quotient-path-5.95.11">Assembly: lift the
+quotient path (5.9–5.11)</a></li>
+</ul></li>
+<li><a href="#base-classes" id="toc-base-classes">§6. Base
+classes</a></li>
+<li><a href="#the-block-lemma" id="toc-the-block-lemma">§7. The Block
+Lemma</a></li>
+<li><a href="#whats-proved-and-what-a-referee-must-still-check" id="toc-whats-proved-and-what-a-referee-must-still-check">§8. What’s
+proved, and what a referee must still check</a></li>
+</ul>
+</nav>
+<h1 id="the-paper-walked-through-with-a-worked-example-at-every-step">The
+paper, walked through — with a worked example at every step</h1>
+<p><em>A companion to <code>manuscript/PAPER.md</code>, in the paper’s
+own order. Best read as <strong>HTML</strong> (clickable table of
+contents; each example has a <strong>▸ See it fully worked out</strong>
+fold you can open for the complete data — all the matrices, every edge,
+the actual covers). Every <strong>definition</strong> is followed by a
+concrete instance; every <strong>claim, lemma, and construction</strong>
+by a worked example and a <strong>Verified</strong> line saying what was
+machine-checked and where.</em></p>
+<p><em>The “such an example always exists / the construction always
+works” assertions are the ones a human referee must still confirm in
+general; what is marked <strong>Verified</strong> has been confirmed
+computationally on the stated instances (and, where noted, on all small
+classes). The fold-outs are generated from
+<code>src/walkthrough_examples_sec12.py</code>, so the matrices shown
+are the real ones.</em></p>
+<p><em>Conventions: <code>𝒜(R,S)</code> = the <code>m×n</code> 0/1
+matrices with row sums <code>R</code>, column sums <code>S</code>;
+matrices drawn as grids; <code>G(R,S)</code> = the interchange graph.
+Status: installment 1 = <strong>§1–§2</strong>; later installments add
+§3–§7.</em></p>
+<hr />
+<h1 id="introduction">§1. Introduction</h1>
+<h2 id="the-objects-matrices-interchanges-and-the-interchange-graph">The
+objects: matrices, interchanges, and the interchange graph</h2>
+<p><strong>Definition.</strong> A <strong><code>2×2</code>
+interchange</strong> replaces a <code>[[1,0],[0,1]]</code> submatrix by
+<code>[[0,1],[1,0]]</code> (or vice versa), leaving all other entries
+fixed. The <strong>interchange graph</strong> <code>G(R,S)</code> has
+the matrices of <code>𝒜(R,S)</code> as vertices, two adjacent when one
+interchange turns one into the other.</p>
+<blockquote>
+<p><strong>Worked example (E1) — the smallest non-bipartite
+class.</strong> <code>R=(2,1)</code>, <code>S=(1,1,1)</code>:
+<code>2×3</code> matrices, row sums <code>2,1</code>, every column sum
+<code>1</code>. The matrix is pinned down by which column holds row 1’s
+single <code>1</code>, so there are exactly <strong>three</strong>, and
+all three are pairwise one interchange apart — <code>G</code> is the
+<strong>triangle</strong> <code>K₃</code>. <strong>Verified:</strong>
+<code>|V|=3</code>, connected, 1 triangle.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>All 3 matrices (m=2×n=3):</p>
+<p>v0:</p>
+<pre><code>1 1 0
+0 0 1</code></pre>
+<p>v1:</p>
+<pre><code>1 0 1
+0 1 0</code></pre>
+<p>v2:</p>
+<pre><code>0 1 1
+1 0 0</code></pre>
+<p>Edges (each one interchange): - v0 — v1 (rows {0,1} × cols {1,2}) -
+v0 — v2 (rows {0,1} × cols {0,2}) - v1 — v2 (rows {0,1} × cols
+{0,1})</p>
+<p>Hamilton path v0→v1: v0→v2→v1</p>
+</details>
+<p><strong>Ryser’s theorem</strong> says any two matrices of
+<code>𝒜(R,S)</code> are joined by some sequence of interchanges — i.e.
+<code>G(R,S)</code> is <strong>connected</strong>.</p>
+<h2 id="brualdis-conjecture-and-the-theorem-we-prove">Brualdi’s
+conjecture, and the theorem we prove</h2>
+<blockquote>
+<p><strong>Conjecture (Brualdi).</strong> <code>G(R,S)</code> is
+<strong>Hamiltonian</strong> for all <code>R,S</code>. <em>(In E1, the
+triangle <code>v0—v1—v2—v0</code> is such a cycle.)</em></p>
+</blockquote>
+<p><strong>Definition.</strong> A graph is
+<strong>Hamilton-connected</strong> if every pair of distinct vertices
+is joined by a Hamilton path; a bipartite graph is
+<strong>Hamilton-laceable</strong> if every <em>opposite-colour</em>
+pair is (the best possible there, since a Hamilton path alternates
+colours). A graph is <strong>maximally Hamiltonian</strong> if it is
+Hamilton-laceable when bipartite and Hamilton-connected when not.</p>
+<blockquote>
+<p><strong>Theorem 1.1.</strong> For every realizable <code>R,S</code>
+(<code>𝒜(R,S)≠∅</code>), <code>G(R,S)</code> is maximally Hamiltonian;
+in particular Brualdi’s conjecture holds.</p>
+</blockquote>
+<blockquote>
+<p><strong>Worked example (E1, non-bipartite).</strong> The triangle is
+non-bipartite, so the claim is Hamilton-<em>connected</em>:
+e.g. <code>v0→v2→v1</code> is a Hamilton path from <code>v0</code> to
+<code>v1</code>. <strong>Verified:</strong> Hamilton-connected.</p>
+<p><strong>Worked example (E2, bipartite).</strong>
+<code>R=S=(1,1,1)</code> — the six <code>3×3</code> permutation
+matrices; this is <code>CT₃ = K₃,₃</code>, bipartite (even/odd
+permutations). Here the claim is Hamilton-<em>laceable</em>.
+<strong>Verified:</strong> <code>|V|=6</code>, bipartite,
+Hamilton-laceable. <em>(All six matrices, the colour classes, the
+fibers/quotient, and a paired-2-DPC cover are in the fold below — it’s
+the running example for the rest of §2.)</em></p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>All 6 matrices (m=3×n=3):</p>
+<p>v0:</p>
+<pre><code>1 0 0
+0 1 0
+0 0 1</code></pre>
+<p>v1:</p>
+<pre><code>1 0 0
+0 0 1
+0 1 0</code></pre>
+<p>v2:</p>
+<pre><code>0 0 1
+1 0 0
+0 1 0</code></pre>
+<p>v3:</p>
+<pre><code>0 1 0
+1 0 0
+0 0 1</code></pre>
+<p>v4:</p>
+<pre><code>0 1 0
+0 0 1
+1 0 0</code></pre>
+<p>v5:</p>
+<pre><code>0 0 1
+0 1 0
+1 0 0</code></pre>
+<p>Colour classes: even = v0, v2, v4 | odd = v1, v3, v5</p>
+<p>Fibers (freeze row 0 to a pattern): - row 0 = (0, 0, 1): {v2, v5}
+(one edge inside → K_2) - row 0 = (0, 1, 0): {v3, v4} (one edge inside →
+K_2) - row 0 = (1, 0, 0): {v0, v1} (one edge inside → K_2)</p>
+<p>Quotient Q_L: the 3 row-0 patterns, every pair adjacent → K_3.</p>
+<p>A paired-2-DPC cover for the balanced demand (v0→v1, v2→v3): - P1:
+v0—v1 - P2: v2—v5—v4—v3</p>
+</details>
+<p><strong>Why the strong form?</strong> The proof builds big graphs
+from small ones (products in §4, fibers over a quotient in §5). A bare
+Hamilton <em>cycle</em> can’t be steered through those gluings; a
+Hamilton <em>path between prescribed endpoints</em> can. So maximal
+Hamiltonicity is what the induction carries — bare Hamiltonicity would
+not.</p>
+<h2 id="the-corollary-and-the-one-lemma-everything-reduces-to">The
+corollary, and the one lemma everything reduces to</h2>
+<p>A 0/1 matrix with margins <code>R,S</code> is the biadjacency matrix
+of a bipartite graph with side-degrees <code>R,S</code>, and a
+<code>2×2</code> interchange is a <strong>2-switch</strong>, so
+<code>G(R,S)</code> is the <em>realization graph</em> of that bipartite
+degree sequence:</p>
+<blockquote>
+<p><strong>Corollary.</strong> The realization graph of any bipartite
+degree sequence (equivalently, by Arikati–Peled, any split-graph degree
+sequence) is maximally Hamiltonian. The arbitrary-degree-sequence
+version stays open.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>A <code>(0,1)</code>-matrix <strong>is</strong> a bipartite graph:
+put the rows on one side, columns on the other, and an edge
+<code>rᵢ—cⱼ</code> for each <code>1</code> in cell <code>(i,j)</code>.
+Take <code>v0</code> and <code>v1</code> of E1:</p>
+<p>v0:</p>
+<pre><code>1 1 0
+0 0 1</code></pre>
+<p>as a bipartite graph, edges: r0—c0, r0—c1, r1—c2</p>
+<p>v1:</p>
+<pre><code>1 0 1
+0 1 0</code></pre>
+<p>as a bipartite graph, edges: r0—c0, r0—c2, r1—c1</p>
+<p>The interchange <code>v0→v1</code> <strong>removes</strong> r0—c1,
+r1—c2 and <strong>adds</strong> r0—c2, r1—c1 — i.e. two edges swap their
+column-endpoints. That is exactly a <strong>2-switch</strong> of the
+bipartite graph. So the interchange graph <code>G(R,S)</code> is the
+<em>realization graph</em> (2-switch graph) of the bipartite degree
+sequence <code>(R,S)</code> — which is why the theorem also settles
+maximal Hamiltonicity of those realization graphs.</p>
+</details>
+<blockquote>
+<p><strong>Lemma 1.2 (Block Lemma).</strong> Every balanced bipartite
+interchange graph is <strong>paired 2-disjoint-path- coverable</strong>
+(§2.4). <em>Proved in §7; used as a black box until then.</em></p>
+</blockquote>
+<hr />
+<h1 id="preliminaries">§2. Preliminaries</h1>
+<h2 id="lines-fibers-and-quotients">§2.1 Lines, fibers, and
+quotients</h2>
+<p><strong>Definition.</strong> A <strong>line</strong> is a row or
+column. Fix a line <code>L</code>. For each pattern <code>p</code> of
+<code>L</code>, the <strong>fiber</strong> <code>F_p</code> is the
+matrices with <code>L=p</code>; inside it <code>L</code> is frozen, so
+(deleting <code>L</code>) a fiber <em>is</em> the interchange graph of a
+<strong>smaller</strong> class. The <strong>quotient</strong>
+<code>Q_L</code> has the patterns of <code>L</code> as vertices,
+<code>p,q</code> adjacent when one interchange (touching <code>L</code>)
+carries <code>F_p</code> to <code>F_q</code>.</p>
+<blockquote>
+<p><strong>Worked example (E2, <code>CT₃</code>).</strong> Freeze row 0:
+its single <code>1</code> sits in column 0, 1, or 2 — three patterns →
+<strong>three fibers</strong>, each (deleting row 0) a <code>K₂</code>;
+the quotient is <code>K₃</code>. So <code>K₃,₃</code> is <em>three
+<code>K₂</code> fibers over a <code>K₃</code> quotient</em>.
+<strong>Verified:</strong> see the E2 fold under §1 for the three fibers
+and the quotient, computed from the six matrices. <em>(The reassembly of
+these pieces into all 9 edges of <code>K₃,₃</code> is walked in
+<code>TUTORIAL_QA_pending.md</code>, Q1–Q2.)</em></p>
+</blockquote>
+<h2 id="invariant-positions">§2.2 Invariant positions</h2>
+<p><strong>Definition.</strong> A cell is <strong>invariant</strong> if
+constant across the whole class. Two sources: an <strong>inactive
+line</strong> (sum <code>0</code> or maximal) is all-constant and
+deletes harmlessly (same graph, smaller matrix; a line that isn’t
+inactive is <strong>active</strong>); the <em>remaining</em> invariant
+cells force a <strong>Cartesian factorisation</strong> into disjoint
+blocks. An active class is <strong>prime</strong> (indecomposable) iff
+it is <strong>invariant-free</strong> (Brualdi–Manber). <em>Prime ≠
+connected:</em> <code>C₄=K₂□K₂</code> is connected yet decomposable.</p>
+<blockquote>
+<p><strong>Worked example (E3) — inactive row, then a leftover
+product.</strong> <code>R=(4,3,3,1,1)</code>, <code>S=(4,4,2,2)</code>.
+Row 0 has sum <code>4 =</code> #columns, so it is all-<code>1</code>s in
+every matrix → inactive; delete it. In the remaining <code>4×4</code>,
+every line is active, yet forced corners (top-left all-<code>1</code>,
+bottom-right all-<code>0</code>) leave two independent <code>2×2</code>
+permutation blocks → <code>G = K₂ □ K₂ = C₄</code>.
+<strong>Verified:</strong> <code>|V|=4</code>, 12 invariant cells, two
+product blocks.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>All 4 matrices (m=5×n=4):</p>
+<p>v0:</p>
+<pre><code>1 1 1 1
+1 1 1 0
+1 1 0 1
+1 0 0 0
+0 1 0 0</code></pre>
+<p>v1:</p>
+<pre><code>1 1 1 1
+1 1 0 1
+1 1 1 0
+1 0 0 0
+0 1 0 0</code></pre>
+<p>v2:</p>
+<pre><code>1 1 1 1
+1 1 1 0
+1 1 0 1
+0 1 0 0
+1 0 0 0</code></pre>
+<p>v3:</p>
+<pre><code>1 1 1 1
+1 1 0 1
+1 1 1 0
+0 1 0 0
+1 0 0 0</code></pre>
+<p>Row 0 is all-1s (inactive); 12 of 20 cells are invariant; the free
+cells are two 2×2 blocks (rows{1,2}×cols{2,3} and rows{3,4}×cols{0,1}),
+each a K_2. So G = K_2 □ K_2 = C_4.</p>
+</details>
+<blockquote>
+<p><strong>Worked example (E4) — a prime (invariant-free)
+class.</strong> <code>R=(2,1,1)</code>, <code>S=(1,1,1,1)</code>,
+<code>12</code> matrices: no cell is constant, so it is invariant-free =
+prime (does <strong>not</strong> factor). This is the class the §5 pivot
+handles. <strong>Verified:</strong> <code>|V|=12</code>, 0 invariant
+cells, a single (non-product) block.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>All 12 matrices (m=3×n=4):</p>
+<p>v0:</p>
+<pre><code>1 1 0 0
+0 0 1 0
+0 0 0 1</code></pre>
+<p>v1:</p>
+<pre><code>1 1 0 0
+0 0 0 1
+0 0 1 0</code></pre>
+<p>v2:</p>
+<pre><code>1 0 1 0
+0 1 0 0
+0 0 0 1</code></pre>
+<p>v3:</p>
+<pre><code>1 0 0 1
+0 1 0 0
+0 0 1 0</code></pre>
+<p>v4:</p>
+<pre><code>1 0 1 0
+0 0 0 1
+0 1 0 0</code></pre>
+<p>v5:</p>
+<pre><code>1 0 0 1
+0 0 1 0
+0 1 0 0</code></pre>
+<p>v6:</p>
+<pre><code>0 1 1 0
+1 0 0 0
+0 0 0 1</code></pre>
+<p>v7:</p>
+<pre><code>0 1 0 1
+1 0 0 0
+0 0 1 0</code></pre>
+<p>v8:</p>
+<pre><code>0 0 1 1
+1 0 0 0
+0 1 0 0</code></pre>
+<p>v9:</p>
+<pre><code>0 1 1 0
+0 0 0 1
+1 0 0 0</code></pre>
+<p>v10:</p>
+<pre><code>0 1 0 1
+0 0 1 0
+1 0 0 0</code></pre>
+<p>v11:</p>
+<pre><code>0 0 1 1
+0 1 0 0
+1 0 0 0</code></pre>
+<p>12 matrices; non-bipartite (8 triangles); 0 invariant cells (prime —
+does not factor). This is the class the §5 pivot construction
+handles.</p>
+</details>
+<h2 id="bipartiteness">§2.3 Bipartiteness</h2>
+<blockquote>
+<p><strong>Lemma 2.1.</strong> An interchange graph is <strong>bipartite
+iff triangle-free</strong> — special to interchange graphs (in general,
+triangle-free is weaker; here any odd cycle already forces a
+triangle).</p>
+</blockquote>
+<blockquote>
+<p><strong>Worked examples.</strong> E2 <code>K₃,₃</code> is
+triangle-free → bipartite. E1 (1 triangle) and E4 (8 triangles) are
+non-bipartite. <strong>Verified:</strong> triangle counts 0 / 1 / 8
+respectively. <em>(This is the engine of the §5 “buffer”: a
+non-bipartite class is guaranteed a triangle — see
+<code>TUTORIAL_QA_pending.md</code> Q4.)</em></p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>A triangle in the non-bipartite E4</strong> — three matrices,
+each pair one interchange apart (so pairwise adjacent). By Lemma 5.7b
+such a triangle sits on 2 rows × 3 columns:</p>
+<p>v0:</p>
+<pre><code>1 1 0 0
+0 0 1 0
+0 0 0 1</code></pre>
+<p>v2:</p>
+<pre><code>1 0 1 0
+0 1 0 0
+0 0 0 1</code></pre>
+<p>v6:</p>
+<pre><code>0 1 1 0
+1 0 0 0
+0 0 0 1</code></pre>
+<p><code>v0—v2</code>, <code>v2—v6</code>, <code>v0—v6</code> are all
+edges → a triangle → E4 is non-bipartite.</p>
+<p><strong>A 2-colouring of the bipartite E2
+(<code>K₃,₃</code>)</strong> — even = {v0, v2, v4}, odd = {v1, v3, v5}.
+Every edge joins an even to an odd vertex (monochromatic edges: 0), so
+E2 is bipartite — and triangle-free (0 triangles).</p>
+</details>
+<h2 id="disjoint-path-covers">§2.4 Disjoint path covers</h2>
+<p><strong>Definition.</strong> For two disjoint pairs
+<code>(a₁,b₁),(a₂,b₂)</code>, a <strong>paired 2-disjoint path
+cover</strong> is disjoint paths <code>P₁:a₁→b₁</code>,
+<code>P₂:a₂→b₂</code> together covering all vertices. In a bipartite
+graph a demand is <strong>balanced</strong> if each pair is
+opposite-coloured; the graph is <strong>paired 2-DPC</strong> if every
+balanced demand has a cover. Strictly stronger than laceability (the
+one-pair case); it is what survives products.</p>
+<blockquote>
+<p><strong>Worked example (E2, <code>K₃,₃</code>).</strong> A balanced
+demand and an explicit disjoint covering pair are shown in the E2 fold
+under §1. <strong>Verified:</strong> <code>K₃,₃</code> is paired 2-DPC —
+<strong>all 72</strong> balanced demands have a cover.</p>
+<p><strong>Worked example (why balanced is required, E3
+<code>=C₄</code>).</strong> For <code>C₄</code> the balanced demands are
+all coverable, but the unbalanced (same-coloured pairs) version fails.
+<strong>Verified:</strong> <code>C₄</code> covers balanced
+<strong>8/8</strong> but unbalanced only <strong>8/12</strong>.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>On C_4 the <em>unbalanced</em> version (two same-coloured pairs) is
+not coverable: only 8 of the 12 unbalanced demands have a disjoint
+covering pair, whereas all 8 balanced demands do. This is why only the
+balanced version is used.</p>
+</details>
+<h2 id="complete-transposition-graphs">§2.5 Complete transposition
+graphs</h2>
+<p><strong>Definition.</strong> <code>CT_a</code> = the Cayley graph of
+<code>S_a</code> with all transpositions = <code>G(R,S)</code> for
+all-ones <code>a×a</code> margins, so <code>|V(CT_a)|=a!</code>;
+bipartite, and balanced for <code>a≥2</code>. Complementary margins
+<code>(a−1,…,a−1)</code> give the <strong>co-permutation</strong> class,
+isomorphic to <code>CT_a</code> via <code>A↦J−A</code>.</p>
+<blockquote>
+<p><strong>Worked examples.</strong> <code>CT₂=K₂</code>;
+<code>CT₃=K₃,₃</code> (E2).</p>
+</blockquote>
+<blockquote>
+<p><strong>Proposition 2.2.</strong> Every bipartite interchange graph
+is a Cartesian product of complete transposition graphs (and
+co-permutation copies); nontrivially, it is balanced and of even order.
+<em>This is the bridge handing the whole bipartite case to the Block
+Lemma (§7) as a CT-product.</em></p>
+</blockquote>
+<blockquote>
+<p><strong>Worked example (E3 <code>=C₄</code>).</strong>
+<code>C₄ = K₂ □ K₂ = CT₂ □ CT₂</code> — a product of two complete
+transposition graphs, as Proposition 2.2 predicts; <code>CT₃=K₃,₃</code>
+(E2) is the prime one-factor case. <strong>Verified:</strong> E3 is
+bipartite with two <code>CT₂</code> blocks; E2 is bipartite and
+prime.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong><code>CT₂ = K₂</code></strong> — the two <code>2×2</code>
+permutation matrices, one interchange apart:</p>
+<p>v0:</p>
+<pre><code>1 0
+0 1</code></pre>
+<p>v1:</p>
+<pre><code>0 1
+1 0</code></pre>
+<p><strong>Co-permutation (<code>A ↦ J−A</code>).</strong> Complementing
+every entry of a permutation matrix gives the co-permutation class
+<code>R=S=(a−1,…,a−1)</code>; complementation is a graph isomorphism, so
+it is just a relabelled <code>CT_a</code>. For <code>a=3</code>, the
+identity and its complement:</p>
+<p>permutation P:</p>
+<pre><code>1 0 0
+0 1 0
+0 0 1</code></pre>
+<p>complement J−P (a co-permutation, <code>R=S=(2,2,2)</code>):</p>
+<pre><code>0 1 1
+1 0 1
+1 1 0</code></pre>
+<p><strong><code>C₄ = CT₂ □ CT₂</code>.</strong> The class E3 (after
+deleting its inactive row) is <code>C₄</code>, and its two free
+<code>2×2</code> permutation blocks are each a <code>CT₂ = K₂</code>;
+since they share no line, <code>C₄ = CT₂ □ CT₂</code> — a product of two
+complete transposition graphs, exactly as Proposition 2.2 says every
+bipartite interchange graph must be.</p>
+</details>
+<hr />
+<h1 id="the-reduction">§3. The reduction</h1>
+<p>The proof is an <strong>induction on <code>|V(G)|</code></strong>,
+with the Block Lemma (§7) as a standing black box. Given a class
+<code>G</code>, run this decision tree; every branch either finishes
+<code>G</code> outright or hands it to <em>strictly smaller</em> classes
+(so the induction hypothesis applies) or to the Block Lemma.</p>
+<ol type="1">
+<li><strong>Is <code>G</code> bipartite?</strong> (Lemma 2.1 —
+equivalently, triangle-free.) If yes, Proposition 2.2 makes it a product
+of complete-transposition blocks, the Block Lemma (§7) makes it paired
+2-DPC, hence Hamilton-laceable. <strong>Done — no induction
+used.</strong></li>
+<li>Otherwise delete inactive lines to the active core (§2.2).
+<strong>Does the core have an invariant cell?</strong> If yes, it is a
+nontrivial Cartesian product <code>A □ B</code> of strictly smaller
+classes (at least one non-bipartite, since a product is bipartite only
+if both factors are); <strong>§4</strong> lifts maximal Hamiltonicity
+from the factors.</li>
+<li>Otherwise the core is <strong>prime</strong> (invariant-free).
+<strong>Are there ≤ 2 active rows, or ≤ 2 active columns?</strong> If
+yes, <code>G</code> is a Johnson graph <code>J(f,k)</code> —
+<strong>§6</strong> (Alspach).</li>
+<li>Otherwise there are ≥ 3 active rows <em>and</em> ≥ 3 active columns.
+If <strong><code>|V|≤6</code></strong> it is a small
+<strong>base</strong> class (<strong>§6</strong>); if
+<strong><code>|V|&gt;6</code></strong> it is the genuinely many-line
+<strong>pivot</strong> case (<strong>§5</strong>).</li>
+</ol>
+<blockquote>
+<p><strong>Worked example — classify the running examples.</strong>
+Sorting each class by the tree: E1 → Johnson, E2 → CORE, E5 → product,
+the base core → base, E4 → pivot. The full decision facts (bipartite?
+invariant cells? dimensions? <code>|V|</code>?) for each are in the
+fold.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>Each class, run through the decision tree (after deleting inactive
+lines):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>class</th>
+<th>R, S</th>
+<th>bipartite?</th>
+<th>invariant cells</th>
+<th>active rows×cols</th>
+<th>|V|</th>
+<th>→ bucket</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E1 triangle</td>
+<td>(2, 1), (1, 1, 1)</td>
+<td>no</td>
+<td>0</td>
+<td>2×3</td>
+<td>3</td>
+<td><strong>Johnson → §6</strong></td>
+</tr>
+<tr class="even">
+<td>E2 CT₃</td>
+<td>(1, 1, 1), (1, 1, 1)</td>
+<td>yes</td>
+<td>0</td>
+<td>3×3</td>
+<td>6</td>
+<td><strong>bipartite → CORE (§7)</strong></td>
+</tr>
+<tr class="odd">
+<td>E5 product</td>
+<td>(4, 3, 1, 1), (3, 3, 1, 1, 1)</td>
+<td>no</td>
+<td>10</td>
+<td>4×5</td>
+<td>6</td>
+<td><strong>non-bip product → §4</strong></td>
+</tr>
+<tr class="even">
+<td>base core</td>
+<td>(2, 1, 1), (2, 1, 1)</td>
+<td>no</td>
+<td>0</td>
+<td>3×3</td>
+<td>5</td>
+<td><strong>base case → §6</strong></td>
+</tr>
+<tr class="odd">
+<td>E4 12-vertex</td>
+<td>(2, 1, 1), (1, 1, 1, 1)</td>
+<td>no</td>
+<td>0</td>
+<td>3×4</td>
+<td>12</td>
+<td><strong>pivot → §5</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The tree: <em>bipartite?</em> → CORE. Else <em>invariant cell?</em> →
+product (§4). Else (prime) <em>≤2 active rows or columns?</em> → Johnson
+(§6). Else <em>|V|≤6?</em> → base (§6), otherwise → pivot (§5).</p>
+</details>
+<blockquote>
+<p><strong>The product bucket (E5).</strong> <code>R=(4,3,1,1)</code>,
+<code>S=(3,3,1,1,1)</code> is non-bipartite, active, and has invariant
+cells — so a nontrivial Cartesian product, routed to §4 (where it is the
+worked example). <strong>Verified:</strong> <code>|V|=6</code>,
+non-bipartite, 10 invariant cells. The six matrices are in the fold.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>R=(4, 3, 1, 1), S=(3, 3, 1, 1, 1) — active core, |V|=6,
+non-bipartite, 10 invariant cells → a Cartesian product (handled in §4).
+The 6 matrices:</p>
+<p>v0:</p>
+<pre><code>1 1 1 1 0
+1 1 0 0 1
+1 0 0 0 0
+0 1 0 0 0</code></pre>
+<p>v1:</p>
+<pre><code>1 1 1 0 1
+1 1 0 1 0
+1 0 0 0 0
+0 1 0 0 0</code></pre>
+<p>v2:</p>
+<pre><code>1 1 0 1 1
+1 1 1 0 0
+1 0 0 0 0
+0 1 0 0 0</code></pre>
+<p>v3:</p>
+<pre><code>1 1 1 1 0
+1 1 0 0 1
+0 1 0 0 0
+1 0 0 0 0</code></pre>
+<p>v4:</p>
+<pre><code>1 1 1 0 1
+1 1 0 1 0
+0 1 0 0 0
+1 0 0 0 0</code></pre>
+<p>v5:</p>
+<pre><code>1 1 0 1 1
+1 1 1 0 0
+0 1 0 0 0
+1 0 0 0 0</code></pre>
+</details>
+<blockquote>
+<p><strong>Claim — the split is exhaustive.</strong> Every active class
+lands in <strong>exactly one</strong> branch — none fall through, none
+match two. <strong>Verified</strong> by running the decision tree on
+every class up to <code>5×5</code>.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>Over all canonical margins up to 5×5, <strong>761</strong> nontrivial
+active classes were classified, and every one falls into <strong>exactly
+one</strong> bucket (none fall through, none match two):</p>
+<ul>
+<li>417 — pivot → §5</li>
+<li>155 — bipartite → CORE (§7)</li>
+<li>144 — Johnson → §6</li>
+<li>39 — base case → §6</li>
+<li>6 — non-bip product → §4</li>
+</ul>
+</details>
+<hr />
+<h1 id="cartesian-products">§4. Cartesian products</h1>
+<p>When the active class has an invariant cell it is a product
+<code>G = A □ B</code> of two strictly smaller interchange graphs
+(§2.2), each maximally Hamiltonian by induction; since <code>G</code> is
+non-bipartite, at least one factor is. <strong>Goal:</strong> show
+<code>G</code> is Hamilton-connected.</p>
+<p><strong>The picture (layers and rungs).</strong> View <code>G</code>
+as <code>|V(B)|</code> copies of <code>A</code> (“layers”), one per
+vertex of <code>B</code>; two layers over <code>B</code>-adjacent
+vertices are joined by the identity matching on the
+<code>A</code>-coordinate (“rungs”). A Hamilton path follows a spanning
+walk of <code>B</code>, crossing each visited layer by a path of
+<code>A</code> and stepping between layers along rungs. Three cases:</p>
+<ol type="1">
+<li><strong>Both factors non-bipartite</strong> — both
+Hamilton-connected, no parity device needed: thread a Hamilton path of
+one factor, cross each copy of the other between its splice points.
+(<code>K_4 □ K_3</code> is such a class.)</li>
+<li><strong>One factor bipartite</strong> — the substantive case,
+Proposition 4.1.</li>
+<li><strong>Degenerate <code>A = K_2</code></strong> — too small for the
+device; a direct <em>comb</em>.</li>
+</ol>
+<blockquote>
+<p><strong>Proposition 4.1.</strong> If <code>A</code> is balanced
+bipartite and paired 2-disjoint-path-coverable with
+<code>|V(A)|≥4</code>, and <code>B</code> is non-bipartite and
+Hamilton-connected, then <code>A □ B</code> is Hamilton-connected.</p>
+</blockquote>
+<p>The obstruction: <code>A</code> bipartite means crossing a layer
+flips its colour, so threading single layers forces a fixed relation
+between the endpoint colours that need not hold. The fix: <strong>double
+one layer</strong> — cover it by a <em>paired 2-cover</em> of
+<code>A</code> (two disjoint paths) instead of one path, absorbing the
+parity. A <em>controlled spanning walk</em> of <code>B</code> (of the
+right parity, repeating no vertex more than twice) picks which layer to
+double; <strong>Lemma 4.2</strong> guarantees that layer’s four
+terminals are distinct and form two opposite-coloured pairs (this is
+where <code>|V(A)|≥4</code> is used); the boundaries are assigned
+globally and the layer pieces spliced.</p>
+<blockquote>
+<p><strong>Worked example (the substantive case):
+<code>C_4 □ K_3</code>.</strong> <code>A = C_4</code> (bipartite,
+<code>|V|=4</code>, the E3 graph), <code>B = K_3</code> (non-bipartite,
+E1): three layers of <code>C_4</code> over <code>K_3</code>, every two
+layers fully runged. An actual lifted Hamilton path — with the
+<strong>doubled layer</strong> visible as the one the path enters twice
+— is in the fold. <strong>Verified:</strong> Hamilton-connected (all 66
+pairs).</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>C_4 □ K_3</strong> — A = C_4 (bipartite, |V|=4: the E3
+graph), B = K_3 (non-bipartite, |V|=3: E1). |V(G)| = 12.</p>
+<p>Vertices are <code>(c, k)</code> with <code>c</code> a C_4-vertex
+(the layer position) and <code>k ∈ {0,1,2}</code> a K_3-vertex (which
+layer). Structure:</p>
+<ul>
+<li><strong>3 layers</strong> (one copy of C_4 per K_3-vertex): layer k
+= {(0,k),(1,k),(2,k),(3,k)}, a 4-cycle.</li>
+<li><strong>Rungs</strong>: K_3 is complete, so every two layers are
+joined by the identity matching <code>(c,k)—(c,k&#39;)</code> for all
+c.</li>
+</ul>
+<p>The parity issue: C_4 is bipartite, so crossing a layer by a Hamilton
+path flips its colour; a straight thread can’t always match the demanded
+endpoint colours. Fix: <strong>double one layer</strong> — cover it by a
+paired 2-disjoint-path cover of C_4 instead of a single path.</p>
+<p>A lifted Hamilton path from <code>(0,0)</code> to <code>(2,2)</code>
+(12 vertices):</p>
+<pre><code>(0,0) → (3,0) → (2,0) → (1,0) → (1,2) → (0,2) → (3,2) → (3,1) → (0,1) → (1,1) → (2,1) → (2,2)</code></pre>
+<p>Broken into layer-runs (a layer appearing in two runs is the
+<strong>doubled</strong> one): - layer 0: (0,0) (3,0) (2,0) (1,0) -
+layer 2 (doubled): (1,2) (0,2) (3,2) - layer 1: (3,1) (0,1) (1,1) (2,1)
+- layer 2 (doubled): (2,2)</p>
+<p><strong>Verified:</strong> C_4 □ K_3 is Hamilton-connected = True
+(all 66 vertex pairs joined by a Hamilton path).</p>
+</details>
+<blockquote>
+<p><strong>Worked example (the comb): the prism <code>K_3 □ K_2</code>
+(= E5).</strong> Here <code>A = K_2</code> is too small for a paired
+cover, so the prism is threaded directly; the two subcases (endpoints in
+different copies, or the same copy) each give a concrete Hamilton path,
+in the fold. <strong>Verified:</strong> Hamilton-connected.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>K_3 □ K_2</strong> — the triangular prism (this is exactly
+<strong>E5</strong>): two copies <code>B^0,B^1</code> of K_3 joined by 3
+rungs. Here A = K_2 has only 2 vertices, too few for a paired 2-cover,
+so the doubled-layer device is replaced by a direct
+<strong>comb</strong> construction. Vertices <code>(t, c)</code>: t a
+K_3-vertex, c ∈ {0,1} the copy. |V| = 6.</p>
+<p><em>Different copies</em> — Hamilton path <code>(0,0) → (2,1)</code>:
+cross B^0, take a rung, cross B^1.</p>
+<pre><code>(0,0) → (2,0) → (1,0) → (1,1) → (0,1) → (2,1)</code></pre>
+<p><em>Same copy</em> — Hamilton path <code>(0,0) → (1,0)</code>: the
+snake that dips into B^1 and comes back.</p>
+<pre><code>(0,0) → (2,0) → (2,1) → (0,1) → (1,1) → (1,0)</code></pre>
+<p><strong>Verified:</strong> the prism is Hamilton-connected =
+True.</p>
+</details>
+<hr />
+<h1 id="the-pivot-construction">§5. The pivot construction</h1>
+<p>The deepest part. Regime: <code>G</code> is active, invariant-free
+(prime), non-bipartite, with <code>m,n ≥ 3</code> active rows and
+columns and <code>|V| &gt; 6</code>; fix endpoints <code>a,b</code>.
+<strong>Plan:</strong> pick a <em>buffer line</em> to pivot on — one
+whose quotient is Hamilton-connected and one of whose fibers is
+non-bipartite — take a Hamilton path through the quotient, and
+<strong>lift</strong> it fiber by fiber into a Hamilton path of
+<code>G</code>.</p>
+<p>Running example <strong>E4 = (2,1,1)/(1,1,1,1)</strong>
+(<code>|V|=12</code>): pivoting a sum-1 row gives four
+<strong>triangle</strong> fibers over a <code>K_4</code> quotient — the
+cleanest instance. For the subtler <em>constrained-fiber</em> machinery
+we also use <strong>E7 = (2,2,1)/(2,1,1,1)</strong>, whose pivot gives
+three bipartite <code>K_2</code> fibers plus one non-bipartite
+buffer.</p>
+<h2 id="setup-5.15.3">Setup (5.1–5.3)</h2>
+<ul>
+<li><strong>Lemma 5.1 (canonical fibers).</strong> Fixing the pivot line
+and deleting it, each fiber — after its own inactive-line deletion and
+invariant split — is a product of <em>strictly smaller</em> interchange
+graphs, so the induction hypothesis applies. <em>(E4: each fiber is the
+residual (2,1)/(1,1,1) class = a triangle.)</em></li>
+<li><strong>Lemma 5.2 (pivot-freedom).</strong> In a prime block every
+cell is active (the active row–column graph is <code>K_{m,n}</code>) —
+there is always room to pivot.</li>
+<li><strong>Lemma 5.3 (#2-nail).</strong> If a pair were “trapped”
+(every separating line has ≤3 patterns) then <code>|V|≤6</code>; so in
+the non-base case some separating line has ≥4 patterns. <em>(E4: the
+pivot row has 4 patterns.)</em></li>
+</ul>
+<h2 id="the-quotient-is-a-hamilton-connected-matroid-graph-5.45.5">The
+quotient is a Hamilton-connected matroid graph (5.4–5.5)</h2>
+<ul>
+<li><strong>Lemma 5.4 / 5.4a (matroid quotient).</strong> The realizable
+patterns of a line are the <strong>bases of a matroid</strong>, and
+every basis exchange is realized by an actual inter-fiber interchange —
+so <code>Q_L</code> <em>is</em> the matroid’s basis-exchange graph (the
+1-skeleton of the base polytope).</li>
+<li><strong>Corollary 5.5 (Case A).</strong> A non-bipartite matroid
+basis-exchange graph is <strong>Hamilton-connected</strong>
+(Naddef–Pulleyblank: a <code>(0,1)</code>-polytope skeleton is a
+hypercube or Hamilton-connected; non-bipartite rules out the hypercube).
+<em>(E4: <code>Q_L = K_4</code>.)</em></li>
+</ul>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>E4 = (2,1,1)/(1,1,1,1)</strong>, pivot line <code>L</code> =
+row 1 (sum 1). Row 1’s single <code>1</code> sits in one of the 4
+columns → <strong>4 fibers</strong>, each the residual (2,1)/(1,1,1)
+class = a <strong>triangle</strong> (non-bipartite — a built-in buffer
+everywhere):</p>
+<ul>
+<li>fiber <code>row1 col 2</code>: vertices v0, v5, v10 — triangle
+(bipartite=False).</li>
+<li>fiber <code>row1 col 3</code>: vertices v1, v4, v9 — triangle
+(bipartite=False).</li>
+<li>fiber <code>row1 col 1</code>: vertices v2, v3, v11 — triangle
+(bipartite=False).</li>
+<li>fiber <code>row1 col 0</code>: vertices v6, v7, v8 — triangle
+(bipartite=False).</li>
+</ul>
+<p>One fiber’s three matrices (fiber <code>row1 col 2</code>):</p>
+<p>v0:</p>
+<pre><code>1 1 0 0
+0 0 1 0
+0 0 0 1</code></pre>
+<p>v5:</p>
+<pre><code>1 0 0 1
+0 0 1 0
+0 1 0 0</code></pre>
+<p>v10:</p>
+<pre><code>0 1 0 1
+0 0 1 0
+1 0 0 0</code></pre>
+<p><strong>Quotient <code>Q_L</code></strong> (4 patterns, two adjacent
+when one interchange moves row 1’s <code>1</code>): every pair adjacent
+→ <strong>K_4</strong>, non-bipartite, hence Hamilton-connected
+(Naddef–Pulleyblank, Cor 5.5). Adjacency: (2,)→[(0,), (1,), (3,)];
+(3,)→[(0,), (1,), (2,)]; (1,)→[(0,), (2,), (3,)]; (0,)→[(1,), (2,),
+(3,)]</p>
+</details>
+<h2 id="the-interface-room-to-splice-5.6-5.7-5.7c-5.7b">The interface:
+room to splice (5.6, 5.7, 5.7c, 5.7b)</h2>
+<p>Crossing from one fiber to the next needs choices of entry/exit
+vertices.</p>
+<ul>
+<li><strong>Lemma 5.6 (NEST).</strong> A <em>constrained</em>
+(bipartite) source fiber on a used edge has its <strong>whole</strong>
+fiber on the interface — it can exit at any vertex of the forced
+colour.</li>
+<li><strong>Lemma 5.7 (interface ≥ 2).</strong> A non-bipartite fiber on
+a used edge offers <strong>≥ 2</strong> crossing vertices.</li>
+<li><strong>Lemma 5.7c (reachable-terminal richness).</strong> From a
+constrained fiber <code>C</code> into a non-bipartite fiber
+<code>E</code>, <strong>each colour class of <code>C</code> reaches ≥ 2
+distinct vertices of <code>E</code></strong>. The clean proof rests on
+the column-count identity <code>b(X) − a(X) = D</code>,
+<code>D = s_j − s_i + 1</code>, forcing <code>D ∈ {0} ∪ {≥2}</code>
+(<code>D=1</code> and <code>D&lt;0</code> impossible); <code>D≥2</code>
+gives <code>b≥2</code> at once, <code>D=0</code> splits into a
+<code>K_2</code> case and a clique case. This lets a constrained fiber,
+whose exit colour is <em>forced</em>, still hand the buffer an entry
+vertex distinct from its pinned exit.</li>
+<li><strong>Lemma 5.7b (triangle classification).</strong> Every
+triangle sits on 2 rows × 3 columns (a wide row pair) or 3 rows × 2
+columns (a wide column pair) — the lever in buffer existence.</li>
+</ul>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>E7 = (2,2,1)/(2,1,1,1)</strong>, pivot row 2. Now the fibers
+are <strong>mixed</strong>:</p>
+<ul>
+<li>fiber <code>(3,)</code>: 2 vertices — constrained (bipartite
+<code>K_2</code>).</li>
+<li>fiber <code>(2,)</code>: 2 vertices — constrained (bipartite
+<code>K_2</code>).</li>
+<li>fiber <code>(1,)</code>: 2 vertices — constrained (bipartite
+<code>K_2</code>).</li>
+<li>fiber <code>(0,)</code>: 6 vertices — non-bipartite
+<strong>buffer</strong>.</li>
+</ul>
+<p><strong>Reachable-terminal richness (5.7c)</strong> on the used edge
+<code>(3,) → (0,)</code> (constrained → buffer): each vertex of the
+constrained fiber <code>(3,)</code> reaches this many distinct buffer
+vertices — - v0 reaches 2 buffer vertices (v6, v10) → ≥2 ✓ - v2 reaches
+2 buffer vertices (v7, v11) → ≥2 ✓</p>
+<p><strong>Lifted Hamilton path</strong> (quotient order (3,) → (2,) →
+(1,) → (0,), buffer last so it absorbs the parity): v0→v6:</p>
+<ul>
+<li>fiber <code>(3,)</code> — constrained: v0 → v2</li>
+<li>fiber <code>(2,)</code> — constrained: v3 → v1</li>
+<li>fiber <code>(1,)</code> — constrained: v4 → v5</li>
+<li>fiber <code>(0,)</code> — buffer: v8 → v7 → v9 → v11 → v10 → v6</li>
+</ul>
+<p><strong>Verified:</strong> valid Hamilton path = True. The general
+richness/identity facts are checked across all small classes by
+<code>src/check_lemma_5_7c_richness.py</code> (10,585 reach sets, 0
+under 2) and <code>src/check_sec5_D_dichotomy.py</code> (4,171 edges,
+identity b−a=D holds).</p>
+</details>
+<h2 id="the-buffer-exists-5.8-5.8a">The buffer exists (5.8, 5.8a)</h2>
+<ul>
+<li><strong>Lemma 5.8 (buffer existence).</strong> For every
+<code>a,b</code> there is a <strong>separating line with a non-bipartite
+fiber</strong>. <em>Idea:</em> <code>G</code> is non-bipartite, so it
+has a triangle (Lemma 2.1); a triangle is local; pivoting on a line the
+triangle avoids traps it inside one fiber, making that fiber
+non-bipartite. The proof also keeps the line <em>separating</em> (a case
+analysis on the separating rows/columns + a wide-pair argument; the
+exceptions are <code>|V|≤6</code> base cases). <em>(See also
+<code>TUTORIAL_QA_pending.md</code> Q4.)</em></li>
+<li><strong>Lemma 5.8a (non-bipartite quotient).</strong> That buffer
+line’s quotient is itself non-bipartite (a shifted-matroid argument), so
+Cor 5.5 makes it Hamilton-connected. <em>(E4: every fiber is a triangle,
+so buffers are abundant, and <code>Q_L=K_4</code> is
+non-bipartite.)</em></li>
+</ul>
+<h2 id="assembly-lift-the-quotient-path-5.95.11">Assembly: lift the
+quotient path (5.9–5.11)</h2>
+<ul>
+<li><strong>Proposition 5.11 (single-pass gluing).</strong> With such a
+buffer line: take a Hamilton path of <code>Q_L</code> from
+<code>a</code>’s pattern to <code>b</code>’s, traverse each fiber by a
+Hamilton path (induction), and splice consecutive fibers on chosen
+interface edges. The non-bipartite <strong>buffer</strong> fiber absorbs
+the parity a chain of bipartite fibers couldn’t close; Lemmas 5.7/5.7c
+keep the entry/exit vertices choosable. (Lemma 5.9 handles a buffer in
+the middle, 5.10 at an endpoint.)</li>
+</ul>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p>Take a Hamilton path of <code>Q_L = K_4</code> through the fibers:
+col 2 → col 3 → col 0 → col 1. Lift it — traverse each triangle once,
+splicing on a crossing edge to the next fiber. Result (v0→v11, a
+Hamilton path of all 12 vertices):</p>
+<ul>
+<li>fiber <code>col 2</code> (triangle): v0 → v5 → v10</li>
+<li>fiber <code>col 3</code> (triangle): v9 → v1 → v4</li>
+<li>fiber <code>col 0</code> (triangle): v8 → v6 → v7</li>
+<li>fiber <code>col 1</code> (triangle): v3 → v2 → v11</li>
+</ul>
+<p><strong>Verified:</strong> valid Hamilton path = True.</p>
+</details>
+<p>This is exactly the procedure run by
+<code>src/verify_capstone_faithful.py</code>, which drives each step by
+the lemma it cites and aborts if any guarantee fails — verified on every
+non-bipartite class within the computational bound (exhaustive on the
+smaller ones, sampled on the larger), 0 failures.</p>
+<hr />
+<h1 id="base-classes">§6. Base classes</h1>
+<p>The recursion bottoms out on three known/finite families — each
+maximally Hamiltonian <strong>directly</strong>:</p>
+<ul>
+<li><strong>A single <code>CT_a</code></strong> is Hamilton-laceable:
+<code>a≥4</code> by <strong>Araki</strong> (a Cayley graph of
+<code>S_a</code> on a connected transposition set is
+hyper-Hamiltonian-laceable); <code>CT_3=K_{3,3}</code> and
+<code>CT_2=K_2</code> directly.</li>
+<li><strong>Johnson graphs <code>J(f,k)</code></strong> (the
+≤2-active-row/column classes) are <strong>Hamilton-connected</strong> by
+<strong>Alspach</strong> (2012), including the degenerate
+parameters.</li>
+<li><strong>The <code>|V|≤6</code> cores</strong>: the only active,
+invariant-free, non-bipartite, non-Johnson cores of order ≤6 are
+<code>R=S=(2,1,1)</code> and its complement <code>R=S=(2,2,1)</code> —
+Hamilton-connected on every pair by inspection.</li>
+</ul>
+<blockquote>
+<p><strong>Worked example — the Johnson base.</strong>
+<code>J(4,2)</code> is the octahedron <code>G((2,2),(1,1,1,1))</code>;
+the fold shows its six matrices, Hamilton-connectedness, and a sample
+path.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>J(4,2), the octahedron</strong> =
+<code>G((2,2),(1,1,1,1))</code>: a matrix is which 2 of the 4 columns
+put their <code>1</code> in row 0 — a 2-subset of {0,1,2,3}. |V| = 6,
+every vertex non-adjacent only to its complement. The 6 matrices (row 0
+= the chosen columns):</p>
+<p>v0:</p>
+<pre><code>1 1 0 0
+0 0 1 1</code></pre>
+<p>v1:</p>
+<pre><code>1 0 1 0
+0 1 0 1</code></pre>
+<p>v2:</p>
+<pre><code>1 0 0 1
+0 1 1 0</code></pre>
+<p>v3:</p>
+<pre><code>0 1 1 0
+1 0 0 1</code></pre>
+<p>v4:</p>
+<pre><code>0 1 0 1
+1 0 1 0</code></pre>
+<p>v5:</p>
+<pre><code>0 0 1 1
+1 1 0 0</code></pre>
+<p>Hamilton-connected = True (Alspach). Sample Hamilton path v0→v5:
+v0→v1→v2→v4→v3→v5</p>
+<p>(Neighbours J(3,1) = the triangle E1, and J(4,1) = K_4, are the other
+small Johnson graphs.)</p>
+</details>
+<blockquote>
+<p><strong>Worked example — the two sporadic cores.</strong> Both
+<code>(2,1,1)</code> and <code>(2,2,1)</code> have <code>|V|=5</code>;
+the fold verifies each is Hamilton-connected on <strong>every</strong>
+endpoint pair — the “by inspection” made explicit.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>Core <code>R=S=(2, 1, 1)</code></strong> — active,
+invariant-free, non-bipartite, non-Johnson, |V| = 5. Hamilton-connected
+on <strong>every</strong> pair = True. Its matrices:</p>
+<p>v0:</p>
+<pre><code>1 1 0
+1 0 0
+0 0 1</code></pre>
+<p>v1:</p>
+<pre><code>1 0 1
+1 0 0
+0 1 0</code></pre>
+<p>v2:</p>
+<pre><code>1 1 0
+0 0 1
+1 0 0</code></pre>
+<p>v3:</p>
+<pre><code>1 0 1
+0 1 0
+1 0 0</code></pre>
+<p>v4:</p>
+<pre><code>0 1 1
+1 0 0
+1 0 0</code></pre>
+<p><strong>Core <code>R=S=(2, 2, 1)</code></strong> — active,
+invariant-free, non-bipartite, non-Johnson, |V| = 5. Hamilton-connected
+on <strong>every</strong> pair = True. Its matrices:</p>
+<p>v0:</p>
+<pre><code>1 1 0
+1 1 0
+0 0 1</code></pre>
+<p>v1:</p>
+<pre><code>1 1 0
+1 0 1
+0 1 0</code></pre>
+<p>v2:</p>
+<pre><code>1 0 1
+1 1 0
+0 1 0</code></pre>
+<p>v3:</p>
+<pre><code>1 1 0
+0 1 1
+1 0 0</code></pre>
+<p>v4:</p>
+<pre><code>0 1 1
+1 1 0
+1 0 0</code></pre>
+</details>
+<p>With these — and assuming the Block Lemma — every interchange graph
+is maximally Hamiltonian. It remains to prove the Block Lemma.</p>
+<h1 id="the-block-lemma">§7. The Block Lemma</h1>
+<p>By Proposition 2.2 the Block Lemma is:</p>
+<blockquote>
+<p><strong>Theorem 7.1.</strong> Every Cartesian product of complete
+transposition graphs (order ≥ 4) is paired
+2-disjoint-path-coverable.</p>
+</blockquote>
+<p><strong>The engine (Coleman et al. 2025).</strong> A
+<strong>weld</strong> of equal-order graphs is their disjoint union plus
+a perfect matching between every pair; a <em>transposition-like
+graph</em> of rank <code>r</code> is a weld of <code>≥ r</code>
+rank-<code>(r−1)</code> ones (rank 1 = any Hamilton-connected/laceable
+graph). Each <code>CT_a</code> is rank <code>a</code> (its
+<code>a</code> cosets are copies of <code>CT_{a−1}</code>).</p>
+<ul>
+<li><strong>Theorem 7.2 (Coleman).</strong> A bipartite
+transposition-like graph of rank <code>n</code>, whose rank-1 leaves are
+single vertices or even-order, has a paired-<code>(n−1)</code>-disjoint
+path cover.</li>
+<li><strong>Theorem 7.3 (Coleman, down-closure).</strong>
+Paired-<code>k</code>-DPC ⇒ paired-<code>ℓ</code>-DPC for every
+<code>ℓ ≤ k</code>.</li>
+</ul>
+<p><strong>A single block.</strong> For <code>a≥3</code>,
+<code>CT_a</code> is rank <code>a</code> with single-vertex leaves →
+paired-<code>(a−1)</code>-DPC (7.2) → paired-2-DPC (7.3).</p>
+<p><strong>Arbitrary products (double induction on the number of
+factors).</strong> All-<code>CT_2</code> products are hypercubes,
+paired-2-DPC by <strong>Jo–Park–Chwa</strong>. Otherwise write
+<code>G = CT_a □ B</code> (<code>a≥3</code>); by the outer induction
+<code>B</code> is even-order Hamilton-laceable, so <code>CT_a □ B</code>
+is a rank-<code>a</code> transposition-like graph with leaf
+<code>B</code>, and 7.2 + 7.3 give paired-2-DPC. The two inductions act
+on different parameters and don’t interact.</p>
+<blockquote>
+<p><strong>Worked example.</strong> <code>K_{3,3}=CT_3</code> is
+paired-2-DPC (single block); <code>C_4=CT_2□CT_2</code> (a product /
+hypercube) is paired-2-DPC; and the <strong>weld</strong>
+(<code>CT_3</code> = 3 welded copies of <code>K_2</code>) is the §2.1
+fibers/quotient again. The fold has the counts and the structure.</p>
+</blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>Single block: <code>CT_3 = K_{3,3}</code>.</strong>
+Paired-2-DPC — all balanced demands covered: 72/72. (Theorem 7.2 +
+down-closure 7.3.)</p>
+<p>The <strong>weld</strong> that drives the induction: freezing the
+last symbol splits <code>CT_3</code> into 3 cosets, each a copy of
+<code>CT_2 = K_2</code>, matched pairwise — exactly the 3 fibers over
+the <code>K_3</code> quotient from §2.1. In general <code>CT_a</code> is
+a weld of <code>a</code> copies of <code>CT_{a-1}</code>, and
+<code>CT_a □ B</code> a weld of <code>a</code> copies of
+<code>CT_{a-1} □ B</code>.</p>
+<p><strong>A product: <code>C_4 = CT_2 □ CT_2</code></strong> (the
+hypercube <code>Q_2</code>, = E3). Paired-2-DPC — balanced demands
+covered: 8/8. Products of <code>CT_2</code>’s (hypercubes) are the base
+of the outer induction (Jo–Park–Chwa); larger products fold in one
+<code>CT_a</code> at a time with <code>B</code> as an even
+Hamilton-laceable leaf. The general statement is Coleman et al. 2025
+(Theorem 7.2) — the one deep external input, which a referee must
+confirm applies at every rank.</p>
+</details>
+<p>This is the one place the proof leans on a <strong>recent external
+theorem</strong> (Coleman 2025) rather than rebuilding from smaller —
+the most load-bearing citation, and the first thing a referee should
+scrutinise.</p>
+<h1 id="whats-proved-and-what-a-referee-must-still-check">§8. What’s
+proved, and what a referee must still check</h1>
+<p>Combining §§3–6 (the reduction) with §7 (the Block Lemma) proves
+Theorem 1.1: <strong>every interchange graph is maximally
+Hamiltonian</strong>, settling Brualdi’s conjecture.</p>
+<p><strong>The honest boundary.</strong> The worked examples here are
+verified on their instances, and each load-bearing lemma is checked on
+all small classes — but that is a <strong>finite</strong> range. The
+leap to the infinite family rests on (a) the induction and our general
+lemma proofs, and (b) the cited theorems at all scales (Coleman 2025
+first, then Naddef–Pulleyblank, Araki, Alspach, Jo–Park–Chwa,
+Brualdi/Brualdi–Manber). Those await human review; the priority list is
+in <code>handoff_yan/VERIFICATION_DOSSIER.md</code>.</p>
+<p><strong>Independent corroboration.</strong> Separately from the
+proof, the <em>conclusion</em> was checked by computer: every canonical
+class up to <code>7×7</code> small enough to enumerate —
+<strong>144,389</strong> classes, complete through <code>|V|=35</code> —
+was confirmed maximally Hamiltonian by deciding all
+<strong>2,555,559</strong> required Hamilton-path instances with a SAT
+solver, with no exception. This corroborates the result but does not
+replace the proof.</p>
+<hr />
+<p><em>End of the walkthrough (§§1–8). Every definition has a concrete
+instance and every claim/construction a verified worked example; the
+fold-outs regenerate from <code>src/walkthrough_dump_*.py</code> via
+<code>tools/build_walkthrough.py</code>.</em></p>
+</body>
+</html>
