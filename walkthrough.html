@@ -208,8 +208,8 @@ paper, walked through — with a worked example at every step</a></li>
 objects: matrices, interchanges, and the interchange graph</a></li>
 <li><a href="#brualdis-conjecture-and-the-theorem-we-prove" id="toc-brualdis-conjecture-and-the-theorem-we-prove">Brualdi’s
 conjecture, and the theorem we prove</a></li>
-<li><a href="#the-corollary-and-the-one-lemma-everything-reduces-to" id="toc-the-corollary-and-the-one-lemma-everything-reduces-to">The
-corollary, and the one lemma everything reduces to</a></li>
+<li><a href="#the-corollary-the-theorem-in-a-second-language" id="toc-the-corollary-the-theorem-in-a-second-language">The corollary —
+the theorem in a second language</a></li>
 </ul></li>
 <li><a href="#preliminaries" id="toc-preliminaries">§2.
 Preliminaries</a>
@@ -264,8 +264,8 @@ machine-checked and where.</em></p>
 works” assertions are the ones a human referee must still confirm in
 general; what is marked <strong>Verified</strong> has been confirmed
 computationally on the stated instances (and, where noted, on all small
-classes). The fold-outs are generated from
-<code>src/walkthrough_examples_sec12.py</code>, so the matrices shown
+classes). The fold-outs are generated from the
+<code>src/walkthrough_dump_*.py</code> scripts, so the matrices shown
 are the real ones.</em></p>
 <p><em>Conventions: <code>𝒜(R,S)</code> = the <code>m×n</code> 0/1
 matrices with row sums <code>R</code>, column sums <code>S</code>;
@@ -310,6 +310,10 @@ all three are pairwise one interchange apart — <code>G</code> is the
 v0 — v2 (rows {0,1} × cols {0,2}) - v1 — v2 (rows {0,1} × cols
 {0,1})</p>
 <p>Hamilton path v0→v1: v0→v2→v1</p>
+<p>As a graph (labelled vertices):</p>
+<svg width="200" height="184" viewBox="0 0 200 184" role="img" aria-label="triangle K3">
+<line x1="100" y1="26" x2="26" y2="158" stroke="#3d7a97" stroke-width="2"></line><line x1="100" y1="26" x2="174" y2="158" stroke="#3d7a97" stroke-width="2"></line><line x1="26" y1="158" x2="174" y2="158" stroke="#3d7a97" stroke-width="2"></line><circle cx="100" cy="26" r="17" fill="#569BBD"></circle><text x="100" y="31" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v0</text><circle cx="26" cy="158" r="17" fill="#569BBD"></circle><text x="26" y="163" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v1</text><circle cx="174" cy="158" r="17" fill="#569BBD"></circle><text x="174" y="163" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v2</text>
+</svg>
 </details>
 <p><strong>Ryser’s theorem</strong> says any two matrices of
 <code>𝒜(R,S)</code> are joined by some sequence of interchanges — i.e.
@@ -383,6 +387,10 @@ K_2) - row 0 = (1, 0, 0): {v0, v1} (one edge inside → K_2)</p>
 <p>Quotient Q_L: the 3 row-0 patterns, every pair adjacent → K_3.</p>
 <p>A paired-2-DPC cover for the balanced demand (v0→v1, v2→v3): - P1:
 v0—v1 - P2: v2—v5—v4—v3</p>
+<p>As a graph (evens on the left, odds on the right):</p>
+<svg width="270" height="220" viewBox="0 0 270 220" role="img" aria-label="K3,3">
+<line x1="55" y1="42" x2="215" y2="42" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="42" x2="215" y2="110" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="42" x2="215" y2="178" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="110" x2="215" y2="42" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="110" x2="215" y2="110" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="110" x2="215" y2="178" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="178" x2="215" y2="42" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="178" x2="215" y2="110" stroke="#c7d2da" stroke-width="1.5"></line><line x1="55" y1="178" x2="215" y2="178" stroke="#c7d2da" stroke-width="1.5"></line><circle cx="55" cy="42" r="17" fill="#569BBD"></circle><text x="55" y="47" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v0</text><circle cx="55" cy="110" r="17" fill="#569BBD"></circle><text x="55" y="115" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v2</text><circle cx="55" cy="178" r="17" fill="#569BBD"></circle><text x="55" y="183" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v4</text><circle cx="215" cy="42" r="17" fill="#33566a"></circle><text x="215" y="47" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v1</text><circle cx="215" cy="110" r="17" fill="#33566a"></circle><text x="215" y="115" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v3</text><circle cx="215" cy="178" r="17" fill="#33566a"></circle><text x="215" y="183" text-anchor="middle" font-size="15" fill="#fff" font-family="sans-serif">v5</text>
+</svg>
 </details>
 <p><strong>Why the strong form?</strong> The proof builds big graphs
 from small ones (products in §4, fibers over a quotient in §5). A bare
@@ -390,8 +398,8 @@ Hamilton <em>cycle</em> can’t be steered through those gluings; a
 Hamilton <em>path between prescribed endpoints</em> can. So maximal
 Hamiltonicity is what the induction carries — bare Hamiltonicity would
 not.</p>
-<h2 id="the-corollary-and-the-one-lemma-everything-reduces-to">The
-corollary, and the one lemma everything reduces to</h2>
+<h2 id="the-corollary-the-theorem-in-a-second-language">The corollary —
+the theorem in a second language</h2>
 <p>A 0/1 matrix with margins <code>R,S</code> is the biadjacency matrix
 of a bipartite graph with side-degrees <code>R,S</code>, and a
 <code>2×2</code> interchange is a <strong>2-switch</strong> — deleting
@@ -405,8 +413,12 @@ degree sequence <code>(R,S)</code>:</p>
 <blockquote>
 <p><strong>Corollary.</strong> The realization graph of any bipartite
 degree sequence (equivalently, by Arikati–Peled, any split-graph degree
-sequence) is maximally Hamiltonian. The arbitrary-degree-sequence
-version stays open.</p>
+sequence) is maximally Hamiltonian. The
+<strong>arbitrary-degree-sequence version</strong> — the realization
+graph of a <em>general</em> (not necessarily bipartite) degree sequence,
+i.e. all labelled simple graphs on a fixed vertex set with the
+prescribed degrees, adjacent under 2-switches — stays open: even plain
+Hamiltonicity of that graph is not known in general.</p>
 </blockquote>
 <details>
 <summary>
@@ -432,11 +444,6 @@ bipartite graph. So the interchange graph <code>G(R,S)</code> is the
 sequence <code>(R,S)</code> — which is why the theorem also settles
 maximal Hamiltonicity of those realization graphs.</p>
 </details>
-<blockquote>
-<p><strong>Lemma 1.2 (Block Lemma).</strong> Every balanced bipartite
-interchange graph is <strong>paired 2-disjoint-path- coverable</strong>
-(§2.4). <em>Proved in §7; used as a black box until then.</em></p>
-</blockquote>
 <hr />
 <h1 id="preliminaries">§2. Preliminaries</h1>
 <h2 id="lines-fibers-and-quotients">§2.1 Lines, fibers, and
@@ -456,11 +463,44 @@ its single <code>1</code> sits in column 0, 1, or 2 — three patterns →
 <strong>three fibers</strong>, each (deleting row 0) a <code>K₂</code>;
 the quotient is <code>K₃</code>. So <code>K₃,₃</code> is <em>three
 <code>K₂</code> fibers over a <code>K₃</code> quotient</em>.
-<strong>Verified:</strong> see the E2 fold under §1 for the three fibers
-and the quotient, computed from the six matrices. <em>(The reassembly of
-these pieces into all 9 edges of <code>K₃,₃</code> is walked in
-<code>TUTORIAL_QA_pending.md</code>, Q1–Q2.)</em></p>
+<strong>Verified:</strong> the three fibers and the quotient are in the
+E2 fold under §1. The fold below walks how these pieces
+<strong>reassemble into all 9 edges of <code>K₃,₃</code></strong>, and
+how a Hamilton path <strong>lifts</strong> through them (the floor-plan
+/ rooms picture).</p>
 </blockquote>
+<details>
+<summary>
+▸ See it fully worked out
+</summary>
+<p><strong>The floor-plan picture.</strong> Read <code>K₃,₃</code> as a
+small building: the <strong>quotient</strong> <code>K₃</code> is the
+floor plan (3 dots); above each dot sits a <strong>room</strong> — a
+fiber, here a <code>K₂</code> (2 matrices). Moving <em>inside</em> a
+room is an interchange that fixes row 0; walking a <em>corridor</em> to
+another room moves row 0’s <code>1</code>.</p>
+<p><strong>Rooms (the 3 fibers), each a <code>K₂</code> with one
+internal edge:</strong> - room <code>row0=(0, 0, 1)</code>: {v2, v5} —
+internal edge v2—v5 - room <code>row0=(0, 1, 0)</code>: {v3, v4} —
+internal edge v3—v4 - room <code>row0=(1, 0, 0)</code>: {v0, v1} —
+internal edge v0—v1</p>
+<p><strong>Corridors — each is a <em>bundle</em> of cross-edges, not one
+edge:</strong> - rooms 0 ↔︎ 1: v2—v3, v4—v5 - rooms 0 ↔︎ 2: v0—v5, v1—v2 -
+rooms 1 ↔︎ 2: v0—v3, v1—v4</p>
+<p><strong>Reassembled:</strong> 3 internal + 6 cross = 9 edges = every
+even–odd pair → exactly <strong><code>K₃,₃</code></strong>. The
+blueprint is a <em>triangle</em> <code>K₃</code>, yet the building is
+triangle-free <code>K₃,₃</code> — because each corridor is a bundle
+joining two rooms, not a single edge.</p>
+<p><strong>Lifting a Hamilton path.</strong> Route through the floor
+plan visiting each room once, walk each room’s <code>K₂</code>, and step
+across a corridor between rooms. One result (all 6 vertices):</p>
+<pre><code>v2 → v5 → v4 → v3 → v0 → v1</code></pre>
+<p><strong>Verified:</strong> valid Hamilton path = True. Each room is
+entered once, traversed, and left across a corridor — the general ‘route
+the quotient, lift the fibers’ mechanism of §5, in its simplest
+case.</p>
+</details>
 <h2 id="invariant-positions">§2.2 Invariant positions</h2>
 <p><strong>Definition.</strong> A cell is <strong>invariant</strong> if
 constant across the whole class. Two sources: an <strong>inactive
@@ -468,9 +508,15 @@ line</strong> (sum <code>0</code> or maximal) is all-constant and
 deletes harmlessly (same graph, smaller matrix; a line that isn’t
 inactive is <strong>active</strong>); the <em>remaining</em> invariant
 cells force a <strong>Cartesian factorisation</strong> into disjoint
-blocks. An active class is <strong>prime</strong> (indecomposable) iff
-it is <strong>invariant-free</strong> (Brualdi–Manber). <em>Prime ≠
-connected:</em> <code>C₄=K₂□K₂</code> is connected yet decomposable.</p>
+blocks. It helps to picture where these come from: an invariant cell
+appears wherever a sub-block of rows and columns is <strong>completely
+forced by the margins</strong> — the row and column sums leave that
+block only one possible filling, so those cells never change. What is
+left free are the <em>varying</em> cells, and they split into the
+independent product blocks. An active class is <strong>prime</strong>
+(indecomposable) iff it is <strong>invariant-free</strong>
+(Brualdi–Manber). <em>Prime ≠ connected:</em> <code>C₄=K₂□K₂</code> is
+connected yet decomposable.</p>
 <blockquote>
 <p><strong>Worked example (E3) — inactive row, then a leftover
 product.</strong> <code>R=(4,3,3,1,1)</code>, <code>S=(4,4,2,2)</code>.
@@ -579,6 +625,15 @@ cells, a single (non-product) block.</p>
 <p>12 matrices; non-bipartite (8 triangles); 0 invariant cells (prime —
 does not factor). This is the class the §5 pivot construction
 handles.</p>
+<p><strong>The graph <code>G</code>, drawn.</strong> Pivoting row 1
+groups the 12 vertices into <strong>4 triangle-fibers</strong> (one per
+column that holds row 1’s <code>1</code>) sitting over a <code>K₄</code>
+quotient. Internal triangle edges are bold; inter-fiber crossing edges
+are light. Each vertex is one of the 12 matrices listed above (same
+<code>v</code>-label):</p>
+<svg width="450" height="360" viewBox="0 0 450 360" role="img" aria-label="E4 graph">
+<line x1="120" y1="69" x2="330" y2="69" stroke="#d3dde3" stroke-width="1"></line><line x1="120" y1="69" x2="120" y2="219" stroke="#d3dde3" stroke-width="1"></line><line x1="120" y1="69" x2="151" y2="123" stroke="#3d7a97" stroke-width="2.4"></line><line x1="120" y1="69" x2="330" y2="219" stroke="#d3dde3" stroke-width="1"></line><line x1="120" y1="69" x2="89" y2="123" stroke="#3d7a97" stroke-width="2.4"></line><line x1="330" y1="69" x2="151" y2="273" stroke="#d3dde3" stroke-width="1"></line><line x1="330" y1="69" x2="361" y2="123" stroke="#3d7a97" stroke-width="2.4"></line><line x1="330" y1="69" x2="361" y2="273" stroke="#d3dde3" stroke-width="1"></line><line x1="330" y1="69" x2="299" y2="123" stroke="#3d7a97" stroke-width="2.4"></line><line x1="120" y1="219" x2="151" y2="273" stroke="#3d7a97" stroke-width="2.4"></line><line x1="120" y1="219" x2="361" y2="123" stroke="#d3dde3" stroke-width="1"></line><line x1="120" y1="219" x2="330" y2="219" stroke="#d3dde3" stroke-width="1"></line><line x1="120" y1="219" x2="89" y2="273" stroke="#3d7a97" stroke-width="2.4"></line><line x1="151" y1="273" x2="151" y2="123" stroke="#d3dde3" stroke-width="1"></line><line x1="151" y1="273" x2="361" y2="273" stroke="#d3dde3" stroke-width="1"></line><line x1="151" y1="273" x2="89" y2="273" stroke="#3d7a97" stroke-width="2.4"></line><line x1="361" y1="123" x2="151" y2="123" stroke="#d3dde3" stroke-width="1"></line><line x1="361" y1="123" x2="299" y2="273" stroke="#d3dde3" stroke-width="1"></line><line x1="361" y1="123" x2="299" y2="123" stroke="#3d7a97" stroke-width="2.4"></line><line x1="151" y1="123" x2="299" y2="273" stroke="#d3dde3" stroke-width="1"></line><line x1="151" y1="123" x2="89" y2="123" stroke="#3d7a97" stroke-width="2.4"></line><line x1="330" y1="219" x2="361" y2="273" stroke="#3d7a97" stroke-width="2.4"></line><line x1="330" y1="219" x2="299" y2="273" stroke="#3d7a97" stroke-width="2.4"></line><line x1="330" y1="219" x2="299" y2="123" stroke="#d3dde3" stroke-width="1"></line><line x1="361" y1="273" x2="299" y2="273" stroke="#3d7a97" stroke-width="2.4"></line><line x1="361" y1="273" x2="89" y2="123" stroke="#d3dde3" stroke-width="1"></line><line x1="299" y1="273" x2="89" y2="273" stroke="#d3dde3" stroke-width="1"></line><line x1="299" y1="123" x2="89" y2="123" stroke="#d3dde3" stroke-width="1"></line><line x1="299" y1="123" x2="89" y2="273" stroke="#d3dde3" stroke-width="1"></line><line x1="89" y1="123" x2="89" y2="273" stroke="#d3dde3" stroke-width="1"></line><circle cx="120" cy="69" r="15" fill="#569BBD"></circle><text x="120" y="73" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v0</text><circle cx="151" cy="123" r="15" fill="#569BBD"></circle><text x="151" y="127" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v5</text><circle cx="89" cy="123" r="15" fill="#569BBD"></circle><text x="89" y="127" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v10</text><circle cx="330" cy="69" r="15" fill="#569BBD"></circle><text x="330" y="73" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v1</text><circle cx="361" cy="123" r="15" fill="#569BBD"></circle><text x="361" y="127" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v4</text><circle cx="299" cy="123" r="15" fill="#569BBD"></circle><text x="299" y="127" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v9</text><circle cx="120" cy="219" r="15" fill="#569BBD"></circle><text x="120" y="223" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v2</text><circle cx="151" cy="273" r="15" fill="#569BBD"></circle><text x="151" y="277" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v3</text><circle cx="89" cy="273" r="15" fill="#569BBD"></circle><text x="89" y="277" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v11</text><circle cx="330" cy="219" r="15" fill="#569BBD"></circle><text x="330" y="223" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v6</text><circle cx="361" cy="273" r="15" fill="#569BBD"></circle><text x="361" y="277" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v7</text><circle cx="299" cy="273" r="15" fill="#569BBD"></circle><text x="299" y="277" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">v8</text>
+</svg>
 </details>
 <h2 id="bipartiteness">§2.3 Bipartiteness</h2>
 <blockquote>
@@ -715,7 +770,13 @@ bipartite interchange graph must be.</p>
 with the Block Lemma (§7) as a standing black box. Given a class
 <code>G</code>, run this decision tree; every branch either finishes
 <code>G</code> outright or hands it to <em>strictly smaller</em> classes
-(so the induction hypothesis applies) or to the Block Lemma.</p>
+(so the induction hypothesis applies) or to the Block Lemma:</p>
+<blockquote>
+<p><strong>Lemma 1.2 (Block Lemma).</strong> Every balanced bipartite
+interchange graph is <strong>paired 2-disjoint-path- coverable</strong>
+(§2.4). This is the single fact the whole reduction leans on; it is
+proved in §7 and used as a black box until then.</p>
+</blockquote>
 <ol type="1">
 <li><strong>Is <code>G</code> bipartite?</strong> (Lemma 2.1 —
 equivalently, triangle-free.) If yes, Proposition 2.2 makes it a product
