@@ -387,9 +387,14 @@ not.</p>
 corollary, and the one lemma everything reduces to</h2>
 <p>A 0/1 matrix with margins <code>R,S</code> is the biadjacency matrix
 of a bipartite graph with side-degrees <code>R,S</code>, and a
-<code>2×2</code> interchange is a <strong>2-switch</strong>, so
-<code>G(R,S)</code> is the <em>realization graph</em> of that bipartite
-degree sequence:</p>
+<code>2×2</code> interchange is a <strong>2-switch</strong> — deleting
+two edges and adding the two “crossed” edges on the same four vertices
+(the fold below makes this concrete). The <strong>realization
+graph</strong> of a degree sequence is the graph whose vertices are
+<em>all</em> labelled graphs with that degree sequence, two of them
+joined when one is obtained from the other by a single 2-switch. So
+<code>G(R,S)</code> is exactly the realization graph of the bipartite
+degree sequence <code>(R,S)</code>:</p>
 <blockquote>
 <p><strong>Corollary.</strong> The realization graph of any bipartite
 degree sequence (equivalently, by Arikati–Peled, any split-graph degree
