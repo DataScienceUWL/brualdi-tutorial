@@ -739,6 +739,23 @@ co-permutation copies); nontrivially, it is balanced and of even order.
 <em>This is the bridge handing the whole bipartite case to the Block
 Lemma (§7) as a CT-product.</em></p>
 </blockquote>
+<p><strong>Why bipartite forces transposition graphs
+(intuition).</strong> By Lemma 2.1 a bipartite class is
+<em>triangle-free</em>, and a triangle is a <strong>3-way
+rotation</strong> — one movable unit with three columns to cycle among
+(exactly what happens in E1). Forbidding all triangles therefore forbids
+any 3-way freedom: every choice must be a plain <strong>2-way
+swap</strong>. The only prime class with no slack left to rotate is
+<strong>one <code>1</code> per row and column</strong> — a permutation
+matrix — and there an interchange is precisely a
+<strong>transposition</strong> (swap which columns two rows point to). A
+transposition flips the permutation’s parity (even ↔︎ odd), so the graph
+is bipartite by sign, and no triangle can close (three transpositions
+compose to an <em>odd</em> permutation, never the identity). That graph
+<em>is</em> <code>CT_a</code>; a general bipartite class is an
+independent combination — a Cartesian product — of such blocks. (Its
+complement, one <code>0</code> per line, is the co-permutation class —
+the same graph relabelled by <code>A↦J−A</code>.)</p>
 <blockquote>
 <p><strong>Worked example (E3 <code>=C₄</code>).</strong>
 <code>C₄ = K₂ □ K₂ = CT₂ □ CT₂</code> — a product of two complete
