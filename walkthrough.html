@@ -677,14 +677,29 @@ Every edge joins an even to an odd vertex (monochromatic edges: 0), so
 E2 is bipartite — and triangle-free (0 triangles).</p>
 </details>
 <h2 id="disjoint-path-covers">§2.4 Disjoint path covers</h2>
-<p><strong>Definition.</strong> For two disjoint pairs
-<code>(a₁,b₁),(a₂,b₂)</code>, a <strong>paired 2-disjoint path
-cover</strong> is disjoint paths <code>P₁:a₁→b₁</code>,
-<code>P₂:a₂→b₂</code> together covering all vertices. In a bipartite
-graph a demand is <strong>balanced</strong> if each pair is
-opposite-coloured; the graph is <strong>paired 2-DPC</strong> if every
-balanced demand has a cover. Strictly stronger than laceability (the
-one-pair case); it is what survives products.</p>
+<p><strong>Definition.</strong> A <strong>demand</strong> is the request
+handed to the cover: two terminal pairs <code>(a₁,b₁)</code>,
+<code>(a₂,b₂)</code> (all four vertices distinct) to be joined by two
+<strong>vertex-disjoint</strong> paths <code>P₁:a₁→b₁</code>,
+<code>P₂:a₂→b₂</code> that <em>together cover every vertex</em> — a
+<strong>paired 2-disjoint path cover</strong>. In a bipartite graph the
+demand is <strong>balanced</strong> when each pair is
+<strong>opposite-coloured</strong> (one endpoint in each colour class).
+The graph is <strong>paired 2-DPC</strong> if every balanced demand has
+a cover.</p>
+<p><em>“Balanced” is a <strong>colour</strong> balance — not the
+transportation supply-vs-demand sense.</em> In a bipartite graph a path
+alternates colours, so a path covers <strong>equal numbers of the two
+colours exactly when its endpoints are opposite-coloured</strong>. A
+balanced bipartite graph has its two colour classes equal in size, so
+two disjoint paths can tile it only if each path is itself
+colour-balanced — i.e. each demanded pair is opposite-coloured. A
+<strong>same</strong>-coloured pair would force its path to carry one
+colour in excess, so the two paths couldn’t cover the equal classes —
+which is exactly why the same-coloured (“unbalanced”) version already
+fails on <code>C₄</code>.</p>
+<p>Paired 2-DPC is strictly stronger than laceability (the one-pair
+case), and it is the property that survives products.</p>
 <blockquote>
 <p><strong>Worked example (E2, <code>K₃,₃</code>).</strong> A balanced
 demand and an explicit disjoint covering pair are shown in the E2 fold
