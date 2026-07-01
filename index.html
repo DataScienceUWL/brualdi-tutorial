@@ -1550,6 +1550,16 @@ fiber/quotient split, a 2×3-margin example enumerated by hand, or a
 deeper dive on the Lean side — just say which and I’ll expand
 it.</em></p>
 <a href="#" class="topbtn">↑</a>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");});}</script>
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",function(){
+    navigator.serviceWorker.register("sw.js").then(function(reg){ if(reg.update) reg.update(); });
+  });
+  var _reloading=false;
+  navigator.serviceWorker.addEventListener("controllerchange",function(){
+    if(_reloading) return; _reloading=true; window.location.reload();  // new version shipped -> refresh
+  });
+}
+</script>
 </body>
 </html>

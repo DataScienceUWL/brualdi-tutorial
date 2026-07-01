@@ -1404,6 +1404,16 @@ instance and every claim/construction a verified worked example; the
 fold-outs regenerate from <code>src/walkthrough_dump_*.py</code> via
 <code>tools/build_walkthrough.py</code>.</em></p>
 <a href="#" class="topbtn">↑</a>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");});}</script>
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",function(){
+    navigator.serviceWorker.register("sw.js").then(function(reg){ if(reg.update) reg.update(); });
+  });
+  var _reloading=false;
+  navigator.serviceWorker.addEventListener("controllerchange",function(){
+    if(_reloading) return; _reloading=true; window.location.reload();  // new version shipped -> refresh
+  });
+}
+</script>
 </body>
 </html>
