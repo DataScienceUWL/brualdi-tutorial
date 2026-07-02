@@ -1286,10 +1286,11 @@ Hamilton path of all 12 vertices):</p>
 <code>src/verify_capstone_faithful.py</code>, which drives each step by
 the lemma it cites and aborts if any guarantee fails — verified on every
 non-bipartite class within the computational bound (exhaustive on the
-smaller ones, sampled on the larger), 0 failures. (Honest caveat: it
-realises each fiber traversal by search, so it certifies a valid
-single-pass threading <em>exists</em> under the cited guarantees, not
-that a fixed deterministic ordering never backtracks.)</p>
+smaller ones, sampled on the larger), 0 failures. (A companion verifier
+<code>src/verify_capstone_deterministic.py</code> runs the construction
+with every interface choice fixed by the proof’s rule — no search — and
+produces the path with <em>zero backtracks</em> on every §5 pivot pair
+tested, confirming the construction is genuinely deterministic.)</p>
 <hr />
 <h1 id="base-classes">§6. Base classes</h1>
 <p>The recursion bottoms out on three known/finite families — each
